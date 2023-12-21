@@ -57,7 +57,22 @@ extension ImagesListViewController {
         cell.likeButton.setImage(likeImage, for: .normal)
     }
 }
-    extension ImagesListViewController: UITableViewDelegate {
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+extension ImagesListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+    
+    func tableView(_ tableVies: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return calculateCellHeight(for: indexPath)
     }
-
+    
+    func calculateCellHeight(for indexPath: IndexPath) -> CGFloat {
+        guard let photo = UIImage(named: photoNames[indexPath.row]) else {
+            return 0
+        }
+        let photoInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        let photoViewWidth = tableView.bounds.width - photoInsets.left - photoInsets.right
+        let photoWidth = photo.size.width
+        let scale = photoViewWidth / photoWidth
+        let cellHeight = photo.size.height * scale + photoInsets.top + photoInsets.bottom
+        return cellHeight
+    }
+}
