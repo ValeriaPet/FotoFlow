@@ -1,24 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--ImageList-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ImageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="z8p-0Z-g9D">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" name="YP Background (iOS)"/>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ImagesListCell" rowHeight="224" id="v7X-en-rzU" customClass="ImagesListCell" customModule="FotoFlow" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="224"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="v7X-en-rzU" id="l5H-Z1-l1T">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="224"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="jHZ-Zf-MH6" userLabel="CellImage">
+                                                    <rect key="frame" x="16" y="4" width="361" height="216"/>
+                                                    <color key="backgroundColor" name="YP Background (iOS)"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7QJ-w2-mmt">
+                                                    <rect key="frame" x="335" y="4" width="42" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="42" id="ZNn-h7-n5B"/>
+                                                        <constraint firstAttribute="height" constant="42" id="op1-s6-4eU"/>
+                                                    </constraints>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="Active"/>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19 декабря 2023" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N46-ti-2lm">
+                                                    <rect key="frame" x="24" y="196" width="105" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" name="YP White (iOS)"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" name="YP Background (iOS)"/>
+                                            <constraints>
+                                                <constraint firstItem="jHZ-Zf-MH6" firstAttribute="bottom" secondItem="N46-ti-2lm" secondAttribute="bottom" constant="8" id="8Cw-wu-rsh"/>
+                                                <constraint firstItem="7QJ-w2-mmt" firstAttribute="trailing" secondItem="jHZ-Zf-MH6" secondAttribute="trailing" id="9ET-1Z-Rur"/>
+                                                <constraint firstItem="jHZ-Zf-MH6" firstAttribute="top" secondItem="l5H-Z1-l1T" secondAttribute="top" constant="4" id="Sin-5D-96Z"/>
+                                                <constraint firstItem="7QJ-w2-mmt" firstAttribute="top" secondItem="jHZ-Zf-MH6" secondAttribute="top" id="dd7-fi-Asz"/>
+                                                <constraint firstItem="jHZ-Zf-MH6" firstAttribute="leading" secondItem="l5H-Z1-l1T" secondAttribute="leading" constant="16" id="fD9-Y6-lmd"/>
+                                                <constraint firstItem="N46-ti-2lm" firstAttribute="leading" secondItem="jHZ-Zf-MH6" secondAttribute="leading" constant="8" id="pkA-2c-Dn0" userLabel="Data Text.leading = CellImage.leading + 8"/>
+                                                <constraint firstAttribute="bottom" secondItem="jHZ-Zf-MH6" secondAttribute="bottom" constant="4" id="qUZ-6J-iA6" userLabel="bottom = CellImage.bottom + 4"/>
+                                                <constraint firstAttribute="trailing" secondItem="jHZ-Zf-MH6" secondAttribute="trailing" constant="16" id="r3t-hN-RCy"/>
+                                                <constraint firstItem="jHZ-Zf-MH6" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="N46-ti-2lm" secondAttribute="trailing" constant="8" id="vYy-ZM-H6P"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="YP Background (iOS)"/>
+                                        <connections>
+                                            <outlet property="cellImage" destination="jHZ-Zf-MH6" id="pl0-Te-qos"/>
+                                            <outlet property="dataText" destination="N46-ti-2lm" id="wCc-aF-Zq5"/>
+                                            <outlet property="likeButton" destination="7QJ-w2-mmt" id="Hee-yE-PlF"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius ">
+                                        <integer key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds " value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Qsr-Oi-sWJ"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="cih-PQ-8jB"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" name="YP Background (iOS)"/>
+                        <constraints>
+                            <constraint firstItem="z8p-0Z-g9D" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="B7B-KB-0s1"/>
+                            <constraint firstAttribute="top" secondItem="z8p-0Z-g9D" secondAttribute="top" id="DjJ-MH-qv4"/>
+                            <constraint firstAttribute="trailing" secondItem="z8p-0Z-g9D" secondAttribute="trailing" id="aEe-DG-ZWs"/>
+                            <constraint firstItem="z8p-0Z-g9D" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="rkF-Lx-rqA"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="z8p-0Z-g9D" id="D9E-kQ-SzK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="12" y="-34"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="AccentColor"/>
+    <resources>
+        <image name="0" width="200" height="132"/>
+        <image name="Active" width="44" height="44"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="YP Background (iOS)">
+            <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="YP White (iOS)">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
