@@ -5,4 +5,11 @@
 //  Created by LERÄ on 17.01.24.
 //
 
-import Foundation
+import UIKit
+
+class WebViewViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+}
