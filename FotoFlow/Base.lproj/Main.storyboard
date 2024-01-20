@@ -137,7 +137,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPr-Qa-W21">
-                                <rect key="frame" x="171" y="765" width="51" height="51"/>
+                                <rect key="frame" x="171.66666666666666" y="766" width="50" height="50"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Sharing"/>
                                 <connections>
@@ -244,6 +244,9 @@
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="ZWH-WY-nfV" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="Bi6-Sw-abq"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="Logo_of_Unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="a0s-WP-HOo">
                                 <rect key="frame" x="166.66666666666666" y="479" width="60" height="60"/>
@@ -270,7 +273,6 @@
                     <connections>
                         <outlet property="Logo" destination="a0s-WP-HOo" id="7OY-g4-lWi"/>
                         <outlet property="openButton" destination="ZXJ-WQ-7pM" id="G0m-qp-24F"/>
-                        <segue destination="ZWH-WY-nfV" kind="presentation" id="ELC-Hy-Gel"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m3s-IH-pxu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -282,12 +284,45 @@
             <objects>
                 <viewController title="WebViewViewController" id="ZWH-WY-nfV" customClass="WebViewViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kmc-kg-GD6">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJo-PH-ldL">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" name="YP White (iOS)"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PbX-R2-vSw">
+                                <rect key="frame" x="8" y="8" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="R2b-vk-FCj"/>
+                                    <constraint firstAttribute="height" constant="24" id="fBX-XC-z5O"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="nav_back_button"/>
+                                <connections>
+                                    <action selector="didTapBackButton:" destination="ZWH-WY-nfV" eventType="touchUpInside" id="baP-A6-7Wk"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="A4f-Cc-7Bf"/>
                         <color key="backgroundColor" name="YP White (iOS)"/>
+                        <constraints>
+                            <constraint firstItem="TJo-PH-ldL" firstAttribute="leading" secondItem="A4f-Cc-7Bf" secondAttribute="leading" id="I1Z-Ek-J8g"/>
+                            <constraint firstItem="PbX-R2-vSw" firstAttribute="top" secondItem="A4f-Cc-7Bf" secondAttribute="top" constant="8" id="Llk-Al-VPW"/>
+                            <constraint firstItem="PbX-R2-vSw" firstAttribute="leading" secondItem="A4f-Cc-7Bf" secondAttribute="leading" constant="8" id="RFG-hY-Jff"/>
+                            <constraint firstItem="A4f-Cc-7Bf" firstAttribute="bottom" secondItem="TJo-PH-ldL" secondAttribute="bottom" id="dSB-7l-FQy"/>
+                            <constraint firstItem="A4f-Cc-7Bf" firstAttribute="trailing" secondItem="TJo-PH-ldL" secondAttribute="trailing" id="hvr-bp-Okc"/>
+                            <constraint firstItem="TJo-PH-ldL" firstAttribute="top" secondItem="A4f-Cc-7Bf" secondAttribute="top" id="oDn-Qi-wSi"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lsy-rL-4uI"/>
+                    <connections>
+                        <outlet property="webView" destination="TJo-PH-ldL" id="aya-85-FVS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ddp-wS-ffA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -312,18 +347,15 @@
             <point key="canvasLocation" x="-253" y="-1426"/>
         </scene>
     </scenes>
-    <color key="tintColor" name="AccentColor"/>
     <resources>
         <image name="0" width="200" height="132"/>
-        <image name="Backward" width="96" height="96"/>
-        <image name="LikeActive" width="44" height="44"/>
-        <image name="Logo_of_Unsplash" width="120" height="120"/>
+        <image name="Backward" width="24" height="24"/>
+        <image name="LikeActive" width="42" height="42"/>
+        <image name="Logo_of_Unsplash" width="60" height="60"/>
         <image name="MainActive" width="30" height="30"/>
         <image name="ProfileActive" width="30" height="30"/>
-        <image name="Sharing" width="51" height="51"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="Sharing" width="50" height="50"/>
+        <image name="nav_back_button" width="24" height="24"/>
         <namedColor name="YP Background (iOS)">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

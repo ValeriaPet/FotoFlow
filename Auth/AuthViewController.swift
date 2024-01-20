@@ -13,7 +13,6 @@ final class AuthViewController: UIViewController {
     
     @IBOutlet weak var openButton: UIButton!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    var WebViewId: String = "ShowWebView"
+    
 }
