@@ -224,7 +224,7 @@
         <scene sceneID="PdN-3O-m81">
             <objects>
                 <viewController title="AuthViewController" id="2ec-y9-og6" customClass="AuthViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="TAX-N9-eOz">
+                    <view key="view" contentMode="scaleToFill" id="TAX-N9-eOz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -262,11 +262,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="ZXJ-WQ-7pM" secondAttribute="trailing" constant="16" id="5EO-iz-V3V"/>
                             <constraint firstItem="ZXJ-WQ-7pM" firstAttribute="centerX" secondItem="TAX-N9-eOz" secondAttribute="centerX" id="Bbm-3v-Otq"/>
                             <constraint firstItem="a0s-WP-HOo" firstAttribute="top" secondItem="pAs-nT-sn6" secondAttribute="top" constant="376" id="BfR-Pb-hBu"/>
-                            <constraint firstItem="ZXJ-WQ-7pM" firstAttribute="centerY" secondItem="TAX-N9-eOz" secondAttribute="centerY" id="Yj5-WU-kva"/>
                             <constraint firstItem="ZXJ-WQ-7pM" firstAttribute="leading" secondItem="TAX-N9-eOz" secondAttribute="leadingMargin" constant="16" id="bhY-Ct-y7w"/>
                             <constraint firstItem="ZXJ-WQ-7pM" firstAttribute="top" secondItem="pAs-nT-sn6" secondAttribute="top" constant="640" id="emV-Lh-5xm"/>
                             <constraint firstItem="a0s-WP-HOo" firstAttribute="centerX" secondItem="TAX-N9-eOz" secondAttribute="centerX" id="exF-UA-73m"/>
-                            <constraint firstItem="a0s-WP-HOo" firstAttribute="centerY" secondItem="TAX-N9-eOz" secondAttribute="centerY" id="vYU-WD-ACV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5DP-7p-Cim"/>
@@ -307,13 +305,20 @@
                                     <action selector="didTapBackButton:" destination="ZWH-WY-nfV" eventType="touchUpInside" id="baP-A6-7Wk"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9H0-nE-VKM">
+                                <rect key="frame" x="0.0" y="28" width="393" height="4"/>
+                                <color key="progressTintColor" name="YP Black (iOS)"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="A4f-Cc-7Bf"/>
                         <color key="backgroundColor" name="YP White (iOS)"/>
                         <constraints>
                             <constraint firstItem="TJo-PH-ldL" firstAttribute="leading" secondItem="A4f-Cc-7Bf" secondAttribute="leading" id="I1Z-Ek-J8g"/>
                             <constraint firstItem="PbX-R2-vSw" firstAttribute="top" secondItem="A4f-Cc-7Bf" secondAttribute="top" constant="8" id="Llk-Al-VPW"/>
+                            <constraint firstItem="9H0-nE-VKM" firstAttribute="leading" secondItem="TJo-PH-ldL" secondAttribute="leading" id="OoY-w3-ksd"/>
                             <constraint firstItem="PbX-R2-vSw" firstAttribute="leading" secondItem="A4f-Cc-7Bf" secondAttribute="leading" constant="8" id="RFG-hY-Jff"/>
+                            <constraint firstAttribute="trailing" secondItem="9H0-nE-VKM" secondAttribute="trailing" id="Woz-cg-IaT"/>
+                            <constraint firstItem="9H0-nE-VKM" firstAttribute="bottom" secondItem="PbX-R2-vSw" secondAttribute="bottom" id="X1u-y1-65Z"/>
                             <constraint firstItem="A4f-Cc-7Bf" firstAttribute="bottom" secondItem="TJo-PH-ldL" secondAttribute="bottom" id="dSB-7l-FQy"/>
                             <constraint firstItem="A4f-Cc-7Bf" firstAttribute="trailing" secondItem="TJo-PH-ldL" secondAttribute="trailing" id="hvr-bp-Okc"/>
                             <constraint firstItem="TJo-PH-ldL" firstAttribute="top" secondItem="A4f-Cc-7Bf" secondAttribute="top" id="oDn-Qi-wSi"/>
@@ -321,6 +326,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="lsy-rL-4uI"/>
                     <connections>
+                        <outlet property="progressView" destination="9H0-nE-VKM" id="FpA-rC-Uso"/>
                         <outlet property="webView" destination="TJo-PH-ldL" id="aya-85-FVS"/>
                     </connections>
                 </viewController>

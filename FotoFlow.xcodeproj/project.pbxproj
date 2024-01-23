@@ -103,10 +103,10 @@
 			isa = PBXGroup;
 			children = (
 				04088DEC2B5847F8007F9C4B /* Auth */,
-				042B16B42B377BE900BE1560 /* Font */,
 				0415CAD82B1E686900BDEFDA /* FotoFlow */,
 				0415CAEF2B1E686A00BDEFDA /* FotoFlowTests */,
 				0415CAF92B1E686A00BDEFDA /* FotoFlowUITests */,
+				042B16B42B377BE900BE1560 /* Font */,
 				0415CAD72B1E686900BDEFDA /* Products */,
 			);
 			sourceTree = "<group>";

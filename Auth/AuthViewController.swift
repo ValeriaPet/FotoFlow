@@ -10,9 +10,18 @@ import UIKit
 final class AuthViewController: UIViewController {
     
     @IBOutlet weak var logo: UIImageView!
-    
     @IBOutlet weak var openButton: UIButton!
+    private let WebViewId: String = "ShowWebView"
+
+}
+
+extension AuthViewController: WebViewViewControllerDelegate {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        
+    }
     
-    var WebViewId: String = "ShowWebView"
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
+        dismiss(animated: true)
+    }
     
 }
