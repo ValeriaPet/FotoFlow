@@ -23,9 +23,12 @@ final class WebViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        print(documentsURL)
+        
         webView.navigationDelegate = self
         
-        var urlComponents = URLComponents(string: "https://unsplash.com/login")!
+        var urlComponents = URLComponents(string: "https://unsplash.com/oauth/authorize")!
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: "6jDFSnen7ZD50h-6Hvjub-3AvzVJlIgObbHfJY1o6B8"),
             URLQueryItem(name: "redirect_uri", value: "urn:ietf:wg:oauth:2.0:oob"),
