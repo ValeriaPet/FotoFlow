@@ -13,6 +13,6 @@ struct Constants {
     static let RedirectURL = "urn:ietf:wg:oauth:2.0:oob"
     
     static let AccessScope = "public+read_user+write_likes"
-    static let DefaultBaseURL = URL(string: "https://unsplash.com/oauth/authorize")
+    static let DefaultBaseURL = URL(string: "https://api.unsplash.com")
 }
 

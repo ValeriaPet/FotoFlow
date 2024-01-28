@@ -26,7 +26,7 @@ final class OAuth2Service {
             "code": code
         ]
         
-        let url = URL(string: "https://unsplash.com/oauth/token")!
+        let url = URL(string: "https://unsplash.com/oauth/me")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -36,7 +36,7 @@ final class OAuth2Service {
             request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch {
             completion(.failure(error as NSError))
-            return
+            return 
         }
         
         let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in

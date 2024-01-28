@@ -23,9 +23,6 @@ final class WebViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        print(documentsURL)
-        
         webView.navigationDelegate = self
         
         var urlComponents = URLComponents(string: "https://unsplash.com/oauth/authorize")!
@@ -43,6 +40,7 @@ final class WebViewViewController: UIViewController {
     }
         @IBAction private func didTapBackButton(_ sender: Any) {
             delegate?.webViewViewControllerDidCancel(self)
+            dismiss(animated: true, completion: nil)
         }
         override func viewDidAppear(_ animated: Bool){
             super.viewDidAppear(animated)
@@ -94,9 +92,9 @@ extension WebViewViewController: WKNavigationDelegate {
             }
         }
     
-    private func code(from navihationAction: WKNavigationAction) -> String? {
+    private func code(from navigationAction: WKNavigationAction) -> String? {
         if
-            let url = navihationAction.request.url,
+            let url = navigationAction.request.url,
             let urlComponents = URLComponents(string: url.absoluteString),
             urlComponents.path == "/oauth/autorize/native",
             let items = urlComponents.queryItems,
@@ -108,3 +106,4 @@ extension WebViewViewController: WKNavigationDelegate {
         }
     }
 }
+
