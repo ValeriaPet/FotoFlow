@@ -22,15 +22,14 @@ final class WebViewViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         webView.navigationDelegate = self
         
         var urlComponents = URLComponents(string: "https://unsplash.com/oauth/authorize")!
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "6jDFSnen7ZD50h-6Hvjub-3AvzVJlIgObbHfJY1o6B8"),
-            URLQueryItem(name: "redirect_uri", value: "urn:ietf:wg:oauth:2.0:oob"),
+            URLQueryItem(name: "client_id", value: AccessKey),
+            URLQueryItem(name: "redirect_uri", value: RedirectURL),
             URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: "public+read_user+write_likes")]
+            URLQueryItem(name: "scope", value: AccessScope)]
         
         let url = urlComponents.url!
         let request = URLRequest(url: url)

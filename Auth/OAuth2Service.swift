@@ -26,7 +26,7 @@ final class OAuth2Service {
             "code": code
         ]
         
-        let url = URL(string: "https://unsplash.com/oauth/me")!
+        let url = URL(string: "https://unsplash.com/oauth/token")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -66,7 +66,7 @@ final class OAuth2Service {
         task.resume()
     }
     
-     struct OAuthTokenResponseBody: Codable {
+     struct OAuthTokenResponseBody: Decodable {
         
         let accessToken: String
         let tokenType: String

@@ -13,12 +13,20 @@ protocol AuthViewControllerDelegate: AnyObject {
 
 final class AuthViewController: UIViewController {
     
-    @IBOutlet weak var logo: UIImageView!
-    @IBOutlet weak var openButton: UIButton!
     private let WebViewId: String = "ShowWebView"
     
     weak var delegate: AuthViewControllerDelegate?
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == WebViewId {
+            guard
+                let webViewViewController = segue.destination as? WebViewViewController
+            else {fatalError("Failed to prepare for \(WebViewId)") }
+            webViewViewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
