@@ -200,7 +200,7 @@
         <!--Auth View Controller-->
         <scene sceneID="PdN-3O-m81">
             <objects>
-                <viewController id="2ec-y9-og6" customClass="AuthViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Auth View Controller" id="2ec-y9-og6" customClass="AuthViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TAX-N9-eOz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -352,7 +352,7 @@
         <!--SplashViewController-->
         <scene sceneID="6V5-Q6-DWr">
             <objects>
-                <viewController storyboardIdentifier="SplashViewController" id="zw8-jG-9Ll" userLabel="SplashViewController" customClass="SplashViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashViewController" id="zw8-jG-9Ll" userLabel="SplashViewController" customClass="SplashViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J6v-xY-Hbm">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

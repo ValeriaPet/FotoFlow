@@ -41,7 +41,7 @@ final class OAuth2Service {
     }
 }
 
-extension OAuth2Service {
+private extension OAuth2Service {
     private func object(
         for request: URLRequest,
         completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void
@@ -57,11 +57,11 @@ extension OAuth2Service {
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
-            + "client_id= \(AccessKey)"
-            + "client_secret=\(SecretKey)"
-            + "redirect_uri=\(RedirectURL)"
-            + "code=\(code)"
-            + "grant_type=authorization_code",
+            + "?client_id= \(AccessKey)"
+            + "&&client_secret=\(SecretKey)"
+            + "&&redirect_uri=\(RedirectURI)"
+            + "&&code=\(code)"
+            + "&&grant_type=authorization_code",
             httpMethod: "POST",
             baseURL: URL(string: "https://unsplash.com")!
         )
@@ -71,7 +71,7 @@ extension OAuth2Service {
         let accessToken: String
         let tokenType: String
         let scope: String
-        let createtAt: Int
+        let createdAt: Int
         
         enum CodingKeys: String, CodingKey {
             case accessToken = "access_token"
@@ -83,15 +83,15 @@ extension OAuth2Service {
     }
 }
 
-fileprivate let DefaultBaseUrl = URL(string: "https://api.unsplash.com")!
+fileprivate let defaultBaseURL = URL(string: "https://api.unsplash.com")!
 
 extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseURL: URL = DefaultBaseUrl
+        baseURL: URL = DefaultBaseURL
     ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
+        var request = URLRequest(url: URL(string: path, relativeTo: baseURL) ?? DefaultBaseURL)
         request.httpMethod = httpMethod
         return request
     }
@@ -117,7 +117,7 @@ extension URLSession {
                    let response = response,
                    let statusCode = (response as? HTTPURLResponse)?.statusCode
                 {
-                    if 200 ..<300 ~= statusCode {
+                    if 200 ..< 300 ~= statusCode {
                         fulfillCompletion(.success(data))
                     } else {
                         fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))

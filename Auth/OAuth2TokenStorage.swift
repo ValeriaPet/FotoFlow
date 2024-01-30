@@ -9,7 +9,9 @@ import Foundation
 
 class OAuth2TokenStorage {
     
-    private let tokenKey = "oauth2_token"
+    static let shared = OAuth2TokenStorage()
+    
+    private let tokenKey = "OAuth2BearerToken"
     
     var token: String? {
         get {
