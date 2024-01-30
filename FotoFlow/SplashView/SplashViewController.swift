@@ -11,6 +11,7 @@ final class SplashViewController: UIViewController{
     
     private let ShowAuthenticationScree = "AutenticationScreen"
     private let oauth2Service = OAuth2Service()
+  
     
     override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(animated)
@@ -27,9 +28,6 @@ final class SplashViewController: UIViewController{
         setNeedsStatusBarAppearanceUpdate()
     }
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        .lightContent
-//    }
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid")}
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
@@ -43,12 +41,12 @@ extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
-            self.fetchAuthToken(code)
+            self.fetchOAuthToken(code)
         }
     }
     
-    private func fetchAuthToken(_ code: String) {
-        oauth2Service.fetchAuthToken(code: code) { [weak self] result in
+    private func fetchOAuthToken(_ code: String) {
+        oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success:
