@@ -21,7 +21,7 @@ final class AuthViewController: UIViewController {
         if segue.identifier == WebViewId {
             guard
                 let webViewViewController = segue.destination as? WebViewViewController
-            else {fatalError("Failed to prepare for \(WebViewId)") }
+            else { fatalError("Failed to prepare for \(WebViewId)") }
             webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
@@ -30,7 +30,7 @@ final class AuthViewController: UIViewController {
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+    func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
         delegate?.authViewController(self, didAutenticateWithCode: code)
     }
     

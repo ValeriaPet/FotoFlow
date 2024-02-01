@@ -11,15 +11,16 @@ final class SplashViewController: UIViewController{
     
     private let ShowAuthenticationScreen = "AutenticationScreen"
     private let oauth2Service = OAuth2Service()
-  
+    private let oauth2TokenStorage = OAuth2TokenStorage()
+    
     
     override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(animated)
         
         if let _  = OAuth2TokenStorage().token {
-            switchToTabBarController()
-        } else {
             performSegue(withIdentifier: ShowAuthenticationScreen, sender: nil)
+        } else {
+            switchToTabBarController()
         }
     }
     
@@ -36,28 +37,7 @@ final class SplashViewController: UIViewController{
     }
 }
 
-extension SplashViewController: AuthViewControllerDelegate {
-    
-    func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String) {
-        dismiss(animated: true) { [weak self] in
-            guard let self = self else { return }
-            self.fetchOAuthToken(code)
-        }
-    }
-    
-    private func fetchOAuthToken(_ code: String) {
-        oauth2Service.fetchOAuthToken(code) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                self.switchToTabBarController()
-            case .failure:
-                // TODO [Sprint 11]
-                break
-            }
-        }
-    }
-        
+extension SplashViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ShowAuthenticationScreen {
             guard
@@ -71,3 +51,25 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
 }
 
+extension SplashViewController: AuthViewControllerDelegate {
+    
+    func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String) {
+        dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.fetchOAuthToken(code)
+        }
+    }
+    private func fetchOAuthToken(_ code: String) {
+        oauth2Service.fetchOAuthToken(code) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let token):
+                self.oauth2TokenStorage.token = token
+                self.switchToTabBarController()
+            case .failure:
+                break
+            }
+        }
+    }
+}
+ 

@@ -184,7 +184,7 @@
         <!--ProfileView-->
         <scene sceneID="fWr-rg-K5m">
             <objects>
-                <viewController storyboardIdentifier="ProfileView" title="ProfileView" id="bH8-19-2jy" customClass="ProfileViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ProfileView" id="bH8-19-2jy" customClass="ProfileViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9ja-NI-P2y">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -352,7 +352,7 @@
         <!--SplashViewController-->
         <scene sceneID="6V5-Q6-DWr">
             <objects>
-                <viewController storyboardIdentifier="SplashViewController" id="zw8-jG-9Ll" userLabel="SplashViewController" customClass="SplashViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zw8-jG-9Ll" userLabel="SplashViewController" customClass="SplashViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J6v-xY-Hbm">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -369,6 +369,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="SplashViewBar" id="edv-dM-gAd"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="393" height="852"/>
                     <connections>
                         <segue destination="Yg4-Ho-Xy4" kind="presentation" identifier="AutenticationScreen" modalPresentationStyle="fullScreen" id="O9k-Av-RW0"/>
                     </connections>
