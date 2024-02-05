@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04088DEB2B582098007F9C4B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04088DEA2B582098007F9C4B /* Constants.swift */; };
+		04088DEE2B584815007F9C4B /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04088DED2B584815007F9C4B /* AuthViewController.swift */; };
+		04088DF02B584829007F9C4B /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04088DEF2B584829007F9C4B /* WebViewViewController.swift */; };
 		0415CADA2B1E686900BDEFDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CAD92B1E686900BDEFDA /* AppDelegate.swift */; };
 		0415CADC2B1E686900BDEFDA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CADB2B1E686900BDEFDA /* SceneDelegate.swift */; };
 		0415CADE2B1E686900BDEFDA /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CADD2B1E686900BDEFDA /* ImagesListViewController.swift */; };
@@ -16,7 +19,12 @@
 		0415CAF12B1E686A00BDEFDA /* FotoFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CAF02B1E686A00BDEFDA /* FotoFlowTests.swift */; };
 		0415CAFB2B1E686A00BDEFDA /* FotoFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CAFA2B1E686A00BDEFDA /* FotoFlowUITests.swift */; };
 		0415CAFD2B1E686A00BDEFDA /* FotoFlowUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CAFC2B1E686A00BDEFDA /* FotoFlowUITestsLaunchTests.swift */; };
+		042B16B32B377BCE00BE1560 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B16B22B377BCE00BE1560 /* ProfileViewController.swift */; };
 		0479F24E2B31E16A0089AA16 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479F24D2B31E16A0089AA16 /* ImagesListCell.swift */; };
+		04C50D6A2B38E08B00B65A4D /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C50D692B38E08A00B65A4D /* SingleImageViewController.swift */; };
+		04E51B4A2B62D489000A65E2 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E51B492B62D489000A65E2 /* OAuth2Service.swift */; };
+		04E51B4C2B62DF79000A65E2 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E51B4B2B62DF79000A65E2 /* OAuth2TokenStorage.swift */; };
+		04E687182B66B5BB00D8FED0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E687172B66B5BB00D8FED0 /* SplashViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04088DEA2B582098007F9C4B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		04088DED2B584815007F9C4B /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		04088DEF2B584829007F9C4B /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		0415CAD62B1E686900BDEFDA /* FotoFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FotoFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0415CAD92B1E686900BDEFDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0415CADB2B1E686900BDEFDA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,7 +61,14 @@
 		0415CAF62B1E686A00BDEFDA /* FotoFlowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FotoFlowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0415CAFA2B1E686A00BDEFDA /* FotoFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoFlowUITests.swift; sourceTree = "<group>"; };
 		0415CAFC2B1E686A00BDEFDA /* FotoFlowUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoFlowUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		042B16B22B377BCE00BE1560 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		042B16B52B377BE900BE1560 /* SFProDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Regular.ttf"; sourceTree = "<group>"; };
+		042B16B62B377BE900BE1560 /* SFProDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Bold.ttf"; sourceTree = "<group>"; };
 		0479F24D2B31E16A0089AA16 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		04C50D692B38E08A00B65A4D /* SingleImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		04E51B492B62D489000A65E2 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
+		04E51B4B2B62DF79000A65E2 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
+		04E687172B66B5BB00D8FED0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,12 +96,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04088DEC2B5847F8007F9C4B /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				04088DED2B584815007F9C4B /* AuthViewController.swift */,
+				04088DEF2B584829007F9C4B /* WebViewViewController.swift */,
+				04E51B492B62D489000A65E2 /* OAuth2Service.swift */,
+				04E51B4B2B62DF79000A65E2 /* OAuth2TokenStorage.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		0415CACD2B1E686900BDEFDA = {
 			isa = PBXGroup;
 			children = (
+				04088DEC2B5847F8007F9C4B /* Auth */,
 				0415CAD82B1E686900BDEFDA /* FotoFlow */,
 				0415CAEF2B1E686A00BDEFDA /* FotoFlowTests */,
 				0415CAF92B1E686A00BDEFDA /* FotoFlowUITests */,
+				042B16B42B377BE900BE1560 /* Font */,
 				0415CAD72B1E686900BDEFDA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,7 +132,11 @@
 		0415CAD82B1E686900BDEFDA /* FotoFlow */ = {
 			isa = PBXGroup;
 			children = (
+				04E687162B66B59400D8FED0 /* SplashView */,
+				04C50D682B38E08A00B65A4D /* SingleImageView */,
+				042B16B12B377BCE00BE1560 /* Profile */,
 				0479F24F2B31E1850089AA16 /* ImagesList */,
+				04088DEA2B582098007F9C4B /* Constants.swift */,
 				0415CAD92B1E686900BDEFDA /* AppDelegate.swift */,
 				0415CADB2B1E686900BDEFDA /* SceneDelegate.swift */,
 				0415CADF2B1E686900BDEFDA /* Main.storyboard */,
@@ -129,6 +164,23 @@
 			path = FotoFlowUITests;
 			sourceTree = "<group>";
 		};
+		042B16B12B377BCE00BE1560 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				042B16B22B377BCE00BE1560 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		042B16B42B377BE900BE1560 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				042B16B52B377BE900BE1560 /* SFProDisplay-Regular.ttf */,
+				042B16B62B377BE900BE1560 /* SFProDisplay-Bold.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		0479F24F2B31E1850089AA16 /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +188,22 @@
 				0415CADD2B1E686900BDEFDA /* ImagesListViewController.swift */,
 			);
 			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		04C50D682B38E08A00B65A4D /* SingleImageView */ = {
+			isa = PBXGroup;
+			children = (
+				04C50D692B38E08A00B65A4D /* SingleImageViewController.swift */,
+			);
+			path = SingleImageView;
+			sourceTree = "<group>";
+		};
+		04E687162B66B59400D8FED0 /* SplashView */ = {
+			isa = PBXGroup;
+			children = (
+				04E687172B66B5BB00D8FED0 /* SplashViewController.swift */,
+			);
+			path = SplashView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,9 +337,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E51B4C2B62DF79000A65E2 /* OAuth2TokenStorage.swift in Sources */,
 				0415CADE2B1E686900BDEFDA /* ImagesListViewController.swift in Sources */,
 				0479F24E2B31E16A0089AA16 /* ImagesListCell.swift in Sources */,
+				04E687182B66B5BB00D8FED0 /* SplashViewController.swift in Sources */,
+				042B16B32B377BCE00BE1560 /* ProfileViewController.swift in Sources */,
 				0415CADA2B1E686900BDEFDA /* AppDelegate.swift in Sources */,
+				04E51B4A2B62D489000A65E2 /* OAuth2Service.swift in Sources */,
+				04088DEE2B584815007F9C4B /* AuthViewController.swift in Sources */,
+				04088DEB2B582098007F9C4B /* Constants.swift in Sources */,
+				04C50D6A2B38E08B00B65A4D /* SingleImageViewController.swift in Sources */,
+				04088DF02B584829007F9C4B /* WebViewViewController.swift in Sources */,
 				0415CADC2B1E686900BDEFDA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -452,6 +528,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3U6WQZ9PG7;
@@ -460,6 +537,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -483,6 +561,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3U6WQZ9PG7;
@@ -491,6 +570,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

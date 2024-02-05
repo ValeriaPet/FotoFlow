@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Vector.png",
+      "filename" : "No Active.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "splash_screen_logo@2x.png",
+      "filename" : "like_button_off@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "splash_screen_logo@3x.png",
+      "filename" : "like_button_off@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
