@@ -32,10 +32,7 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
         delegate?.authViewController(self, didAutenticateWithCode: code)
-        
-//        let vc = WebViewViewController()
-//        vc.modalPresentationStyle = .overFullScreen
-//        present(vc, animated: true)
+
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {

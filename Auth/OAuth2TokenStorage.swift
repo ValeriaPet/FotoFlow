@@ -9,8 +9,8 @@ import Foundation
 
 final class OAuth2TokenStorage {
     
-//    static let shared = OAuth2TokenStorage()
-//    private let tokenKey = "OAuth2BearerToken"
+    //    static let shared = OAuth2TokenStorage()
+    //    private let tokenKey = "OAuth2BearerToken"
     
     private let userDefaults = UserDefaults.standard
     
