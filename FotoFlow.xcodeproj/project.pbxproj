@@ -20,6 +20,7 @@
 		0415CAFB2B1E686A00BDEFDA /* FotoFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CAFA2B1E686A00BDEFDA /* FotoFlowUITests.swift */; };
 		0415CAFD2B1E686A00BDEFDA /* FotoFlowUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CAFC2B1E686A00BDEFDA /* FotoFlowUITestsLaunchTests.swift */; };
 		042B16B32B377BCE00BE1560 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B16B22B377BCE00BE1560 /* ProfileViewController.swift */; };
+		043F8B522BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F8B512BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift */; };
 		0477938B2B768D730039AA9A /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 0477938A2B768D730039AA9A /* ProgressHUD */; };
 		0479F24E2B31E16A0089AA16 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0479F24D2B31E16A0089AA16 /* ImagesListCell.swift */; };
 		04C50D6A2B38E08B00B65A4D /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C50D692B38E08A00B65A4D /* SingleImageViewController.swift */; };
@@ -65,6 +66,7 @@
 		042B16B22B377BCE00BE1560 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		042B16B52B377BE900BE1560 /* SFProDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Regular.ttf"; sourceTree = "<group>"; };
 		042B16B62B377BE900BE1560 /* SFProDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Bold.ttf"; sourceTree = "<group>"; };
+		043F8B512BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		0479F24D2B31E16A0089AA16 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		04C50D692B38E08A00B65A4D /* SingleImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		04E51B492B62D489000A65E2 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		0415CACD2B1E686900BDEFDA = {
 			isa = PBXGroup;
 			children = (
+				043F8B512BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift */,
 				04088DEC2B5847F8007F9C4B /* Auth */,
 				0415CAD82B1E686900BDEFDA /* FotoFlow */,
 				0415CAEF2B1E686A00BDEFDA /* FotoFlowTests */,
@@ -351,6 +354,7 @@
 				04E687182B66B5BB00D8FED0 /* SplashViewController.swift in Sources */,
 				042B16B32B377BCE00BE1560 /* ProfileViewController.swift in Sources */,
 				0415CADA2B1E686900BDEFDA /* AppDelegate.swift in Sources */,
+				043F8B522BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift in Sources */,
 				04E51B4A2B62D489000A65E2 /* OAuth2Service.swift in Sources */,
 				04088DEE2B584815007F9C4B /* AuthViewController.swift in Sources */,
 				04088DEB2B582098007F9C4B /* Constants.swift in Sources */,
