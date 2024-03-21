@@ -9,10 +9,13 @@ import Foundation
 
 enum AuthServiceError: Error {
     case invalidRequest
+    case decodingError
+    case serverError(String)
 }
+
 final class OAuth2Service {
     
-    static let shared = OAuth2Service()
+    
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
@@ -28,32 +31,50 @@ final class OAuth2Service {
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
-        if let lastCode = lastCode, lastCode != code {
+        
+        if let lastCode = lastCode, task != nil {
+            if lastCode == code {
+                completion(.failure(AuthServiceError.invalidRequest))
+                return
+            }
             task?.cancel()
-            task = nil // Important to reset the task here
         }
         
-        // If a task is already in progress with the same code, reject the new request
-        if task != nil && lastCode == code {
-            completion(.failure(AuthServiceError.invalidRequest))
-            return
-        }
-        
-        self.lastCode = code
+        lastCode = code
         guard let request = authTokenRequest(code: code) else {
             completion(.failure(AuthServiceError.invalidRequest))
             return
         }
         
-        let task = urlSession.dataTask(with: request) { [weak self] data, response, error in
+        task = urlSession.dataTask(with: request) { [weak self] data, response, error in
             DispatchQueue.main.async {
-                // TODO: разбора ответа, из 10 спринта
-                self?.task = nil
-                self?.lastCode = nil
+                guard let self = self else { return }
+                
+                self.task = nil
+                self.lastCode = nil
+                
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(.failure(AuthServiceError.serverError("No data received")))
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let responseBody = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                    self.authToken = responseBody.accessToken
+                    completion(.success(responseBody.accessToken))
+                } catch {
+                    completion(.failure(AuthServiceError.decodingError))
+                }
             }
         }
-        self.task = task
-        task.resume()
+        
+        task?.resume()
     }
     
     private func object(for request: URLRequest, completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
@@ -67,31 +88,40 @@ final class OAuth2Service {
     }
     
     private func authTokenRequest(code: String) -> URLRequest? {
-        guard let url = URL(string: "...\(code)") else {
+        // Определяем параметры для запроса
+        let params = "?client_id=\(AccessKey)" +
+        "&client_secret=\(SecretKey)" +
+        "&redirect_uri=\(RedirectURI)" +
+        "&code=\(code)" +
+        "&grant_type=authorization_code"
+        
+        // Формируем полный URL с параметрами
+        guard let url = URL(string: "https://unsplash.com/oauth/token" + params) else {
             assertionFailure("Failed to create URL")
             return nil
         }
+        
+        // Создаем запрос
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         return request
     }
-}
-
-private struct OAuthTokenResponseBody: Decodable {
-    let accessToken: String
-    let tokenType: String
-    let scope: String
-    let createdAt: Int
     
-    enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-        case tokenType = "token_type"
-        case scope
-        case createdAt = "created_at"
+    private struct OAuthTokenResponseBody: Decodable {
+        let accessToken: String
+        let tokenType: String
+        let scope: String
+        let createdAt: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case accessToken = "access_token"
+            case tokenType = "token_type"
+            case scope
+            case createdAt = "created_at"
+        }
+        let url = URL(string: "https://api.unsplash.com/oauth/token")!
     }
-    let url = URL(string: "https://api.unsplash.com/oauth/token")!
 }
-
 
 //fileprivate let defaultBaseURL = URL(string: "https://api.unsplash.com")!
 
@@ -103,6 +133,10 @@ extension URLRequest {
     ) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL) ?? DefaultBaseURL)
         request.httpMethod = httpMethod
+        
+        if let token = OAuth2TokenStorage.shared.authToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         return request
     }
 }

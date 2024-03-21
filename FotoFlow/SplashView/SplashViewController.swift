@@ -13,6 +13,7 @@ final class SplashViewController: UIViewController{
     private let ShowAuthenticationScreen = "AutenticationScreen"
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let profileService = ProfileService()
     
     
     override func viewDidAppear(_ animated: Bool){
@@ -71,6 +72,35 @@ extension SplashViewController: AuthViewControllerDelegate {
                 UIBlockingProgressHUD.dismiss()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
+                break
+            }
+        }
+    }
+}
+
+extension SplashViewController {
+    func didAuthenticate(_ vc: AuthViewController) {
+        vc.dismiss(animated: true)
+       
+        guard let token = oauth2TokenStorage.token else {
+            return
+        }
+        fetchProfile(token)
+    }
+
+    private func fetchProfile(_ token: String) {
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile(token) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+
+            guard let self = self else { return }
+
+            switch result {
+            case .success:
+               self.switchToTabBarController()
+
+            case .failure:
+                // TODO [Sprint 11] Покажите ошибку получения профиля
                 break
             }
         }

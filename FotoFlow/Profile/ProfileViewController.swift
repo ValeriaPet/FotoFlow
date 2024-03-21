@@ -9,9 +9,16 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
+    let photo = UIImageView()
+       let name = UILabel()
+       let nick = UILabel()
+       let greet = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        loadProfileData()
+        
         let photo = UIImageView()
         let image = UIImage(named: "photo.user")
         let imageSize = CGSize(width: 70, height: 70)
@@ -29,8 +36,8 @@ final class ProfileViewController: UIViewController {
             photo.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
         
-        let name = UILabel()
-        name.text = "Екатерина Новикова"
+//        let name = UILabel()
+//        name.text = ""
         name.textColor = .ypWhiteIOS
         name.font = .boldSystemFont(ofSize: 23)
         
@@ -44,8 +51,8 @@ final class ProfileViewController: UIViewController {
             name.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
         
-        let nick = UILabel()
-        nick.text = "@ekaterina_nov"
+//        let nick = UILabel()
+//        nick.text = ""
         nick.textColor = .ypGrayIOS
         nick.font = .systemFont(ofSize: 13)
         
@@ -59,8 +66,8 @@ final class ProfileViewController: UIViewController {
             nick.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
         
-        let greet = UILabel()
-        greet.text = "Hello!"
+//        let greet = UILabel()
+//        greet.text = ""
         greet.textColor = .ypWhiteIOS
         greet.font = .systemFont(ofSize: 13)
         
@@ -68,7 +75,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(greet)
         
         NSLayoutConstraint.activate([
-            greet.widthAnchor.constraint(equalToConstant: 77),
+            greet.widthAnchor.constraint(equalToConstant: 300),
             greet.heightAnchor.constraint(equalToConstant: 18),
             greet.topAnchor.constraint(equalTo: nick.bottomAnchor, constant: 8),
             greet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
@@ -87,8 +94,24 @@ final class ProfileViewController: UIViewController {
             exitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             exitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 65),
             exitButton.centerYAnchor.constraint(equalTo: photo.centerYAnchor)
-            ])
+        ])
+        
+    }
     
+    func loadProfileData() {
+       
+    let userToken = "access_token"
+    ProfileService.shared.fetchProfile(userToken) { [weak self] result in
+    DispatchQueue.main.async {
+        switch result {
+        case .success(let profile):
+            self?.name.text = profile.name
+            self?.nick.text = profile.loginName // Измените на соответствующее свойств
+            self?.greet.text = profile.bio // Или используйте другое свойство для приветствия
+        case .failure(let error):
+        print(error.localizedDescription)
+                }
+            }
+        }
     }
 }
-    
