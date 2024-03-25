@@ -14,6 +14,7 @@ final class SplashViewController: UIViewController{
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService()
+    private let profileImageService = ProfileImageService()
     
     
     override func viewDidAppear(_ animated: Bool){
@@ -38,6 +39,14 @@ final class SplashViewController: UIViewController{
         window.rootViewController = tabBarController
     }
 }
+
+private func switchToTabBarController() {
+    guard let window = UIApplication.shared.windows.first else { fatalError("Invalid")}
+    let tabBarController = UIStoryboard(name: "Main", bundle: .main)
+        .instantiateViewController(withIdentifier: "TabBarViewController")
+    window.rootViewController = tabBarController
+}
+
 
 extension SplashViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -86,24 +95,37 @@ extension SplashViewController {
             return
         }
         fetchProfile(token)
+        fetchProfileImageURL("username")
     }
 
     private func fetchProfile(_ token: String) {
         UIBlockingProgressHUD.show()
         profileService.fetchProfile(token) { [weak self] result in
+            
             UIBlockingProgressHUD.dismiss()
-
+            
             guard let self = self else { return }
-
+            
             switch result {
             case .success:
-               self.switchToTabBarController()
-
+                self.switchToTabBarController()
+                
             case .failure:
-                // TODO [Sprint 11] Покажите ошибку получения профиля
+                
+                let alertController = UIAlertController(title: "Ошибка", message: "Не удалось загрузить профиль. Пожалуйста, попробуйте еще раз позже.", preferredStyle: .alert)
+                let actionOk = UIAlertAction(title: "OK", style: .default)
+                
+                alertController.addAction(actionOk)
+                
                 break
             }
         }
     }
-}
+        func fetchProfileImageURL(_ username: String) {
+            UIBlockingProgressHUD.show()
+            ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in }
+            UIBlockingProgressHUD.dismiss()
+        }
+    }
+
 

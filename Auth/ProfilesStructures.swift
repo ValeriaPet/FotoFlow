@@ -12,14 +12,14 @@ struct ProfileResult: Codable {
     let firstName: String?
     let lastName: String?
     let bio: String?
-    //        let profileImage: ProfileImage?
+    let profileImage: ProfileImage?
     
     private enum CodingKeys: String, CodingKey {
         case userLogin = "username"
         case firstName = "first_name"
         case lastName = "last_name"
         case bio
-        //case profileImage = "profile_image"
+        case profileImage = "profile_image"
     }
 }
     
@@ -31,11 +31,11 @@ struct ProfileResult: Codable {
         
     }
     
-    //    struct ProfileImage: Codable {
-    //        let small: String?
-    //        let medium: String?
-    //        let large: String?
-    //    }
+        struct ProfileImage: Codable {
+            let small: String?
+            let medium: String?
+            let large: String?
+        }
     
     extension Profile {
         init(result profile: ProfileResult) {
@@ -47,4 +47,13 @@ struct ProfileResult: Codable {
                 )
         }
     }
+extension ProfileImage {
+    init(result profile: ProfileResult) {
+        self.init (
+            small: profile.profileImage?.small,
+            medium: profile.profileImage?.medium,
+            large: profile.profileImage?.large
+        )
+    }
+}
 
