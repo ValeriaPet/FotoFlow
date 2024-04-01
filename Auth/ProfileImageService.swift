@@ -10,6 +10,7 @@ import Foundation
 final class ProfileImageService {
     
     static let shared = ProfileImageService()
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     private (set) var avatarURL: String?
     private var profile: ProfileImage?
     private let urlSession = URLSession.shared
@@ -17,9 +18,16 @@ final class ProfileImageService {
     private var task: URLSessionTask?
     
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<ProfileImage, Error>) -> Void) {
-        guard let request = makeFetchProfileImageRequest(token: username) else {
+        guard let request = makeFetchProfileImageRequest(userLogin: username) else {
             assertionFailure("Invalid request")
             completion(.failure(AuthServiceError.invalidRequest))
+            
+            NotificationCenter.default
+                .post(
+                    name: ProfileImageService.didChangeNotification,
+                    object: self, 
+                    userInfo: ["URL" : profileImageURL]
+                    )
             return
         }
         
@@ -57,14 +65,12 @@ final class ProfileImageService {
             return task
         }
         
-        
-    }
-    
-    func makeFetchProfileImageRequest(token: String) -> URLRequest? {
-        URLRequest.makeHTTPRequest(
-            path: "/users/:username",
-            httpMethod: "GET",
-            baseURL: DefaultBaseURL
-        )
+        func makeFetchProfileImageRequest(userLogin: String) -> URLRequest? {
+            URLRequest.makeHTTPRequest(
+                path: "/users/\(username)",
+                httpMethod: "GET",
+                baseURL: profileImageURL
+            )
+        }
     }
 }

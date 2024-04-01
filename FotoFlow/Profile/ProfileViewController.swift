@@ -14,18 +14,24 @@ final class ProfileViewController: UIViewController {
     let nick = UILabel()
     let greet = UILabel()
     
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self ] _ in
+                guard let self = self else {return}
+                self.updateAvatar()
+            }
+        updateAvatar()
         loadProfileData()
-        loadProfileImage()
         
-        //        let photo = UIImageView()
-        //        let image = UIImage(named: "photo.user")
         let imageSize = CGSize(width: 70, height: 70)
-        //
-        //        photo.image = image
-        //
         
         photo.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(photo)
@@ -115,18 +121,10 @@ final class ProfileViewController: UIViewController {
             }
         }
     }
-    
-    func loadProfileImage() {
-        let userToken = "access_token"
-        ProfileImageService.shared.fetchProfileImageURL(username: username) {_ in}
-            DispatchQueue.main.async {
-                switch username {
-                case .success(let profile):
-                    self?.photo.image = profile.profileImage
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else {return}
     }
-
+}
