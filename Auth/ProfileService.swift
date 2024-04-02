@@ -22,7 +22,8 @@ final class ProfileService {
             return
         }
         
-        task = fetch(request: request) { [weak self] response in
+        let session = URLSession.shared
+        task = session.objectTask(for: request) { [weak self] (response: Result<ProfileResult, Error>) in
             self?.task = nil
             switch response {
             case .success(let profileResult):
@@ -32,37 +33,15 @@ final class ProfileService {
                 completion(.failure(error))
             }
         }
-        
-        func fetch(request: URLRequest, completion: @escaping(Result<ProfileResult, Error>)->Void) -> URLSessionTask {
-            let task = urlSession.dataTask(with: request) { data, response, error in
-                DispatchQueue.main.async {
-                    guard let data = data, error == nil,
-                          let response = response as? HTTPURLResponse,
-                          200 ..< 300 ~= response.statusCode else {
-                        completion(.failure(NetworkError.urlSessionError))
-                        return
-                    }
-                    
-                    do {
-                        let decoder = JSONDecoder()
-                        let result = try decoder.decode(ProfileResult.self, from: data)
-                        completion(.success(result))
-                    } catch {
-                        completion(.failure(NetworkError.urlRequestError(error)))
-                    }
-                }
-            }
-            task.resume()
-            return task
-        }
-        
-        func makeFetchProfileRequest(token: String) -> URLRequest? {
-            URLRequest.makeHTTPRequest(
-                path: "/me",
-                httpMethod: "GET",
-                baseURL: DefaultBaseURL
-            )
-        }
+    }
+    
+    func makeFetchProfileRequest(token: String) -> URLRequest? {
+        URLRequest.makeHTTPRequest(
+            path: "/me",
+            httpMethod: "GET",
+            baseURL: DefaultBaseURL
+        )
     }
 }
+
 

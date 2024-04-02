@@ -12,11 +12,13 @@ enum AuthServiceError: Error {
     case decodingError
     case serverError(String)
 }
+enum NetworkError: Error {
+    case httpStatusCode(Int)
+    case urlRequestError(Error)
+    case urlSessionError
+}
 
 final class OAuth2Service {
-    
-    
-    private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
     private var lastCode: String?
@@ -30,60 +32,26 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        assert(Thread.isMainThread)
         
-        if let lastCode = lastCode, task != nil {
-            if lastCode == code {
-                completion(.failure(AuthServiceError.invalidRequest))
-                return
-            }
-            task?.cancel()
-        }
-        
-        lastCode = code
-        guard let request = authTokenRequest(code: code) else {
-            completion(.failure(AuthServiceError.invalidRequest))
+        guard code != lastCode, task != nil else {
             return
         }
-        
-        task = urlSession.dataTask(with: request) { [weak self] data, response, error in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                
-                self.task = nil
-                self.lastCode = nil
-                
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                
-                guard let data = data else {
-                    completion(.failure(AuthServiceError.serverError("No data received")))
-                    return
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let responseBody = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    self.authToken = responseBody.accessToken
-                    completion(.success(responseBody.accessToken))
-                } catch {
-                    completion(.failure(AuthServiceError.decodingError))
-                }
-            }
+        lastCode = code
+        guard let request = authTokenRequest(code: code) else {
+            assertionFailure("Invalid")
+            completion(.failure(NetworkError.urlSessionError))
+            return
         }
-        
-        task?.resume()
-    }
-    
-    private func object(for request: URLRequest, completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let responce = result.flatMap {data -> Result<OAuthTokenResponseBody, Error> in
-                Result { try decoder.decode(OAuthTokenResponseBody.self, from: data) }
+        let session = URLSession.shared
+        task = session.objectTask(for: request) { [weak self] (response: Result<OAuthTokenResponseBody, Error>) in
+            self?.task = nil
+            switch response {
+            case .success(let body):
+                let authToken = body.accessToken
+                completion(.success(authToken))
+            case .failure(let error):
+                completion(.failure(error))
             }
-            completion(responce)
         }
     }
     
@@ -123,8 +91,6 @@ final class OAuth2Service {
     }
 }
 
-//fileprivate let defaultBaseURL = URL(string: "https://api.unsplash.com")!
-
 extension URLRequest {
     static func makeHTTPRequest(
         path: String,
@@ -141,38 +107,3 @@ extension URLRequest {
     }
 }
 
-enum NetworkError: Error {
-    case httpStatusCode(Int)
-    case urlRequestError(Error)
-    case urlSessionError
-}
-
-extension URLSession {
-    func data(
-        for request: URLRequest,
-        completion: @escaping(Result<Data, Error>)->Void)->URLSessionTask {
-            let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            }
-            let task = dataTask(with: request, completionHandler: { data, response, error in
-                if let data = data,
-                   let response = response,
-                   let statusCode = (response as? HTTPURLResponse)?.statusCode
-                {
-                    if 200 ..< 300 ~= statusCode {
-                        fulfillCompletion(.success(data))
-                    } else {
-                        fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
-                    }
-                } else if let error = error {
-                    fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
-                } else {
-                    fulfillCompletion(.failure(NetworkError.urlSessionError))
-                }
-            })
-            task.resume()
-            return task
-        }
-}
