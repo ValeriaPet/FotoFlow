@@ -30,7 +30,6 @@ struct ProfileResult: Codable {
         let bio: String?
         
     }
-    
         struct ProfileImage: Codable {
             let small: String?
             let medium: String?

@@ -32,6 +32,22 @@ final class SplashViewController: UIViewController{
         setNeedsStatusBarAppearanceUpdate()
     }
     
+    private func checkAuthStatus() {
+        if oauth2Service.isAuthenticated{
+            switchToTabBarController()
+        } else {
+            showAuthController()
+        }
+    }
+    
+    private func showAuthController() {
+        let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AuthViewControllerID")
+        guard let authViewController = viewController as? AuthViewController else {return}
+        authViewController.delegate = self
+        authViewController.modalPresentationStyle = .fullScreen
+        present(authViewController, animated: true)
+    }
+    
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid")}
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
@@ -39,14 +55,6 @@ final class SplashViewController: UIViewController{
         window.rootViewController = tabBarController
     }
 }
-
-private func switchToTabBarController() {
-    guard let window = UIApplication.shared.windows.first else { fatalError("Invalid")}
-    let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-        .instantiateViewController(withIdentifier: "TabBarViewController")
-    window.rootViewController = tabBarController
-}
-
 
 extension SplashViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -71,6 +79,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             self.fetchOAuthToken(code)
         }
     }
+    
     private func fetchOAuthToken(_ code: String) {
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else { return }
@@ -84,6 +93,16 @@ extension SplashViewController: AuthViewControllerDelegate {
                 break
             }
         }
+    }
+    
+    private func presentAuth() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let viewController = storyboard.instantiateViewController(identifier: "AuthViewControllerID")
+        guard let authViewController = viewController as? AuthViewController
+        else {return}
+        authViewController.delegate = self
+        authViewController.modalPresentationStyle = .fullScreen
+        present(authViewController, animated: true)
     }
 }
 

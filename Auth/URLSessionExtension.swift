@@ -19,7 +19,8 @@ extension URLSession {
                 completion(result)
             }
         }
-        let task = dataTask(with: request, completionHandler: { data, response, error in
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
             if let data = data,
                let response = response,
                let statusCode = (response as? HTTPURLResponse)?.statusCode
@@ -30,7 +31,6 @@ extension URLSession {
                         let result = try decoder.decode(T.self, from: data)
                         fulfillCompletion(.success(result))
                     } catch {
-                        print("Ошибка декодирования: \(error.localizedDescription), Данные: \(String(data: data, encoding: .utf8) ?? "")")
                         fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
                         
                     }
@@ -46,6 +46,22 @@ extension URLSession {
         })
         task.resume()
         return task
+    }
+}
+
+extension URLRequest {
+    static func makeHTTPRequest(
+        path: String,
+        httpMethod: String,
+        baseURL: URL = DefaultApiURL
+    ) -> URLRequest {
+        var request = URLRequest(url: URL(string: path, relativeTo: baseURL) ?? DefaultApiURL)
+        request.httpMethod = httpMethod
+        
+        if let token = OAuth2TokenStorage.shared.authToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        return request
     }
 }
 

@@ -22,6 +22,7 @@ final class OAuth2Service {
     
     private var task: URLSessionTask?
     private var lastCode: String?
+    private var oauth2TokenStorage = OAuth2TokenStorage()
     
     private (set) var authToken: String? {
         get {
@@ -29,6 +30,10 @@ final class OAuth2Service {
         } set {
             OAuth2TokenStorage().token = newValue
         }
+    }
+    
+    var isAuthenticated: Bool {
+        oauth2TokenStorage.token != nil
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -39,11 +44,11 @@ final class OAuth2Service {
         lastCode = code
         guard let request = authTokenRequest(code: code) else {
             assertionFailure("Invalid")
-            completion(.failure(NetworkError.urlSessionError))
+            completion(.failure(AuthServiceError.invalidRequest))
             return
         }
-        let session = URLSession.shared
-        task = session.objectTask(for: request) { [weak self] (response: Result<OAuthTokenResponseBody, Error>) in
+        
+        task =  URLSession.shared.objectTask(for: request) { [weak self] (response: Result<OAuthTokenResponseBody, Error>) in
             self?.task = nil
             switch response {
             case .success(let body):
@@ -91,19 +96,4 @@ final class OAuth2Service {
     }
 }
 
-extension URLRequest {
-    static func makeHTTPRequest(
-        path: String,
-        httpMethod: String,
-        baseURL: URL = DefaultBaseURL
-    ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL) ?? DefaultBaseURL)
-        request.httpMethod = httpMethod
-        
-        if let token = OAuth2TokenStorage.shared.authToken {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
-        return request
-    }
-}
 

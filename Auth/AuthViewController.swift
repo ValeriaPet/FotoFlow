@@ -36,7 +36,7 @@ extension AuthViewController: WebViewViewControllerDelegate {
 //        print("Сетевая ошибка обнаружена")
 //        networkError()
 //    }
-//    
+//
 //    func networkError() {
 //        let alertController = UIAlertController(title: "Что-то пошло не так(", message: "Не удалось войти в систему", preferredStyle: .alert)
 //        let okAction = UIAlertAction(title: "ОК", style: .default) { (action) in

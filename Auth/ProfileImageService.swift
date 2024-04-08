@@ -25,7 +25,7 @@ final class ProfileImageService {
             NotificationCenter.default
                 .post(
                     name: ProfileImageService.didChangeNotification,
-                    object: self, 
+                    object: self,
                     userInfo: ["URL" : profileImageURL]
                     )
             return
