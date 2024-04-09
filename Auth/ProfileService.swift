@@ -18,7 +18,7 @@ final class ProfileService {
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void){
         guard let request = makeFetchProfileRequest(token: token) else {
             assertionFailure("Invalid request")
-            completion(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(NetworkError.invalidRequest))
             return
         }
         

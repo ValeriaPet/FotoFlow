@@ -31,17 +31,17 @@ extension URLSession {
                         let result = try decoder.decode(T.self, from: data)
                         fulfillCompletion(.success(result))
                     } catch {
-                        fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
+                        fulfillCompletion(.failure(AuthServiceError.urlRequestError(error)))
                         
                     }
                 } else {
-                    fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
+                    fulfillCompletion(.failure(AuthServiceError.httpStatusCode(statusCode)))
                 }
             } else if let error = error {
                 
-                fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
+                fulfillCompletion(.failure(AuthServiceError.urlRequestError(error)))
             } else {
-                fulfillCompletion(.failure(NetworkError.urlSessionError))
+                fulfillCompletion(.failure(AuthServiceError.urlSessionError))
             }
         })
         task.resume()

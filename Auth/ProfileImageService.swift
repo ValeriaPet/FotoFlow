@@ -20,7 +20,7 @@ final class ProfileImageService {
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<ProfileImage, Error>) -> Void) {
         guard let request = makeFetchProfileImageRequest(userLogin: username) else {
             assertionFailure("Invalid request")
-            completion(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(NetworkError.invalidRequest))
             
             NotificationCenter.default
                 .post(

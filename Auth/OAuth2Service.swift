@@ -7,12 +7,12 @@
 
 import Foundation
 
-enum AuthServiceError: Error {
+enum NetworkError: Error {
     case invalidRequest
     case decodingError
     case serverError(String)
 }
-enum NetworkError: Error {
+enum AuthServiceError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
@@ -38,13 +38,13 @@ final class OAuth2Service {
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
         
-        guard code != lastCode, task != nil else {
+        guard !(code == lastCode && task != nil) else {
             return
         }
         lastCode = code
         guard let request = authTokenRequest(code: code) else {
             assertionFailure("Invalid")
-            completion(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(NetworkError.invalidRequest))
             return
         }
         
