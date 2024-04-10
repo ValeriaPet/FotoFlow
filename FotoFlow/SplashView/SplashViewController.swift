@@ -36,6 +36,7 @@ final class SplashViewController: UIViewController{
         } else {
                 showAuthController()
             }
+        UIBlockingProgressHUD.dismiss()
         }
     
     
@@ -61,6 +62,7 @@ final class SplashViewController: UIViewController{
            
             switch result {
             case .success(let token):
+                self?.oauth2TokenStorage.token = token
                 self?.fetchProfile(token)
                 UIBlockingProgressHUD.dismiss()
             case .failure(let error):
