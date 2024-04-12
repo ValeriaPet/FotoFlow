@@ -88,12 +88,12 @@ final class SplashViewController: UIViewController{
         }
     }
     
-    func fetchProfileImageURL(_ username: String) {
-        UIBlockingProgressHUD.show()
-        ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in }
-        UIBlockingProgressHUD.dismiss()
-    }
-    
+//    func fetchProfileImageURL(_ username: String) {
+//        UIBlockingProgressHUD.show()
+//        profileImageService.fetchProfileImageURL(username: username) { _ in }
+//        UIBlockingProgressHUD.dismiss()
+//    }
+//    
     private func showLoginAlert(error: Error) {
         DispatchQueue.main.async { [weak self] in
             self?.alertPresenter.showAlert(title: "Что-то пошло не так :(", message: "Не удалось войти в систему,\(error.localizedDescription)") {

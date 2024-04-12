@@ -10,7 +10,7 @@ import Foundation
 final class ProfileService {
     
     static let shared = ProfileService()
-    private var profile: Profile?
+     var profile: Profile?
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
@@ -28,6 +28,7 @@ final class ProfileService {
             switch response {
             case .success(let profileResult):
                 let profile = Profile(result: profileResult)
+                self?.profile = profile
                 completion(.success(profile))
             case .failure(let error):
                 completion(.failure(error))
@@ -39,8 +40,7 @@ final class ProfileService {
         URLRequest.makeHTTPRequest(
             path: "/me",
             httpMethod: "GET",
-            baseURL: DefaultApiURL
-        )
+            baseURL: DefaultBaseURL)
     }
 }
 

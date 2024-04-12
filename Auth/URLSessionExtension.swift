@@ -53,9 +53,9 @@ extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseURL: URL = DefaultApiURL
+        baseURL: URL = DefaultBaseURL
     ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL) ?? DefaultApiURL)
+        var request = URLRequest(url: URL(string: path, relativeTo: baseURL) ?? DefaultBaseURL)
         request.httpMethod = httpMethod
         
         if let token = OAuth2TokenStorage.shared.authToken {
