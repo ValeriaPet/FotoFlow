@@ -16,8 +16,8 @@ final class ProfileViewController: UIViewController {
     let greet = UILabel()
     
         private let photoImageView = {
-            let photoImage = UIImage(systemName: "person.crop.circle.fill")
-            let photoImageView = UIImageView(image: photoImage)
+//            let photoImage = UIImage(systemName: "person.crop.circle.fill")
+            let photoImageView = UIImageView()
             photoImageView.layer.cornerRadius = 35
             photoImageView.tintColor = .white
             photoImageView.clipsToBounds = true
@@ -25,7 +25,7 @@ final class ProfileViewController: UIViewController {
     
             return photoImageView
         } ()
-    
+ 
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
@@ -46,6 +46,7 @@ final class ProfileViewController: UIViewController {
             })
         
         loadProfileData()
+
     }
     
     func loadProfileData() {
@@ -57,13 +58,16 @@ final class ProfileViewController: UIViewController {
                     self?.name.text = profile.name
                     self?.nick.text = profile.loginName
                     self?.greet.text = profile.bio
+                    
+                    ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in }
+                    
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
         }
     }
-    
+ 
     private func updateAvatar(notification: Notification) {
         guard
             let userInfo = notification.userInfo,
@@ -76,7 +80,7 @@ final class ProfileViewController: UIViewController {
         photoImageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 61)
         photoImageView.kf.setImage(with: url,
-                                   placeholder: UIImage(named: "PlaceholderAvatar"), options: [.processor(processor)])
+                                    options: [.processor(processor)])
     }
     
     func layout() {

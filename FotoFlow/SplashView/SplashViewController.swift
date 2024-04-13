@@ -21,14 +21,19 @@ final class SplashViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         alertPresenter.delegate = self
-
     }
     
     override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(animated)
-        checkAuthStatus()
-    }
-
+        if oauth2Service.isAuthenticated {
+            UIBlockingProgressHUD.show()
+           switchToTabBarController()
+        } else {
+            checkAuthStatus()
+            }
+        UIBlockingProgressHUD.dismiss()
+        }
+    
     private func checkAuthStatus() {
         if oauth2Service.isAuthenticated {
             UIBlockingProgressHUD.show()
@@ -38,7 +43,6 @@ final class SplashViewController: UIViewController{
             }
         UIBlockingProgressHUD.dismiss()
         }
-    
     
     private func showAuthController() {
         let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AuthViewControllerID")
@@ -62,11 +66,11 @@ final class SplashViewController: UIViewController{
            
             switch result {
             case .success(let token):
-                self?.oauth2TokenStorage.token = token
+                OAuth2TokenStorage.token = token
                 self?.fetchProfile(token)
                 UIBlockingProgressHUD.dismiss()
-            case .failure(let error):
-                self?.showLoginAlert(error: error)
+            case .failure:
+                self?.showLoginAlert(message: "Не удалось войти в систему")
                 UIBlockingProgressHUD.dismiss()
             }
         }
@@ -78,28 +82,21 @@ final class SplashViewController: UIViewController{
             guard let self = self else { return }
             switch result {
             case .success:
-                self.switchToTabBarController()
-               
-            case .failure(let error):
-                self.showLoginAlert(error: error)
-            
+                switchToTabBarController()
+            case .failure:
+                showLoginAlert(message: "Не удалось получить данные профиля")
             }
             UIBlockingProgressHUD.dismiss()
         }
     }
     
-//    func fetchProfileImageURL(_ username: String) {
-//        UIBlockingProgressHUD.show()
-//        profileImageService.fetchProfileImageURL(username: username) { _ in }
-//        UIBlockingProgressHUD.dismiss()
-//    }
-//    
-    private func showLoginAlert(error: Error) {
-        DispatchQueue.main.async { [weak self] in
-            self?.alertPresenter.showAlert(title: "Что-то пошло не так :(", message: "Не удалось войти в систему,\(error.localizedDescription)") {
-                self?.performSegue(withIdentifier: self?.showLoginFlowSegueID ?? "", sender: nil)
-            }
+    private func showLoginAlert(message: String) {
+        let alert = AlertModel(title: "Что-то пошло не так :(",
+                               text: message,
+                               buttonText: "OK") {[self] UIAlertAction in
+            showAuthController()
         }
+        AlertPresenter.showAlert(alert: alert, on: self)
     }
     
     private func presentAuth() {
@@ -112,7 +109,6 @@ final class SplashViewController: UIViewController{
         present(authViewController, animated: true)
     }
 }
-
 
 extension SplashViewController: AuthViewControllerDelegate {
     

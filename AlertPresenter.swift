@@ -7,22 +7,27 @@
 
 import UIKit
 
+struct AlertModel {
+    let title: String
+    let text: String
+    let buttonText: String
+    var completion: ((UIAlertAction) -> Void)? = nil
+}
+
 final class AlertPresenter {
     
     weak var delegate: UIViewController?
     
-    func showAlert(title: String, message: String, handler: @escaping() -> Void
-    ){
-        DispatchQueue.main.async { [weak delegate] in
-                let alert = UIAlertController(title: title,
-                                              message: message,
-                                              preferredStyle: .alert)
-                let alertAction = UIAlertAction(title: "OK", style: .default) { _ in
-                    handler()
-                }
-                alert.addAction(alertAction)
-            delegate?.present(alert, animated: true)
-            }
-        }
+    static func showAlert(alert model: AlertModel, on screen: UIViewController) {
+        let alert = UIAlertController(
+            title: model.title,
+            message: model.text,
+            preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: model.buttonText, style: .default, handler: model.completion)
+        
+        alert.addAction(alertAction)
+        screen.present(alert, animated: true, completion: nil)
     }
+}
+
 

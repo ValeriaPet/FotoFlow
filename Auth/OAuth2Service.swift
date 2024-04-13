@@ -26,14 +26,14 @@ final class OAuth2Service {
     
     private (set) var authToken: String? {
         get {
-            return OAuth2TokenStorage().token
+            return OAuth2TokenStorage.token
         } set {
-            OAuth2TokenStorage().token = newValue
+            OAuth2TokenStorage.token = newValue
         }
     }
     
     var isAuthenticated: Bool {
-        oauth2TokenStorage.token != nil
+        OAuth2TokenStorage.token != nil
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {

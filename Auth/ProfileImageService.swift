@@ -18,7 +18,7 @@ final class ProfileImageService {
     
     private var task: URLSessionTask?
     
-    func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
+    func fetchProfileImageURL(_ username: String, completion: @escaping (Result<String, Error>) -> Void) {
         
         guard let request = makeFetchProfileImageRequest(username: username) else
         {return}
@@ -30,14 +30,14 @@ final class ProfileImageService {
             
             switch result {
             case .success(let profilePhoto):
-                guard let mediumPhoto = profilePhoto.profileImage?.medium else {return}
+                guard let largePhoto = profilePhoto.profileImage?.large else {return}
                 
-                self.avatarURL = URL(string: mediumPhoto)
-                completion(.success(mediumPhoto))
+                self.avatarURL = URL(string: largePhoto)
+                completion(.success(largePhoto))
                 NotificationCenter.default.post(
                         name: ProfileImageService.didChangeNotification,
                         object: self,
-                        userInfo: ["URL": mediumPhoto]
+                        userInfo: ["URL": largePhoto]
                     )
             case .failure(let error):
                 completion(.failure(error))
