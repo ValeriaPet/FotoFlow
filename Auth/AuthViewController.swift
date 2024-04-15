@@ -17,6 +17,7 @@ final class AuthViewController: UIViewController {
     
     weak var delegate: AuthViewControllerDelegate?
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == WebViewId {
             guard
@@ -33,6 +34,17 @@ extension AuthViewController: WebViewViewControllerDelegate {
         
     func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
         delegate?.authViewController(self, didAutenticateWithCode: code)
+    }
+    
+    func webViewViewController(_ viewController: WebViewViewController, didFailWithError error: Error) {
+        showLoginAlert(error: error)
+    }
+    
+    private func showLoginAlert(error: Error) {
+        let alert = AlertModel(title: "Что-то пошло не так :(",
+                               text: "Не удалось войти в систему",
+                               buttonText: "OK")
+        AlertPresenter.showAlert(alert: alert, on: self)
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {

@@ -25,14 +25,8 @@ final class SplashViewController: UIViewController{
     
     override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(animated)
-        if oauth2Service.isAuthenticated {
-            UIBlockingProgressHUD.show()
-           switchToTabBarController()
-        } else {
-            checkAuthStatus()
-            }
-        UIBlockingProgressHUD.dismiss()
-        }
+        checkAuthStatus()
+    }
     
     private func checkAuthStatus() {
         if oauth2Service.isAuthenticated {
@@ -63,42 +57,31 @@ final class SplashViewController: UIViewController{
         UIBlockingProgressHUD.show()
         
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
-           
-            switch result {
-            case .success(let token):
-                OAuth2TokenStorage.token = token
-                self?.fetchProfile(token)
+            DispatchQueue.main.async {
                 UIBlockingProgressHUD.dismiss()
-            case .failure:
-                self?.showLoginAlert(message: "Не удалось войти в систему")
-                UIBlockingProgressHUD.dismiss()
+                switch result {
+                case .success(let token):
+                    OAuth2TokenStorage.token = token
+                    self?.fetchProfile(token)
+                    
+                case .failure:
+                    self?.showLoginAlert(message: "Не удалось войти в систему")
+                }
             }
         }
     }
-    private func fetchProfile(_ token: String) {
-        
-        profileService.fetchProfile(token) { [weak self] result in
-            
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                switchToTabBarController()
-            case .failure:
-                showLoginAlert(message: "Не удалось получить данные профиля")
-            }
-            UIBlockingProgressHUD.dismiss()
-        }
-    }
+  
     
     private func showLoginAlert(message: String) {
-        let alert = AlertModel(title: "Что-то пошло не так :(",
-                               text: message,
-                               buttonText: "OK") {[self] UIAlertAction in
-            showAuthController()
+        let alert = UIAlertController(title: "Что-то пошло не так :(", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.showAuthController()
+        }))
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
         }
-        AlertPresenter.showAlert(alert: alert, on: self)
     }
-    
+
     private func presentAuth() {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         let viewController = storyboard.instantiateViewController(identifier: "AuthViewControllerID")
@@ -121,6 +104,23 @@ extension SplashViewController: AuthViewControllerDelegate {
             viewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
+        }
+    }
+
+    private func fetchProfile(_ token: String) {
+        
+        profileService.fetchProfile(token) { [weak self] result in
+            
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+                switch result {
+                case .success:
+                    self.switchToTabBarController()
+                case .failure:
+                    self.showLoginAlert(message: "Не удалось получить данные профиля")
+                }
+            }
         }
     }
     

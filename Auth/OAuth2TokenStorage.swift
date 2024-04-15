@@ -10,9 +10,6 @@ import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
     
-    //    static let shared = OAuth2TokenStorage()
-    //    private let tokenKey = "OAuth2BearerToken"
-    
     private let userDefaults = UserDefaults.standard
     static let shared = OAuth2Service()
     
@@ -27,9 +24,18 @@ final class OAuth2TokenStorage {
             }
         }
     }
+    
+    static func removeToken() -> Bool {
+        print("Removing token: Current token is \(String(describing: KeychainWrapper.standard.string(forKey: Keys.token.rawValue)))")
+        let result = KeychainWrapper.standard.removeObject(forKey: Keys.token.rawValue)
+        print("Token removed: \(result), new token is \(String(describing: KeychainWrapper.standard.string(forKey: Keys.token.rawValue)))")
+            return result
+        }
+    
     private enum Keys: String {
         case token
     }
 }
+
 
 

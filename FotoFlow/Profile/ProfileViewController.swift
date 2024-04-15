@@ -136,8 +136,9 @@ final class ProfileViewController: UIViewController {
             greet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
         
-        let exitButton = UIButton(type: .custom)
+        
         let buttonImage = UIImage(named: "Exit")
+        let exitButton = UIButton.systemButton(with: buttonImage!, target: self, action: #selector(self.logoutButtonAction))
         
         exitButton.tintColor = .ypRedIOS
         exitButton.setImage(buttonImage, for: .normal)
@@ -150,5 +151,31 @@ final class ProfileViewController: UIViewController {
             exitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 65),
             exitButton.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor)
         ])
+    }
+    
+    @objc func logoutButtonAction() {
+        
+        let tokenRemoved = OAuth2TokenStorage.removeToken()
+        
+        if tokenRemoved {
+            photoImageView.image = UIImage(named: "user_profile_picture")
+            name.text = "user_name"
+            nick.text = "@user_login"
+            greet.text = "greet"
+
+            redirectToLogin()
+        } else {
+            print("Error: Failed to remove authentication token.")
+        }
+    }
+
+    private func redirectToLogin() {
+        if let window = UIApplication.shared.windows.first {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginViewController = storyboard.instantiateViewController(withIdentifier: "SplashViewController")
+            let navigationController = UINavigationController(rootViewController: loginViewController)
+            window.rootViewController = navigationController
+            window.makeKeyAndVisible()
+        }
     }
 }

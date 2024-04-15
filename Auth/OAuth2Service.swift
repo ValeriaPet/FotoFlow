@@ -33,7 +33,7 @@ final class OAuth2Service {
     }
     
     var isAuthenticated: Bool {
-        OAuth2TokenStorage.token != nil
+        return OAuth2TokenStorage.token != nil
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
