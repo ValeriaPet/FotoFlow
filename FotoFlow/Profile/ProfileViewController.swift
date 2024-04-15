@@ -32,10 +32,12 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
+    
         
         if let url = ProfileImageService.shared.avatarURL {
             updateAvatar(url: url)
         }
+        
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
             object: nil,
@@ -46,7 +48,6 @@ final class ProfileViewController: UIViewController {
             })
         
         loadProfileData()
-
     }
     
     func loadProfileData() {
@@ -172,10 +173,12 @@ final class ProfileViewController: UIViewController {
     private func redirectToLogin() {
         if let window = UIApplication.shared.windows.first {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginViewController = storyboard.instantiateViewController(withIdentifier: "SplashViewController")
+            let loginViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewControllerID")
             let navigationController = UINavigationController(rootViewController: loginViewController)
             window.rootViewController = navigationController
             window.makeKeyAndVisible()
         }
     }
-}
+        }
+    
+

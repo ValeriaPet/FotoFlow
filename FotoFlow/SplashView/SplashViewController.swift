@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SplashViewController: UIViewController{
+final class SplashViewController: UIViewController {
     
     private let ShowAuthenticationScreen = "AutenticationScreen"
     private let oauth2Service = OAuth2Service()
@@ -20,11 +20,13 @@ final class SplashViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        UIElementsLogo()
         alertPresenter.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(animated)
+        UIElementsLogo()
         checkAuthStatus()
     }
     
@@ -38,6 +40,13 @@ final class SplashViewController: UIViewController{
         UIBlockingProgressHUD.dismiss()
         }
     
+//    private func showAuthController() {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let viewController = storyboard.instantiateViewController(identifier: "AuthViewControllerID") as UIViewController
+//        viewController.modalPresentationStyle = .fullScreen
+//        self.present(viewController, animated: true, completion: nil)
+//    }
+
     private func showAuthController() {
         let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AuthViewControllerID")
         guard let authViewController = viewController as? AuthViewController else {return}
@@ -95,18 +104,6 @@ final class SplashViewController: UIViewController{
 
 extension SplashViewController: AuthViewControllerDelegate {
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowAuthenticationScreen {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(ShowAuthenticationScreen)")}
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
-
     private func fetchProfile(_ token: String) {
         
         profileService.fetchProfile(token) { [weak self] result in
@@ -131,6 +128,20 @@ extension SplashViewController: AuthViewControllerDelegate {
             self.fetchOAuthToken(code)
         }
     }
+    
+    private func UIElementsLogo() {
+        view.backgroundColor = .ypBackgroundIOS
+        let logoImage = UIImage(named: "Logo_of_Unsplash")
+        let logoImageView = UIImageView(image: logoImage)
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoImageView)
+        
+        NSLayoutConstraint.activate([
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
 }
+
 
 

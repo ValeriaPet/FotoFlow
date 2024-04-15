@@ -26,7 +26,7 @@ final class OAuth2TokenStorage {
     }
     
     static func removeToken() -> Bool {
-        print("Removing token: Current token is \(String(describing: KeychainWrapper.standard.string(forKey: Keys.token.rawValue)))")
+         
         let result = KeychainWrapper.standard.removeObject(forKey: Keys.token.rawValue)
         print("Token removed: \(result), new token is \(String(describing: KeychainWrapper.standard.string(forKey: Keys.token.rawValue)))")
             return result
