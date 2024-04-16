@@ -37,28 +37,72 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        
-        guard !(code == lastCode && task != nil) else {
+        // Проверка на повторные запросы с тем же кодом
+        guard task == nil else {
             return
         }
-        lastCode = code
+        
         guard let request = authTokenRequest(code: code) else {
-            assertionFailure("Invalid")
             completion(.failure(NetworkError.invalidRequest))
             return
         }
         
-        task =  URLSession.shared.objectTask(for: request) { [weak self] (response: Result<OAuthTokenResponseBody, Error>) in
-            self?.task = nil
-            switch response {
-            case .success(let body):
-                let authToken = body.accessToken
-                completion(.success(authToken))
-            case .failure(let error):
+        task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            defer { self?.task = nil }
+            if let error = error {
                 completion(.failure(error))
+                return
+            }
+            
+            guard let data = data,
+                  let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                completion(.failure(NetworkError.serverError("Invalid response")))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let tokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                self?.authToken = tokenResponse.accessToken
+                completion(.success(tokenResponse.accessToken))
+            } catch {
+                completion(.failure(NetworkError.decodingError))
             }
         }
+        
+        task?.resume()
     }
+
+//    func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
+//
+//        guard !(code == lastCode && task != nil) else {
+//            return
+//        }
+//        lastCode = code
+//        guard let request = authTokenRequest(code: code) else {
+//            assertionFailure("Invalid")
+//            completion(.failure(NetworkError.invalidRequest))
+//            return
+//        }
+//
+//        task =  URLSession.shared.objectTask(for: request) { [weak self] (response: Result<OAuthTokenResponseBody, Error>) in
+//            self?.task = nil
+//            switch response {
+//            case .success(let body):
+//                let authToken = body.accessToken
+//                completion(.success(authToken))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//    }
+    
+//    private func showLoginAlert(error: Error) {
+//        let alert = AlertModel(title: "Что-то пошло не так :(",
+//                               text: "Не удалось войти в систему",
+//                               buttonText: "OK")
+//    }
     
     private func authTokenRequest(code: String) -> URLRequest? {
         // Определяем параметры для запроса

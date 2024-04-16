@@ -10,29 +10,29 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
-//    let photoImageView = UIImageView()
+    
     let name = UILabel()
     let nick = UILabel()
     let greet = UILabel()
     
-        private let photoImageView = {
-//            let photoImage = UIImage(systemName: "person.crop.circle.fill")
-            let photoImageView = UIImageView()
-            photoImageView.layer.cornerRadius = 35
-            photoImageView.tintColor = .white
-            photoImageView.clipsToBounds = true
-            photoImageView.backgroundColor = UIColor(named: "YP Black")
+    private let photoImageView = {
+        
+        let photoImageView = UIImageView()
+        photoImageView.layer.cornerRadius = 35
+        photoImageView.tintColor = .white
+        photoImageView.clipsToBounds = true
+        photoImageView.backgroundColor = UIColor(named: "YP Black")
+        
+        return photoImageView
+    } ()
     
-            return photoImageView
-        } ()
- 
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
-    
+        
         
         if let url = ProfileImageService.shared.avatarURL {
             updateAvatar(url: url)
@@ -68,7 +68,7 @@ final class ProfileViewController: UIViewController {
             }
         }
     }
- 
+    
     private func updateAvatar(notification: Notification) {
         guard
             let userInfo = notification.userInfo,
@@ -81,7 +81,7 @@ final class ProfileViewController: UIViewController {
         photoImageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 61)
         photoImageView.kf.setImage(with: url,
-                                    options: [.processor(processor)])
+                                   options: [.processor(processor)])
     }
     
     func layout() {
@@ -179,6 +179,7 @@ final class ProfileViewController: UIViewController {
             window.makeKeyAndVisible()
         }
     }
-        }
+}
+
     
 

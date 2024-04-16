@@ -32,16 +32,19 @@ extension URLSession {
                         fulfillCompletion(.success(result))
                     } catch {
                         fulfillCompletion(.failure(AuthServiceError.urlRequestError(error)))
-                        
+                        print("\(String(describing: T.self)) [dataTask:] - Network Error \(error)" )
                     }
                 } else {
                     fulfillCompletion(.failure(AuthServiceError.httpStatusCode(statusCode)))
+                    print("\(String(describing: T.self)) [dataTask:] - Network Error \(statusCode)" )
                 }
             } else if let error = error {
                 
                 fulfillCompletion(.failure(AuthServiceError.urlRequestError(error)))
+                print("\(String(describing: T.self)) [dataTask:] - Network Error \(error)" )
             } else {
                 fulfillCompletion(.failure(AuthServiceError.urlSessionError))
+                print("\(String(describing: T.self)) [dataTask:] - Network Error")
             }
         })
         task.resume()

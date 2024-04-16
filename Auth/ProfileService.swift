@@ -10,7 +10,7 @@ import Foundation
 final class ProfileService {
     
     static let shared = ProfileService()
-    private var profile: Profile?
+    var profile: Profile?
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
@@ -19,6 +19,7 @@ final class ProfileService {
         guard let request = makeFetchProfileRequest(token: token) else {
             assertionFailure("Invalid request")
             completion(.failure(NetworkError.invalidRequest))
+            print("\(String(describing: Profile.self)) [dataTask:] - Network Error")
             return
         }
         
@@ -32,6 +33,7 @@ final class ProfileService {
                 completion(.success(profile))
             case .failure(let error):
                 completion(.failure(error))
+                print("\(String(describing: ProfileResult.self)) [dataTask:] - Network Error \(error)" )
             }
         }
     }

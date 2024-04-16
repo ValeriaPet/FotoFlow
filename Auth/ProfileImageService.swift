@@ -41,6 +41,7 @@ final class ProfileImageService {
                     )
             case .failure(let error):
                 completion(.failure(error))
+                print("\(String(describing: ProfileResult.self)) [dataTask:] - Network Error \(error)")
             }
             self.task = nil
         }
