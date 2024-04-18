@@ -7,61 +7,121 @@
 
 import Foundation
 
+enum NetworkError: Error {
+    case invalidRequest
+    case decodingError
+    case serverError(String)
+}
+enum AuthServiceError: Error {
+    case httpStatusCode(Int)
+    case urlRequestError(Error)
+    case urlSessionError
+}
+
 final class OAuth2Service {
     
-    static let shared = OAuth2Service()
-    
-    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    private var oauth2TokenStorage = OAuth2TokenStorage()
     
     private (set) var authToken: String? {
         get {
-            return OAuth2TokenStorage().token
+            return OAuth2TokenStorage.token
         } set {
-            OAuth2TokenStorage().token = newValue
+            OAuth2TokenStorage.token = newValue
         }
+    }
+    
+    var isAuthenticated: Bool {
+        return OAuth2TokenStorage.token != nil
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let request = authTokenRequest(code: code)
-        let task = object(for: request) {[weak self] result in
-            guard let self = self else {return}
-            switch result {
-            case .success(let body):
-                let authToken = body.accessToken
-                self.authToken = authToken
-                completion(.success(authToken))
-                
-            case .failure(let error):
+        // Проверка на повторные запросы с тем же кодом
+        guard task == nil else {
+            return
+        }
+        
+        guard let request = authTokenRequest(code: code) else {
+            completion(.failure(NetworkError.invalidRequest))
+            return
+        }
+        
+        task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            defer { self?.task = nil }
+            if let error = error {
                 completion(.failure(error))
+                return
+            }
+            
+            guard let data = data,
+                  let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                completion(.failure(NetworkError.serverError("Invalid response")))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let tokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                self?.authToken = tokenResponse.accessToken
+                completion(.success(tokenResponse.accessToken))
+            } catch {
+                completion(.failure(NetworkError.decodingError))
             }
         }
-        task.resume()
+        
+        task?.resume()
     }
-}
 
-private extension OAuth2Service {
+//    func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
+//
+//        guard !(code == lastCode && task != nil) else {
+//            return
+//        }
+//        lastCode = code
+//        guard let request = authTokenRequest(code: code) else {
+//            assertionFailure("Invalid")
+//            completion(.failure(NetworkError.invalidRequest))
+//            return
+//        }
+//
+//        task =  URLSession.shared.objectTask(for: request) { [weak self] (response: Result<OAuthTokenResponseBody, Error>) in
+//            self?.task = nil
+//            switch response {
+//            case .success(let body):
+//                let authToken = body.accessToken
+//                completion(.success(authToken))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//    }
     
-    private func object(for request: URLRequest, completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let responce = result.flatMap {data -> Result<OAuthTokenResponseBody, Error> in
-                Result { try decoder.decode(OAuthTokenResponseBody.self, from: data) }
-            }
-            completion(responce)
+//    private func showLoginAlert(error: Error) {
+//        let alert = AlertModel(title: "Что-то пошло не так :(",
+//                               text: "Не удалось войти в систему",
+//                               buttonText: "OK")
+//    }
+    
+    private func authTokenRequest(code: String) -> URLRequest? {
+        // Определяем параметры для запроса
+        let params = "?client_id=\(AccessKey)" +
+        "&client_secret=\(SecretKey)" +
+        "&redirect_uri=\(RedirectURI)" +
+        "&code=\(code)" +
+        "&grant_type=authorization_code"
+        
+        // Формируем полный URL с параметрами
+        guard let url = URL(string: "https://unsplash.com/oauth/token" + params) else {
+            assertionFailure("Failed to create URL")
+            return nil
         }
-    }
-    
-    private func authTokenRequest(code: String) -> URLRequest {
-        URLRequest.makeHTTPRequest(
-            path: "/oauth/token"
-            + "?client_id=\(AccessKey)"
-            + "&&client_secret=\(SecretKey)"
-            + "&&redirect_uri=\(RedirectURI)"
-            + "&&code=\(code)"
-            + "&&grant_type=authorization_code",
-            httpMethod: "POST",
-            baseURL: URL(string: "https://unsplash.com")!
-        )
+        
+        // Создаем запрос
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        return request
     }
     
     private struct OAuthTokenResponseBody: Decodable {
@@ -80,52 +140,4 @@ private extension OAuth2Service {
     }
 }
 
-//fileprivate let defaultBaseURL = URL(string: "https://api.unsplash.com")!
 
-extension URLRequest {
-    static func makeHTTPRequest(
-        path: String,
-        httpMethod: String,
-        baseURL: URL = DefaultBaseURL
-    ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL) ?? DefaultBaseURL)
-        request.httpMethod = httpMethod
-        return request
-    }
-}
-
-enum NetworkError: Error {
-    case httpStatusCode(Int)
-    case urlRequestError(Error)
-    case urlSessionError
-}
-
-extension URLSession {
-    func data(
-        for request: URLRequest,
-        completion: @escaping(Result<Data, Error>)->Void)->URLSessionTask {
-            let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            }
-            let task = dataTask(with: request, completionHandler: { data, response, error in
-                if let data = data,
-                   let response = response,
-                   let statusCode = (response as? HTTPURLResponse)?.statusCode
-                {
-                    if 200 ..< 300 ~= statusCode {
-                        fulfillCompletion(.success(data))
-                    } else {
-                        fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
-                    }
-                } else if let error = error {
-                    fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
-                } else {
-                    fulfillCompletion(.failure(NetworkError.urlSessionError))
-                }
-            })
-            task.resume()
-            return task
-        }
-}
