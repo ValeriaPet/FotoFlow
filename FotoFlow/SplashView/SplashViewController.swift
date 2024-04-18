@@ -36,11 +36,12 @@ final class SplashViewController: UIViewController {
             } else {
                 switchToTabBarController()
             }
-        } else {
-            showAuthController()
-            }
+                    } else {
+                        showAuthController()
+                        }
             UIBlockingProgressHUD.dismiss()
         }
+    
 
     private func showAuthController() {
         let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AuthViewControllerID")
@@ -68,15 +69,19 @@ final class SplashViewController: UIViewController {
                 case .failure:
                     self?.showLoginAlert(message: "Не удалось войти в систему")
                 }
-
         }
     }
-    private func showLoginAlert(message: String) {
-        let alert = UIAlertController(title: "Что-то пошло не так :(", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-}))
-            self.present(alert, animated: true, completion: nil)
-        }
+    
+    func showLoginAlert(message: String) {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так :(",
+            message: "Не удалось войти в систему.",
+            preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true)
+    }
+    
     
     private func presentAuth() {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
@@ -110,6 +115,7 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String) {
         UIBlockingProgressHUD.show()
+        
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             self.fetchOAuthToken(code)

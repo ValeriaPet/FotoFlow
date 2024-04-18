@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum CodingError: Error {
+    case customError
+}
+
 protocol AuthViewControllerDelegate: AnyObject {
     func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String)
 }
@@ -18,10 +22,10 @@ final class AuthViewController: UIViewController {
     
     weak var delegate: AuthViewControllerDelegate?
     
-    override func viewDidLoad() {
-         super.viewDidLoad()
-         oauth2Service = OAuth2Service()
-     }
+//    override func viewDidLoad() {
+//         super.viewDidLoad()
+//         oauth2Service = OAuth2Service()
+//     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == WebViewId {
@@ -43,20 +47,23 @@ extension AuthViewController: WebViewViewControllerDelegate {
             switch result {
             case .success(let token):
                 print("Token received: \(token)")
+                self?.showLoginAlert(error: CodingError.customError)
             case .failure(let error):
                 self?.showLoginAlert(error: error)
             }
         })
     }
+    
     func showLoginAlert(error: Error) {
         let alert = UIAlertController(
             title: "Что-то пошло не так :(",
-            message: "Не удалось войти в систему. Ошибка: \(error.localizedDescription)",
+            message: "Не удалось войти в систему.",
             preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         self.present(alert, animated: true)
     }
+    
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true)
     }
