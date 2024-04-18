@@ -51,23 +51,17 @@ final class ProfileViewController: UIViewController {
     }
     
     func loadProfileData() {
-        let userToken = "access_token"
-        ProfileService.shared.fetchProfile(userToken) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let profile):
-                    self?.name.text = profile.name
-                    self?.nick.text = profile.loginName
-                    self?.greet.text = profile.bio
-                    
-                    ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in }
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
+        if let profile = ProfileService.shared.profile {
+                // Use the existing profile data
+                name.text = profile.name
+                nick.text = profile.loginName
+                greet.text = profile.bio
+
+                ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in }
+        } else {
+                print("No profile data available.")
                 }
             }
-        }
-    }
     
     private func updateAvatar(notification: Notification) {
         guard

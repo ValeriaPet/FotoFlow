@@ -100,27 +100,30 @@ extension SplashViewController: AuthViewControllerDelegate {
         
         profileService.fetchProfile(token) { [weak self] result in
             
-            guard let self = self else { return }
-            DispatchQueue.main.async {
+                guard let self = self else { return }
                 UIBlockingProgressHUD.dismiss()
                 switch result {
-                case .success:
+                case .success(let profile):
+                    // Store the fetched profile in ProfileService
+                    self.profileService.profile = profile
                     self.switchToTabBarController()
                 case .failure:
                     self.showLoginAlert(message: "Не удалось получить данные профиля")
-                }
+                
             }
         }
     }
     
     func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String) {
-        UIBlockingProgressHUD.show()
         
-        dismiss(animated: true) { [weak self] in
-            guard let self = self else { return }
-            self.fetchOAuthToken(code)
+            if let token = OAuth2TokenStorage.token {
+                        fetchProfile(token)
+                    } else {
+                        showLoginAlert(message: "Не удалось получить токен")
+                        print("бля")
+                    }
         }
-    }
+    
     
     private func UIElementsLogo() {
         view.backgroundColor = .ypBackgroundIOS

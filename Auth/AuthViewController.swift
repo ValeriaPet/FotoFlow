@@ -12,7 +12,7 @@ enum CodingError: Error {
 }
 
 protocol AuthViewControllerDelegate: AnyObject {
-    func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String)
+    func authViewController(_ vc: AuthViewController, didAutenticateWithCode token: String)
 }
 
 final class AuthViewController: UIViewController {
@@ -22,10 +22,10 @@ final class AuthViewController: UIViewController {
     
     weak var delegate: AuthViewControllerDelegate?
     
-//    override func viewDidLoad() {
-//         super.viewDidLoad()
-//         oauth2Service = OAuth2Service()
-//     }
+    override func viewDidLoad() {
+         super.viewDidLoad()
+         oauth2Service = OAuth2Service()
+     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == WebViewId {
@@ -42,16 +42,21 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     
     func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
-        delegate?.authViewController(self, didAutenticateWithCode: code)
-        oauth2Service?.fetchOAuthToken(code, completion: { [weak self] result in
+        
+        oauth2Service?.fetchOAuthToken(code) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let token):
-                print("Token received: \(token)")
-                self?.showLoginAlert(error: CodingError.customError)
+                // Сохранение токена в Keychain
+                OAuth2TokenStorage.token = token
+                // Уведомление делегата об успешной аутентификации
+                self.delegate?.authViewController(self, didAutenticateWithCode: code)
             case .failure(let error):
-                self?.showLoginAlert(error: error)
+                // Показ алерта с ошибкой
+                self.showLoginAlert(error: error)
+                print("бля")
             }
-        })
+        }
     }
     
     func showLoginAlert(error: Error) {
