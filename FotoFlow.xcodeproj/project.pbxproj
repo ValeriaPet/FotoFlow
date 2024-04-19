@@ -24,6 +24,7 @@
 		0415CAFD2B1E686A00BDEFDA /* FotoFlowUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415CAFC2B1E686A00BDEFDA /* FotoFlowUITestsLaunchTests.swift */; };
 		042B16B32B377BCE00BE1560 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B16B22B377BCE00BE1560 /* ProfileViewController.swift */; };
 		042DB0802BC5D98600F7569C /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DB07F2BC5D98600F7569C /* AlertPresenter.swift */; };
+		0433D9002BD32AC800A5F5AE /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433D8FF2BD32AC800A5F5AE /* UIColor.swift */; };
 		04365A4F2BC8629F001DDF31 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 04365A4E2BC8629F001DDF31 /* Kingfisher */; };
 		04365A522BC8874C001DDF31 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 04365A512BC8874C001DDF31 /* SwiftKeychainWrapper */; };
 		043F8B522BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F8B512BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift */; };
@@ -88,6 +89,7 @@
 		042B16B52B377BE900BE1560 /* SFProDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Regular.ttf"; sourceTree = "<group>"; };
 		042B16B62B377BE900BE1560 /* SFProDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Bold.ttf"; sourceTree = "<group>"; };
 		042DB07F2BC5D98600F7569C /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		0433D8FF2BD32AC800A5F5AE /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		043F8B512BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		044374FA2BAB328900DC7B2E /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		0479F24D2B31E16A0089AA16 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
@@ -173,11 +175,11 @@
 				049EA5092BCDA2F700492E34 /* TabBarViewController.swift */,
 				043F8B512BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift */,
 				042DB07F2BC5D98600F7569C /* AlertPresenter.swift */,
-				04BAB27E2BBC82D90052D169 /* URLSessionExtension.swift */,
 				0407D7DA2BD0BFB90084007A /* Structures */,
 				0407D7D92BD0BFB10084007A /* Servises */,
 				04088DEC2B5847F8007F9C4B /* Auth */,
 				0415CAD82B1E686900BDEFDA /* FotoFlow */,
+				0433D8FE2BD32AA100A5F5AE /* Help */,
 				04E2637D2BD1CACD00C37DFE /* FotoFlowImageTests */,
 				0415CAEF2B1E686A00BDEFDA /* FotoFlowTests */,
 				0415CAF92B1E686A00BDEFDA /* FotoFlowUITests */,
@@ -205,7 +207,6 @@
 				04C50D682B38E08A00B65A4D /* SingleImageView */,
 				042B16B12B377BCE00BE1560 /* Profile */,
 				0479F24F2B31E1850089AA16 /* ImagesList */,
-				04088DEA2B582098007F9C4B /* Constants.swift */,
 				0415CAD92B1E686900BDEFDA /* AppDelegate.swift */,
 				0415CADB2B1E686900BDEFDA /* SceneDelegate.swift */,
 				0415CADF2B1E686900BDEFDA /* Main.storyboard */,
@@ -248,6 +249,16 @@
 				042B16B62B377BE900BE1560 /* SFProDisplay-Bold.ttf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		0433D8FE2BD32AA100A5F5AE /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				04BAB27E2BBC82D90052D169 /* URLSessionExtension.swift */,
+				04088DEA2B582098007F9C4B /* Constants.swift */,
+				0433D8FF2BD32AC800A5F5AE /* UIColor.swift */,
+			);
+			path = Help;
 			sourceTree = "<group>";
 		};
 		0479F24F2B31E1850089AA16 /* ImagesList */ = {
@@ -468,6 +479,7 @@
 				04E687182B66B5BB00D8FED0 /* SplashViewController.swift in Sources */,
 				0407D7DC2BD0BFF50084007A /* ImagesListService.swift in Sources */,
 				042B16B32B377BCE00BE1560 /* ProfileViewController.swift in Sources */,
+				0433D9002BD32AC800A5F5AE /* UIColor.swift in Sources */,
 				04BAB27F2BBC82D90052D169 /* URLSessionExtension.swift in Sources */,
 				042DB0802BC5D98600F7569C /* AlertPresenter.swift in Sources */,
 				0415CADA2B1E686900BDEFDA /* AppDelegate.swift in Sources */,

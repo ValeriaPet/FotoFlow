@@ -7,6 +7,11 @@
 
 
 import UIKit
+
+protocol ImagesListCellDelegate: AnyObject {
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
+}
+
 final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
@@ -17,5 +22,19 @@ final class ImagesListCell: UITableViewCell {
     
     @IBOutlet var dataText: UILabel!
     
+    @IBOutlet var gradientView: UIView!
     
+    weak var delegate: ImagesListCellDelegate?
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
+        self.cellImage.kf.cancelDownloadTask()
+    }
+    
+    // MARK: - IB Actions
+    @IBAction private func likeButtonClicked() {
+        delegate?.imageListCellDidTapLike(self)
+    }
+
 }
