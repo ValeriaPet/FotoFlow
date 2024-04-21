@@ -54,7 +54,7 @@ extension AuthViewController: WebViewViewControllerDelegate {
             case .failure(let error):
                 // Показ алерта с ошибкой
                 self.showLoginAlert(error: error)
-                print("бля")
+                print("purr")
             }
         }
     }

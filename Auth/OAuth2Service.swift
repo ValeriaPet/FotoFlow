@@ -22,18 +22,18 @@ final class OAuth2Service {
     
     private var task: URLSessionTask?
     private var lastCode: String?
-    private var oauth2TokenStorage = OAuth2TokenStorage()
+    private var oauth2TokenStorage = OAuth2TokenStorage.token
     
     private (set) var authToken: String? {
         get {
-            return OAuth2TokenStorage.token
+            return oauth2TokenStorage
         } set {
-            OAuth2TokenStorage.token = newValue
+            oauth2TokenStorage = newValue
         }
     }
     
     var isAuthenticated: Bool {
-        return OAuth2TokenStorage.token != nil
+        return oauth2TokenStorage != nil
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {

@@ -11,7 +11,7 @@ final class SplashViewController: UIViewController {
     
     private let ShowAuthenticationScreen = "AutenticationScreen"
     private let oauth2Service = OAuth2Service()
-    private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let oauth2TokenStorage = OAuth2TokenStorage.token
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
 //    private let alertPresenter = AlertPresenter()
