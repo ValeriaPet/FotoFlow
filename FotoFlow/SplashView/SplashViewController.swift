@@ -11,7 +11,7 @@ final class SplashViewController: UIViewController {
     
     private let ShowAuthenticationScreen = "AutenticationScreen"
     private let oauth2Service = OAuth2Service()
-    private let oauth2TokenStorage = OAuth2TokenStorage.token
+    private var oauth2TokenStorage = OAuth2TokenStorage.token
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
 //    private let alertPresenter = AlertPresenter()
@@ -31,7 +31,7 @@ final class SplashViewController: UIViewController {
     private func checkAuthStatus() {
         if oauth2Service.isAuthenticated {
             UIBlockingProgressHUD.show()
-            if let token = OAuth2TokenStorage.token {
+            if let token = oauth2TokenStorage {
                 fetchProfile(token)
             } else {
                 switchToTabBarController()
@@ -64,7 +64,7 @@ final class SplashViewController: UIViewController {
                 UIBlockingProgressHUD.dismiss()
                 switch result {
                 case .success(let token):
-                    OAuth2TokenStorage.token = token
+                    self?.oauth2TokenStorage = token
                     self?.fetchProfile(token)
                 case .failure:
                     self?.showLoginAlert(message: "Не удалось войти в систему")

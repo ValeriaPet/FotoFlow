@@ -19,6 +19,7 @@ final class AuthViewController: UIViewController {
     
     private let WebViewId: String = "ShowWebView"
     private var oauth2Service: OAuth2Service?
+    private var oauth2TokenStorage = OAuth2TokenStorage.token
     
     weak var delegate: AuthViewControllerDelegate?
     
@@ -48,7 +49,7 @@ extension AuthViewController: WebViewViewControllerDelegate {
             switch result {
             case .success(let token):
                 // Сохранение токена в Keychain
-                OAuth2TokenStorage.token = token
+                self.oauth2TokenStorage = token
                 // Уведомление делегата об успешной аутентификации
                 self.delegate?.authViewController(self, didAutenticateWithCode: code)
             case .failure(let error):
