@@ -25,6 +25,17 @@ struct PhotoPageResult: Decodable {
     let urls: UrlsResult
 //    let likes: Int
     let likedByUser: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case width
+        case height
+        case createdAt = "created_at"
+        case description
+        case altDescription = "alt_description"
+        case urls
+        case likedByUser = "liked_by_user"
+    }
 }
 
 struct PhotoPageResponse: Decodable {

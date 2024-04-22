@@ -9,13 +9,13 @@ import Foundation
 
 final class ImagesListService {
     
-    static let imagesListService = ImagesListService()
-    var task: URLSessionTask?
-    
     private enum photosNextPageErrors: Error {
         case requestError
     }
     
+    static let shared = ImagesListService()
+    var task: URLSessionTask?
+
     static let imageListUpdated = Notification.Name(rawValue:"ImagesListServiceDidChange")
     
     private (set) var photos: [Photo] = []

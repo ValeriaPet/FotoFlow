@@ -73,7 +73,8 @@
                                         <connections>
                                             <outlet property="cellImage" destination="X3G-s6-2qw" id="aLo-y7-Ley"/>
                                             <outlet property="dataText" destination="dyR-AQ-k0H" id="jIO-VC-gkc"/>
-                                            <outlet property="likeButton" destination="nYb-ZK-tvA" id="vH9-pd-0jc"/>
+                                            <outlet property="gradientView" destination="X3G-s6-2qw" id="tSJ-K5-FIO"/>
+                                            <outlet property="likeButton" destination="nYb-ZK-tvA" id="uPr-wi-XQv"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
