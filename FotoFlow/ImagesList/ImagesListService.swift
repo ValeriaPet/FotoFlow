@@ -14,8 +14,9 @@ final class ImagesListService {
     }
     
     static let shared = ImagesListService()
+    let session = URLSession.shared
     var task: URLSessionTask?
-
+    
     static let imageListUpdated = Notification.Name(rawValue:"ImagesListServiceDidChange")
     
     private (set) var photos: [Photo] = []
@@ -36,13 +37,12 @@ final class ImagesListService {
         
         let nextPage = (lastLoadedPage ?? 0) + 1
         guard let request = makeFetchListPhotoRequest(url: "\(PhotoListUrl)?page=\(nextPage)&per_page=\(photosPerPage)",
-                                                    httpMethod: "GET"
+                                                      httpMethod: "GET"
         ) else {
             print("CONSOLE func fetchPhotosNextPage: Ошибка сборки запроса страницы с картинками")
             return
         }
         
-        let session = URLSession.shared
         task = session.objectTask(for: request) { [weak self] (result: Result<[PhotoPageResult], Error>) in
             guard let self = self else {return}
             self.task = nil
@@ -90,24 +90,61 @@ final class ImagesListService {
             }
             self.task = task
         }
+    }
+    
+    func changeLike(photoId: String, isLiked: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+        
+        assert(Thread.isMainThread)
+        if changeLikeTask != nil {
+            print("ooo")
+            return
         }
-
+        
+        guard let index = photos.firstIndex(where: { $0.id == photoId }) else {
+            print("Photo not found")
+            return
+        }
+        
+        let url = "\(PhotoListUrl)/\(photos[index].id)/like"
+        let method = isLiked ? "POST" : "DELETE"
+        
+        guard let request = makeFetchListPhotoRequest(url: url, httpMethod: method) else {
+            return
+        }
+        
+        changeLikeTask = session.objectTask(for: request) {[weak self] (result: Result<PhotoPageResult, Error>) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.changeLikeTask = nil
+                switch result {
+                case .success(let photoInfo):
+                    self.photos[index].isLiked = photoInfo.likedByUser
+                    completion(.success(()))
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+        changeLikeTask?.resume()
+    }
+    
     func makeFetchListPhotoRequest(url: String, httpMethod: String) -> URLRequest? {
-
-            guard let url = URL(string: url) else {
-                assertionFailure("Failed to create URL")
-                print("CONSOLE func makeImageServiceRequest: Ошибка сборки URL для запроса данных о фото")
-                return nil
-            }
-            guard let token = OAuth2TokenStorage.token else {
-                assertionFailure("Failed to get token from OAuth2TokenStorage")
-                print("CONSOLE func makeImageServiceRequest: Ошибка получения токена от OAuth2TokenStorage")
-                return nil
-            }
-            var request = URLRequest(url: url)
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-            request.httpMethod = httpMethod
-            return request
+        
+        guard let url = URL(string: url) else {
+            assertionFailure("Failed to create URL")
+            print("CONSOLE func makeImageServiceRequest: Ошибка сборки URL для запроса данных о фото")
+            return nil
         }
+        guard let token = OAuth2TokenStorage.token else {
+            assertionFailure("Failed to get token from OAuth2TokenStorage")
+            print("CONSOLE func makeImageServiceRequest: Ошибка получения токена от OAuth2TokenStorage")
+            return nil
+        }
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = httpMethod
+        return request
+    }
 }
 

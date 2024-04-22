@@ -18,7 +18,7 @@ final class ImagesListCell: UITableViewCell {
     
     @IBOutlet var cellImage: UIImageView!
     
-    @IBOutlet var likeButton: UIButton!
+    @IBOutlet weak var likeButton: UIButton!
     
     @IBOutlet var dataText: UILabel!
     

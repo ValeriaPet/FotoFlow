@@ -32,17 +32,18 @@ class ImagesListViewController: UIViewController {
         }
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier ==  ShowSingleImageSegueId {
             if let viewController = segue.destination as? SingleImageViewController,
-            let indexPath = sender as? IndexPath {
+               let indexPath = sender as? IndexPath {
                 viewController.imageURL = photoNames[indexPath.row].largeImageURL
             } else {
                 super.prepare(for: segue, sender: sender)
             }
         }
     }
-        
+    
     func updateTableViewAnimated() {
         let oldCount = photoNames.count
         let newCount = imagesListService.photos.count
@@ -76,7 +77,7 @@ class ImagesListViewController: UIViewController {
         setImageWithKF(for: cell, with: indexPath)
         cell.dataText.text = self.dateToStringFormatter.string(from: self.photoNames[indexPath.row].createdAt ?? Date())
         
-        let likedImage = UIImage(named: self.photoNames[indexPath.row].isLiked ? "LikeActive" : "LikeNoActive")
+        let likedImage = UIImage(named: self.photoNames[indexPath.row].isLiked ? "LikeIsActive" : "LikeNoActive")
         cell.likeButton.setImage(likedImage, for: .normal)
         
         cell.gradientView.layer.masksToBounds = true
@@ -99,12 +100,13 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath) as? ImagesListCell else {
             fatalError("Unable to dequeue ImagesListCell")
         }
+        cell.delegate = self  // Назначение делегата
         configCell(for: cell, with: indexPath)
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // Автоматическая подгрузка данных при скроллинге к последней ячейке
+        
         if indexPath.row == photoNames.count - 1 && imagesListService.task == nil {
             imagesListService.fetchPhotosNextPage("") { }
         }
@@ -115,13 +117,13 @@ extension ImagesListViewController: UITableViewDataSource {
 extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         performSegue(withIdentifier: ShowSingleImageSegueId, sender: indexPath)
-     }
-
+        performSegue(withIdentifier: ShowSingleImageSegueId, sender: indexPath)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard self.photoNames.count > 0 else {
             return 0
-    }
+        }
         let photoInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let photoViewWidth = tableView.bounds.width - photoInsets.left - photoInsets.right
         let photoWidth = photoNames[indexPath.row].size.width
@@ -130,9 +132,32 @@ extension ImagesListViewController: UITableViewDelegate {
         return cellHeight
     }
 }
-
 extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
-   
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photoNames[indexPath.row]
+        
+        UIBlockingProgressHUD.show()
+        
+        imagesListService.changeLike(photoId: photo.id, isLiked: !photo.isLiked) { result in
+            
+                switch result {
+                case .success():
+                    self.photoNames = self.imagesListService.photos
+                    // Обновляем статус лайка локально
+                    self.photoNames[indexPath.row].isLiked.toggle() 
+                    UIBlockingProgressHUD.dismiss()
+                    // Переключаем статус лайка
+                    // Устанавливаем соответствующее изображение для кнопки
+//                    let likedImage = UIImage(named: self.photoNames[indexPath.row].isLiked ? "LikeIsActive" : "LikeNoActive")
+//                    cell.likeButton.setImage(likedImage, for: .normal)
+                    
+                case .failure(let error):
+                    print("Ошибка при изменении лайка:", error.localizedDescription)
+                    UIBlockingProgressHUD.dismiss()
+                }
+            }
+        }
     }
-}
+
+

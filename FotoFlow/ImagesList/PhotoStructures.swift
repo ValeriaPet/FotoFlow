@@ -23,7 +23,6 @@ struct PhotoPageResult: Decodable {
     let createdAt: String
     let description, altDescription: String?
     let urls: UrlsResult
-//    let likes: Int
     let likedByUser: Bool
     
     enum CodingKeys: String, CodingKey {
@@ -38,9 +37,10 @@ struct PhotoPageResult: Decodable {
     }
 }
 
-struct PhotoPageResponse: Decodable {
-    let results: [PhotoPageResult]
+struct PhotoLikedResult: Decodable {
+    let photo: PhotoPageResult
 }
+
 struct UrlsResult: Decodable {
     let full: String
     let thumb: String
