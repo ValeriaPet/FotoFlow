@@ -12,21 +12,20 @@ enum CodingError: Error {
 }
 
 protocol AuthViewControllerDelegate: AnyObject {
-    func authViewController(_ vc: AuthViewController, didAutenticateWithCode token: String)
+    func authViewController(_ vc: AuthViewController)
 }
 
 final class AuthViewController: UIViewController {
     
     private let WebViewId: String = "ShowWebView"
-    private var oauth2Service: OAuth2Service?
     private var oauth2TokenStorage = OAuth2TokenStorage.token
     
     weak var delegate: AuthViewControllerDelegate?
     
-    override func viewDidLoad() {
-         super.viewDidLoad()
-         oauth2Service = OAuth2Service()
-     }
+//    override func viewDidLoad() {
+//         super.viewDidLoad()
+//         oauth2Service = OAuth2Service()
+//     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == WebViewId {
@@ -42,16 +41,17 @@ final class AuthViewController: UIViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     
-    func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         
-        oauth2Service?.fetchOAuthToken(code) { [weak self] result in
+        OAuth2Service.oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
+                
             case .success(let token):
                 // Сохранение токена в Keychain
                 self.oauth2TokenStorage = token
                 // Уведомление делегата об успешной аутентификации
-                self.delegate?.authViewController(self, didAutenticateWithCode: code)
+                self.delegate?.authViewController(self)
             case .failure(let error):
                 // Показ алерта с ошибкой
                 self.showLoginAlert(error: error)

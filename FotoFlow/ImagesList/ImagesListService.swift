@@ -37,12 +37,13 @@ final class ImagesListService {
         
         let nextPage = (lastLoadedPage ?? 0) + 1
         guard let request = makeFetchListPhotoRequest(url: "\(PhotoListUrl)?page=\(nextPage)&per_page=\(photosPerPage)",
-                                                      httpMethod: "GET"
+                                                    httpMethod: "GET"
         ) else {
             print("CONSOLE func fetchPhotosNextPage: Ошибка сборки запроса страницы с картинками")
             return
         }
         
+        let session = URLSession.shared
         task = session.objectTask(for: request) { [weak self] (result: Result<[PhotoPageResult], Error>) in
             guard let self = self else {return}
             self.task = nil
@@ -90,9 +91,8 @@ final class ImagesListService {
             }
             self.task = task
         }
-    }
-    
-    func changeLike(photoId: String, isLiked: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+        }
+    func changeLike(photoId: Int, completion: @escaping (Result<Bool, Error>) -> Void) {
         
         assert(Thread.isMainThread)
         if changeLikeTask != nil {
@@ -100,33 +100,28 @@ final class ImagesListService {
             return
         }
         
-        guard let index = photos.firstIndex(where: { $0.id == photoId }) else {
-            print("Photo not found")
+        guard let request = makeFetchListPhotoRequest(url: "\(PhotoListUrl)/\(photos[photoId].id)/like", httpMethod:photos[photoId].isLiked ? "DELETE" : "POST")
+                
+        else {
             return
         }
         
-        let url = "\(PhotoListUrl)/\(photos[index].id)/like"
-        let method = isLiked ? "POST" : "DELETE"
-        
-        guard let request = makeFetchListPhotoRequest(url: url, httpMethod: method) else {
-            return
-        }
-        
-        changeLikeTask = session.objectTask(for: request) {[weak self] (result: Result<PhotoPageResult, Error>) in
+        let changeLikeTask = session.objectTask(for: request) {[weak self] (result: Result<PhotoLikedResult, Error>) in
             DispatchQueue.main.async {
-                guard let self = self else { return }
-                self.changeLikeTask = nil
+                self?.changeLikeTask = nil
                 switch result {
                 case .success(let photoInfo):
-                    self.photos[index].isLiked = photoInfo.likedByUser
-                    completion(.success(()))
+                    self?.photos[photoId].isLiked = photoInfo.photo.likedByUser
+                    completion(.success(photoInfo.photo.likedByUser))
                     
                 case .failure(let error):
                     completion(.failure(error))
+                    return
                 }
             }
         }
-        changeLikeTask?.resume()
+        self.changeLikeTask = changeLikeTask
+        changeLikeTask.resume()
     }
     
     func makeFetchListPhotoRequest(url: String, httpMethod: String) -> URLRequest? {
@@ -146,5 +141,6 @@ final class ImagesListService {
         request.httpMethod = httpMethod
         return request
     }
+    
 }
 

@@ -58,19 +58,19 @@ final class SplashViewController: UIViewController {
         window.rootViewController = tabBarController
     }
     
-    private func fetchOAuthToken(_ code: String) {
-        UIBlockingProgressHUD.show()
-        oauth2Service.fetchOAuthToken(code) { [weak self] result in
-                UIBlockingProgressHUD.dismiss()
-                switch result {
-                case .success(let token):
-                    self?.oauth2TokenStorage = token
-                    self?.fetchProfile(token)
-                case .failure:
-                    self?.showLoginAlert(message: "Не удалось войти в систему")
-                }
-        }
-    }
+//    private func fetchOAuthToken(_ code: String) {
+//        UIBlockingProgressHUD.show()
+//        oauth2Service.fetchOAuthToken(code) { [weak self] result in
+//                UIBlockingProgressHUD.dismiss()
+//                switch result {
+//                case .success(let token):
+//                    self?.oauth2TokenStorage = token
+//                    self?.fetchProfile(token)
+//                case .failure:
+//                    self?.showLoginAlert(message: "Не удалось войти в систему")
+//                }
+//        }
+//    }
     
     func showLoginAlert(message: String) {
         let alert = UIAlertController(
@@ -96,6 +96,10 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     
+    func authViewController(_ vc: AuthViewController) {
+        vc.dismiss(animated: true)
+    }
+    
     private func fetchProfile(_ token: String) {
         
         profileService.fetchProfile(token) { [weak self] result in
@@ -120,7 +124,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                         fetchProfile(token)
                     } else {
                         showLoginAlert(message: "Не удалось получить токен")
-                        print("бля")
+                        print("no")
                     }
         }
     

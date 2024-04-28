@@ -139,23 +139,30 @@ extension ImagesListViewController: ImagesListCellDelegate {
         
         UIBlockingProgressHUD.show()
         
-        imagesListService.changeLike(photoId: photo.id, isLiked: !photo.isLiked) { result in
+        imagesListService.changeLike(photoId: indexPath.row) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
             
-                switch result {
-                case .success():
-                    self.photoNames = self.imagesListService.photos
-                    // Обновляем статус лайка локально
-                    self.photoNames[indexPath.row].isLiked.toggle() 
-                    UIBlockingProgressHUD.dismiss()
-                    // Переключаем статус лайка
-                    // Устанавливаем соответствующее изображение для кнопки
+            switch result {
+            case .success(let like):
+                guard let favoriteImage = UIImage(named: like ? "LikeIsActive" : "LikeNoActive") else {
+                    return
+                }
+                cell.likeButton.setImage(favoriteImage, for: .normal)
+                print("CONSOLE func changeLike: изменен лайк для фото",
+                      self?.photoNames[indexPath.row].id ?? "",
+                      self?.photoNames[indexPath.row].welcomeDescription ?? "")
+            case .failure(let error):
+                print("CONSOLE func changeLike:", error.localizedDescription)
+            }
+//                switch result {
+//                case .success():
+//                    self.photoNames[indexPath.row].isLiked.toggle()
 //                    let likedImage = UIImage(named: self.photoNames[indexPath.row].isLiked ? "LikeIsActive" : "LikeNoActive")
 //                    cell.likeButton.setImage(likedImage, for: .normal)
-                    
-                case .failure(let error):
-                    print("Ошибка при изменении лайка:", error.localizedDescription)
-                    UIBlockingProgressHUD.dismiss()
-                }
+//                    self.photoNames = self.imagesListService.photos
+//                case .failure(let error):
+//                    print("Ошибка при изменении лайка:", error.localizedDescription)
+//                }
             }
         }
     }

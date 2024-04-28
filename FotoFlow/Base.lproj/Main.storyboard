@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2ec-y9-og6">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -47,7 +47,10 @@
                                                         <constraint firstAttribute="width" constant="42" id="aq5-eR-c2c"/>
                                                     </constraints>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" image="LikeActive"/>
+                                                    <state key="normal" image="LikeIsActive"/>
+                                                    <connections>
+                                                        <action selector="likeButtonClicked" destination="Nkv-0S-3k6" eventType="touchUpInside" id="I43-XQ-ljz"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19 декабря 2023" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyR-AQ-k0H">
                                                     <rect key="frame" x="24" y="196" width="105" height="16"/>
@@ -238,7 +241,7 @@
         <!--WebViewViewController-->
         <scene sceneID="Hd7-Y4-zd7">
             <objects>
-                <viewController title="WebViewViewController" id="ZWH-WY-nfV" customClass="WebViewViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" title="WebViewViewController" id="ZWH-WY-nfV" customClass="WebViewViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kmc-kg-GD6">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -295,7 +298,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Id4-Fk-9bX">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Yg4-Ho-Xy4" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Yg4-Ho-Xy4" customClass="NavigationController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="row-b1-7EY">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -334,7 +337,7 @@
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="Backward" width="24" height="24"/>
-        <image name="LikeActive" width="42" height="42"/>
+        <image name="LikeIsActive" width="42" height="42"/>
         <image name="Logo_of_Unsplash" width="60" height="60"/>
         <image name="MainActive" width="30" height="30"/>
         <image name="Sharing" width="50" height="50"/>

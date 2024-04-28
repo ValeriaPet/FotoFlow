@@ -26,15 +26,13 @@ final class ImagesListCell: UITableViewCell {
     
     weak var delegate: ImagesListCellDelegate?
     
+    @IBAction private func likeButtonClicked() {
+        delegate?.imageListCellDidTapLike(self)
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         // Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
         self.cellImage.kf.cancelDownloadTask()
     }
-    
-    // MARK: - IB Actions
-    @IBAction private func likeButtonClicked() {
-        delegate?.imageListCellDidTapLike(self)
-    }
-
 }
