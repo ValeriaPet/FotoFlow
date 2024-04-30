@@ -124,6 +124,11 @@ final class ImagesListService {
         changeLikeTask.resume()
     }
     
+    func cleanPhotos() {
+        photos.removeAll()
+        lastLoadedPage = nil
+    }
+    
     func makeFetchListPhotoRequest(url: String, httpMethod: String) -> URLRequest? {
         
         guard let url = URL(string: url) else {

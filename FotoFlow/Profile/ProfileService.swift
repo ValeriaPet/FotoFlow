@@ -38,6 +38,14 @@ final class ProfileService {
         }
     }
     
+    func cleanUserProfile() {
+        profile = Profile (username: "",
+                          name: "",
+                          loginName: "",
+                          bio: nil
+        )
+    }
+    
     func makeFetchProfileRequest(token: String) -> URLRequest? {
         URLRequest.makeHTTPRequest(
             path: "/me",

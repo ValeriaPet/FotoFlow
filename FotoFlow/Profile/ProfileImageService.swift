@@ -18,6 +18,10 @@ final class ProfileImageService {
     
     private var task: URLSessionTask?
     
+    func cleanUserAvatarURL () {
+        avatarURL = nil
+    }
+    
     func fetchProfileImageURL(_ username: String, completion: @escaping (Result<String, Error>) -> Void) {
         
         guard let request = makeFetchProfileImageRequest(username: username) else

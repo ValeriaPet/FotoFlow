@@ -18,11 +18,7 @@ final class SplashViewController: UIViewController {
     
     private let showLoginFlowSegueID = "ShowLoginFlow"
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        alertPresenter.delegate = self
-//    }
-    
+
     override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(animated)
         checkAuthStatus()
@@ -57,21 +53,7 @@ final class SplashViewController: UIViewController {
             .instantiateViewController(withIdentifier: "TabBarViewController")
         window.rootViewController = tabBarController
     }
-    
-//    private func fetchOAuthToken(_ code: String) {
-//        UIBlockingProgressHUD.show()
-//        oauth2Service.fetchOAuthToken(code) { [weak self] result in
-//                UIBlockingProgressHUD.dismiss()
-//                switch result {
-//                case .success(let token):
-//                    self?.oauth2TokenStorage = token
-//                    self?.fetchProfile(token)
-//                case .failure:
-//                    self?.showLoginAlert(message: "Не удалось войти в систему")
-//                }
-//        }
-//    }
-    
+        
     func showLoginAlert(message: String) {
         let alert = UIAlertController(
             title: "Что-то пошло не так :(",

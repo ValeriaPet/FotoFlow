@@ -21,17 +21,12 @@ final class OAuth2TokenStorage {
         set {
             if let token = newValue {
                 KeychainWrapper.standard.set(token, forKey: Keys.token.rawValue)
+            } else {
+                KeychainWrapper.standard.removeObject(forKey: Keys.token.rawValue)
             }
         }
     }
     
-    static func removeToken() -> Bool {
-         
-        let result = KeychainWrapper.standard.removeObject(forKey: Keys.token.rawValue)
-        print("Token removed: \(result), new token is \(String(describing: KeychainWrapper.standard.string(forKey: Keys.token.rawValue)))")
-            return result
-        }
-
     private enum Keys: String {
         case token
     }
