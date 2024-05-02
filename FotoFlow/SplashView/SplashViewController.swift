@@ -10,7 +10,7 @@ import UIKit
 final class SplashViewController: UIViewController {
     
     private let ShowAuthenticationScreen = "AutenticationScreen"
-    private let oauth2Service = OAuth2Service()
+    private let oauth2Service = OAuth2Service.oauth2Service
     private var oauth2TokenStorage = OAuth2TokenStorage.token
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
@@ -78,8 +78,10 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     
-    func authViewController(_ vc: AuthViewController) {
+    func authViewController(_ vc: AuthViewController, _ token: String) {
         vc.dismiss(animated: true)
+        dismiss(animated: true)
+        fetchProfile(token)
     }
     
     private func fetchProfile(_ token: String) {

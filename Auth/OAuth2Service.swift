@@ -20,11 +20,18 @@ enum AuthServiceError: Error {
 
 final class OAuth2Service {
     
+
+    static let shared = OAuth2Service() // Создание нового экземпляра
+    private init() {}
+    
     private var task: URLSessionTask?
     private var lastCode: String?
     static let oauth2Service = OAuth2Service()
     private var oauth2TokenStorage = OAuth2TokenStorage.token
     
+   
+//    private init() {} // Приватный конструктор
+
     private (set) var authToken: String? {
         get {
             return oauth2TokenStorage
@@ -81,9 +88,9 @@ final class OAuth2Service {
 //                completion(.failure(NetworkError.decodingError))
 //            }
 //        }
-//    
+//
 //        task?.resume()
-// 
+//
 //    }
 
     

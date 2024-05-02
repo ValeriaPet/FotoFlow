@@ -12,7 +12,7 @@ enum CodingError: Error {
 }
 
 protocol AuthViewControllerDelegate: AnyObject {
-    func authViewController(_ vc: AuthViewController)
+    func authViewController(_ vc: AuthViewController, _ token: String)
 }
 
 final class AuthViewController: UIViewController {
@@ -51,7 +51,7 @@ extension AuthViewController: WebViewViewControllerDelegate {
                 // Сохранение токена в Keychain
                 self.oauth2TokenStorage = token
                 // Уведомление делегата об успешной аутентификации
-                self.delegate?.authViewController(self)
+                self.delegate?.authViewController(self, token)
             case .failure(let error):
                 // Показ алерта с ошибкой
                 self.showLoginAlert(error: error)

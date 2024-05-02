@@ -10,7 +10,7 @@ import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
     
-    static let shared = OAuth2Service()
+    static let shared = OAuth2Service.shared
     private init() {}
     
     

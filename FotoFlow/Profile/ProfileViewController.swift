@@ -51,15 +51,19 @@ final class ProfileViewController: UIViewController {
     }
     
     func loadProfileData() {
-        if let profile = ProfileService.shared.profile {
-            // Use the existing profile data
-            name.text = profile.name
-            nick.text = profile.loginName
-            greet.text = profile.bio
-            
-            ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in }
+        if OAuth2Service.oauth2Service.isAuthenticated {
+            if let profile = ProfileService.shared.profile {
+                // Use the existing profile data
+                name.text = profile.name
+                nick.text = profile.loginName
+                greet.text = profile.bio
+                
+                ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in }
+            } else {
+                print("No profile data available.")
+            }
         } else {
-            print("No profile data available.")
+            print("User is not authenticated.")
         }
     }
     

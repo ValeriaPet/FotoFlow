@@ -38,8 +38,8 @@ final class ProfileLogoutService {
         ProfileImageService.shared.cleanUserAvatarURL()
         
         ImagesListService.shared.cleanPhotos()
-        let imageListViewController = ImagesListViewController()
-        imageListViewController.cleanPhotos()
+//        let imageListViewController = ImagesListViewController()
+//        imageListViewController.cleanPhotos()
         
         let cache = ImageCache.default
         cache.clearMemoryCache()
