@@ -5,7 +5,7 @@ final class SplashViewController: UIViewController {
     
     private let ShowAuthenticationScreen = "AutenticationScreen"
     private let oauth2Service = OAuth2Service.oauth2Service
-    private var oauth2TokenStorage = OAuth2TokenStorage.token
+    private var oauth2TokenStorage = OAuth2TokenStorage.shared.token
     private let profileService = ProfileService.profileService
     private let profileImageService = ProfileImageService.profileImageService
 
@@ -96,7 +96,7 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String) {
         
-            if let token = OAuth2TokenStorage.token {
+        if let token = OAuth2TokenStorage.shared.token {
                         fetchProfile(token)
                     } else {
                         showLoginAlert(message: "Не удалось получить токен")

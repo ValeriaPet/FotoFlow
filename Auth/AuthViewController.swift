@@ -12,7 +12,7 @@ protocol AuthViewControllerDelegate: AnyObject {
 final class AuthViewController: UIViewController {
     
     private let WebViewId: String = "ShowWebView"
-    private var oauth2TokenStorage = OAuth2TokenStorage.token
+    private var oauth2TokenStorage = OAuth2TokenStorage.shared.token
     
     weak var delegate: AuthViewControllerDelegate?
     

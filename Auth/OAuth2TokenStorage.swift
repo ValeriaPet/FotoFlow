@@ -5,11 +5,11 @@ import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
     
-    static let shared = OAuth2Service.oauth2Service
+    static let shared = OAuth2TokenStorage()
     private init() {}
     
     
-    static var token: String? {
+    var token: String? {
         get {
             return KeychainWrapper.standard.string(forKey: Keys.token.rawValue)
         }

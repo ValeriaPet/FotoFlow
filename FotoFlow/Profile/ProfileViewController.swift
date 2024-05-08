@@ -51,7 +51,6 @@ final class ProfileViewController: UIViewController {
     }
     
     func loadProfileData() {
-        if OAuth2Service.oauth2Service.isAuthenticated {
             if let profile = ProfileService.profileService.profile {
                 // Use the existing profile data
                 name.text = profile.name
@@ -62,10 +61,8 @@ final class ProfileViewController: UIViewController {
             } else {
                 print("No profile data available.")
             }
-        } else {
-            print("User is not authenticated.")
-        }
-    }
+        } 
+
     
     private func updateAvatar(notification: Notification) {
         guard

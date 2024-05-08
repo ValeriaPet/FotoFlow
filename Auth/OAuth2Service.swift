@@ -25,19 +25,19 @@ final class OAuth2Service {
     
     private var task: URLSessionTask?
     private var lastCode: String?
-    private var oauth2TokenStorage = OAuth2TokenStorage.token
+    private var oauth2TokenStorage = OAuth2TokenStorage.shared.token
 
     
     private (set) var authToken: String? {
         get {
-            return oauth2TokenStorage
+            return OAuth2TokenStorage.shared.token
         } set {
-            oauth2TokenStorage = newValue
+            OAuth2TokenStorage.shared.token = newValue
         }
     }
     
     var isAuthenticated: Bool {
-        return oauth2TokenStorage != nil
+        return OAuth2TokenStorage.shared.token != nil
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -58,7 +58,7 @@ final class OAuth2Service {
                 OAuth2Service.oauth2Service.lastCode = nil
                 switch result {
                 case .success(let token):
-                    OAuth2TokenStorage.token = token.accessToken
+                    OAuth2TokenStorage.shared.token = token.accessToken
                     print("Token successfully retrieved and stored: \(token.accessToken)")
                     completion(.success(token.accessToken))
                 case .failure(let error):

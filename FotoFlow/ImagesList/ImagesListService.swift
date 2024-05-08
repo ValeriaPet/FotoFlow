@@ -133,7 +133,7 @@ final class ImagesListService {
             print("CONSOLE func makeImageServiceRequest: Ошибка сборки URL для запроса данных о фото")
             return nil
         }
-        guard let token = OAuth2TokenStorage.token else {
+        guard let token = OAuth2TokenStorage.shared.token else {
             print("CONSOLE func makeImageServiceRequest: Ошибка получения токена от OAuth2TokenStorage")
             return nil
         }
