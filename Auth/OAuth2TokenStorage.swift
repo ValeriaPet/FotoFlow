@@ -1,16 +1,11 @@
-//
-//  OAuth2TokenStorage.swift
-//  FotoFlow
-//
-//  Created by LERÄ on 25.01.24.
-//
+
 
 import Foundation
 import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
     
-    static let shared = OAuth2Service.shared
+    static let shared = OAuth2Service.oauth2Service
     private init() {}
     
     

@@ -13,7 +13,7 @@ final class ImagesListService {
         case requestError
     }
     
-    static let shared = ImagesListService()
+    static let imagesListService = ImagesListService()
     let session = URLSession.shared
     var task: URLSessionTask?
     
@@ -31,7 +31,6 @@ final class ImagesListService {
     func fetchPhotosNextPage(_ username: String, completion: @escaping () -> Void) {
         assert(Thread.isMainThread)
         if task != nil {
-            print("aaaa")
             return
         }
         
@@ -96,7 +95,6 @@ final class ImagesListService {
         
         assert(Thread.isMainThread)
         if changeLikeTask != nil {
-            print("ooo")
             return
         }
         
@@ -132,15 +130,15 @@ final class ImagesListService {
     func makeFetchListPhotoRequest(url: String, httpMethod: String) -> URLRequest? {
         
         guard let url = URL(string: url) else {
-            assertionFailure("Failed to create URL")
             print("CONSOLE func makeImageServiceRequest: Ошибка сборки URL для запроса данных о фото")
             return nil
         }
         guard let token = OAuth2TokenStorage.token else {
-            assertionFailure("Failed to get token from OAuth2TokenStorage")
             print("CONSOLE func makeImageServiceRequest: Ошибка получения токена от OAuth2TokenStorage")
             return nil
         }
+        print("Using token: \(token)")
+        
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.httpMethod = httpMethod

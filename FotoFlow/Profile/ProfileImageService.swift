@@ -9,7 +9,7 @@ import Foundation
 
 final class ProfileImageService {
     
-    static let shared = ProfileImageService()
+    static let profileImageService = ProfileImageService()
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     

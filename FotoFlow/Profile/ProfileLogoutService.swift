@@ -34,13 +34,11 @@ final class ProfileLogoutService {
         
         OAuth2TokenStorage.token = nil
         
-        ProfileService.shared.cleanUserProfile()
-        ProfileImageService.shared.cleanUserAvatarURL()
+        ProfileService.profileService.cleanUserProfile()
+        ProfileImageService.profileImageService.cleanUserAvatarURL()
         
-        ImagesListService.shared.cleanPhotos()
-//        let imageListViewController = ImagesListViewController()
-//        imageListViewController.cleanPhotos()
-        
+        ImagesListService.imagesListService.cleanPhotos()
+
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()

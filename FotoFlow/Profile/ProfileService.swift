@@ -9,22 +9,26 @@ import Foundation
 
 final class ProfileService {
     
-    static let shared = ProfileService()
+    static let profileService = ProfileService()
     var profile: Profile?
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
     
-    func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void){
+    func fetchProfile(token: String, completion: @escaping (Result<Profile, Error>) -> Void){
+
+        if task != nil {
+            task?.cancel()
+        }
+        
         guard let request = makeFetchProfileRequest(token: token) else {
-            assertionFailure("Invalid request")
             completion(.failure(NetworkError.invalidRequest))
             print("\(String(describing: Profile.self)) [dataTask:] - Network Error")
             return
         }
         
         let session = URLSession.shared
-        task = session.objectTask(for: request) { [weak self] (response: Result<ProfileResult, Error>) in
+        let task = session.objectTask(for: request) { [weak self] (response: Result<ProfileResult, Error>) in
             self?.task = nil
             switch response {
             case .success(let profileResult):
@@ -36,6 +40,7 @@ final class ProfileService {
                 print("\(String(describing: ProfileResult.self)) [dataTask:] - Network Error \(error)" )
             }
         }
+        self.task = task
     }
     
     func cleanUserProfile() {

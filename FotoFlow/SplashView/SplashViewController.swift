@@ -1,9 +1,3 @@
-//
-//  SplashViewController.swift
-//  FotoFlow
-//
-//  Created by LERÄ on 28.01.24.
-//
 
 import UIKit
 
@@ -12,10 +6,9 @@ final class SplashViewController: UIViewController {
     private let ShowAuthenticationScreen = "AutenticationScreen"
     private let oauth2Service = OAuth2Service.oauth2Service
     private var oauth2TokenStorage = OAuth2TokenStorage.token
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
-//    private let alertPresenter = AlertPresenter()
-    
+    private let profileService = ProfileService.profileService
+    private let profileImageService = ProfileImageService.profileImageService
+
     private let showLoginFlowSegueID = "ShowLoginFlow"
     
 
@@ -38,7 +31,6 @@ final class SplashViewController: UIViewController {
             UIBlockingProgressHUD.dismiss()
         }
     
-
     private func showAuthController() {
         let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AuthViewControllerID")
         guard let authViewController = viewController as? AuthViewController else {return}
@@ -86,7 +78,7 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     private func fetchProfile(_ token: String) {
         
-        profileService.fetchProfile(token) { [weak self] result in
+        profileService.fetchProfile(token: token) { [weak self] result in
             
                 guard let self = self else { return }
                 UIBlockingProgressHUD.dismiss()
@@ -108,7 +100,6 @@ extension SplashViewController: AuthViewControllerDelegate {
                         fetchProfile(token)
                     } else {
                         showLoginAlert(message: "Не удалось получить токен")
-                        print("no")
                     }
         }
     

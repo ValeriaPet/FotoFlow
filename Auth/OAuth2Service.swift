@@ -20,18 +20,14 @@ enum AuthServiceError: Error {
 
 final class OAuth2Service {
     
-
-    static let shared = OAuth2Service() // Создание нового экземпляра
+    static let oauth2Service = OAuth2Service()
     private init() {}
     
     private var task: URLSessionTask?
     private var lastCode: String?
-    static let oauth2Service = OAuth2Service()
     private var oauth2TokenStorage = OAuth2TokenStorage.token
-    
-   
-//    private init() {} // Приватный конструктор
 
+    
     private (set) var authToken: String? {
         get {
             return oauth2TokenStorage
@@ -45,7 +41,7 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        // Проверка на повторные запросы с тем же кодом
+        
         guard task == nil else {
             return
         }
@@ -63,6 +59,7 @@ final class OAuth2Service {
                 switch result {
                 case .success(let token):
                     OAuth2TokenStorage.token = token.accessToken
+                    print("Token successfully retrieved and stored: \(token.accessToken)")
                     completion(.success(token.accessToken))
                 case .failure(let error):
                     completion(.failure(error))
@@ -71,29 +68,7 @@ final class OAuth2Service {
         }
         self.task = task
     }
-            
-//            guard let data = data,
-//                  let httpResponse = response as? HTTPURLResponse,
-//                  httpResponse.statusCode == 200 else {
-//                completion(.failure(NetworkError.serverError("Invalid response")))
-//                return
-//            }
-            
-//            do {
-//                let decoder = JSONDecoder()
-//                let tokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-//                self.authToken = tokenResponse.accessToken
-//                completion(.success(tokenResponse.accessToken))
-//            } catch {
-//                completion(.failure(NetworkError.decodingError))
-//            }
-//        }
-//
-//        task?.resume()
-//
-//    }
-
-    
+        
     private func authTokenRequest(code: String) -> URLRequest? {
         // Определяем параметры для запроса
         let params = "?client_id=\(AccessKey)" +

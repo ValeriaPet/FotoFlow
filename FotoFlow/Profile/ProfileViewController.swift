@@ -34,7 +34,7 @@ final class ProfileViewController: UIViewController {
         layout()
         
         
-        if let url = ProfileImageService.shared.avatarURL {
+        if let url = ProfileImageService.profileImageService.avatarURL {
             updateAvatar(url: url)
         }
         
@@ -52,13 +52,13 @@ final class ProfileViewController: UIViewController {
     
     func loadProfileData() {
         if OAuth2Service.oauth2Service.isAuthenticated {
-            if let profile = ProfileService.shared.profile {
+            if let profile = ProfileService.profileService.profile {
                 // Use the existing profile data
                 name.text = profile.name
                 nick.text = profile.loginName
                 greet.text = profile.bio
                 
-                ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in }
+                ProfileImageService.profileImageService.fetchProfileImageURL(profile.username) { result in }
             } else {
                 print("No profile data available.")
             }

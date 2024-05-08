@@ -7,7 +7,7 @@ class ImagesListViewController: UIViewController {
     
     private let ShowSingleImageSegueId = "ShowSingleImage"
     private var photoNames: [Photo] = []
-    private let imagesListService = ImagesListService.shared
+    private let imagesListService = ImagesListService.imagesListService
     private var ImagesListServiceObserver: NSObjectProtocol?
     private let dateToStringFormatter = DateFormatter()
     
@@ -154,17 +154,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
             case .failure(let error):
                 print("CONSOLE func changeLike:", error.localizedDescription)
             }
-//                switch result {
-//                case .success():
-//                    self.photoNames[indexPath.row].isLiked.toggle()
-//                    let likedImage = UIImage(named: self.photoNames[indexPath.row].isLiked ? "LikeIsActive" : "LikeNoActive")
-//                    cell.likeButton.setImage(likedImage, for: .normal)
-//                    self.photoNames = self.imagesListService.photos
-//                case .failure(let error):
-//                    print("Ошибка при изменении лайка:", error.localizedDescription)
-//                }
-            }
         }
     }
-
+}
 

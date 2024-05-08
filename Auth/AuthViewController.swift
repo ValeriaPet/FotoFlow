@@ -1,9 +1,3 @@
-//
-//  AuthViewController.swift
-//  FotoFlow
-//
-//  Created by LERÄ on 17.01.24.
-//
 
 import UIKit
 
@@ -21,11 +15,6 @@ final class AuthViewController: UIViewController {
     private var oauth2TokenStorage = OAuth2TokenStorage.token
     
     weak var delegate: AuthViewControllerDelegate?
-    
-//    override func viewDidLoad() {
-//         super.viewDidLoad()
-//         oauth2Service = OAuth2Service()
-//     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == WebViewId {
@@ -48,14 +37,10 @@ extension AuthViewController: WebViewViewControllerDelegate {
             switch result {
                 
             case .success(let token):
-                // Сохранение токена в Keychain
                 self.oauth2TokenStorage = token
-                // Уведомление делегата об успешной аутентификации
                 self.delegate?.authViewController(self, token)
             case .failure(let error):
-                // Показ алерта с ошибкой
                 self.showLoginAlert(error: error)
-                print("purr")
             }
         }
     }
