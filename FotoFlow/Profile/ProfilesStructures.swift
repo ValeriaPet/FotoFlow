@@ -9,8 +9,8 @@ import Foundation
 
 struct ProfileResult: Codable {
     var userLogin: String
-    var firstName: String
-    var lastName: String
+    var firstName: String?
+    var lastName: String?
     var bio: String?
     var profileImage: ProfileImage?
     
@@ -40,7 +40,7 @@ struct ProfileResult: Codable {
         init(result profile: ProfileResult) {
             self.init(
                 username: profile.userLogin,
-                name: "\(profile.firstName) \(profile.lastName)",
+                name: "\(profile.firstName ?? "") \(profile.lastName ?? "")",
                 loginName: "@\(profile.userLogin)",
                 bio: profile.bio
                 )
