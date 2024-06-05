@@ -9,12 +9,13 @@ import Foundation
 
 final class ImagesListService {
     
-    static let imagesListService = ImagesListService()
-    var task: URLSessionTask?
-    
     private enum photosNextPageErrors: Error {
         case requestError
     }
+    
+    static let imagesListService = ImagesListService()
+    let session = URLSession.shared
+    var task: URLSessionTask?
     
     static let imageListUpdated = Notification.Name(rawValue:"ImagesListServiceDidChange")
     
@@ -30,7 +31,6 @@ final class ImagesListService {
     func fetchPhotosNextPage(_ username: String, completion: @escaping () -> Void) {
         assert(Thread.isMainThread)
         if task != nil {
-            print("aaaa")
             return
         }
         
@@ -91,23 +91,59 @@ final class ImagesListService {
             self.task = task
         }
         }
-
-    func makeFetchListPhotoRequest(url: String, httpMethod: String) -> URLRequest? {
-
-            guard let url = URL(string: url) else {
-                assertionFailure("Failed to create URL")
-                print("CONSOLE func makeImageServiceRequest: Ошибка сборки URL для запроса данных о фото")
-                return nil
-            }
-            guard let token = OAuth2TokenStorage.token else {
-                assertionFailure("Failed to get token from OAuth2TokenStorage")
-                print("CONSOLE func makeImageServiceRequest: Ошибка получения токена от OAuth2TokenStorage")
-                return nil
-            }
-            var request = URLRequest(url: url)
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-            request.httpMethod = httpMethod
-            return request
+    func changeLike(photoId: Int, completion: @escaping (Result<Bool, Error>) -> Void) {
+        
+        assert(Thread.isMainThread)
+        if changeLikeTask != nil {
+            return
         }
+        
+        guard let request = makeFetchListPhotoRequest(url: "\(PhotoListUrl)/\(photos[photoId].id)/like", httpMethod:photos[photoId].isLiked ? "DELETE" : "POST")
+                
+        else {
+            return
+        }
+        
+        let changeLikeTask = session.objectTask(for: request) {[weak self] (result: Result<PhotoLikedResult, Error>) in
+            DispatchQueue.main.async {
+                self?.changeLikeTask = nil
+                switch result {
+                case .success(let photoInfo):
+                    self?.photos[photoId].isLiked = photoInfo.photo.likedByUser
+                    completion(.success(photoInfo.photo.likedByUser))
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                    return
+                }
+            }
+        }
+        self.changeLikeTask = changeLikeTask
+        changeLikeTask.resume()
+    }
+    
+    func cleanPhotos() {
+        photos.removeAll()
+        lastLoadedPage = nil
+    }
+    
+    func makeFetchListPhotoRequest(url: String, httpMethod: String) -> URLRequest? {
+        
+        guard let url = URL(string: url) else {
+            print("CONSOLE func makeImageServiceRequest: Ошибка сборки URL для запроса данных о фото")
+            return nil
+        }
+        guard let token = OAuth2TokenStorage.shared.token else {
+            print("CONSOLE func makeImageServiceRequest: Ошибка получения токена от OAuth2TokenStorage")
+            return nil
+        }
+        print("Using token: \(token)")
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = httpMethod
+        return request
+    }
+    
 }
 

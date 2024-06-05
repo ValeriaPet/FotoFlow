@@ -8,11 +8,11 @@
 import Foundation
 
 struct ProfileResult: Codable {
-    let userLogin: String
-    let firstName: String?
-    let lastName: String?
-    let bio: String?
-    let profileImage: ProfileImage?
+    var userLogin: String
+    var firstName: String
+    var lastName: String?
+    var bio: String?
+    var profileImage: ProfileImage?
     
     private enum CodingKeys: String, CodingKey {
         case userLogin = "username"
@@ -24,10 +24,10 @@ struct ProfileResult: Codable {
 }
     
     struct Profile {
-        let username: String
-        let name: String
-        let loginName: String
-        let bio: String?
+        var username: String
+        var name: String?
+        var loginName: String
+        var bio: String?
         
     }
         struct ProfileImage: Codable {
@@ -40,7 +40,7 @@ struct ProfileResult: Codable {
         init(result profile: ProfileResult) {
             self.init(
                 username: profile.userLogin,
-                name: "\(profile.firstName ?? "") \(profile.lastName ?? "")",
+                name: "\(profile.firstName) \(profile.lastName ?? "")",
                 loginName: "@\(profile.userLogin)",
                 bio: profile.bio
                 )

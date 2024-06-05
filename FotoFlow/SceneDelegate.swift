@@ -1,9 +1,4 @@
-//
-//  SceneDelegate.swift
-//  FotoFlow
-//
-//  Created by LERÄ on 05.12.23.
-//
+
 
 import UIKit
 
@@ -14,10 +9,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: scene)                   // 1
+        window = UIWindow(windowScene: scene)
         window?.rootViewController = SplashViewController()
         window?.makeKeyAndVisible()
     }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {}
 

@@ -9,7 +9,7 @@ import Foundation
 
 final class ProfileImageService {
     
-    static let shared = ProfileImageService()
+    static let profileImageService = ProfileImageService()
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
@@ -17,6 +17,10 @@ final class ProfileImageService {
     private var profile: ProfileImage?
     
     private var task: URLSessionTask?
+    
+    func cleanUserAvatarURL () {
+        avatarURL = nil
+    }
     
     func fetchProfileImageURL(_ username: String, completion: @escaping (Result<String, Error>) -> Void) {
         
@@ -52,7 +56,7 @@ final class ProfileImageService {
             URLRequest.makeHTTPRequest(
                 path: "/users/\(username)",
                 httpMethod: "GET",
-                baseURL: DefaultBaseURL
+                baseURL: UserPhotoListUrl
             )
         }
     }
