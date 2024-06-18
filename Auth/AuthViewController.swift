@@ -23,7 +23,8 @@ final class AuthViewController: UIViewController {
             else { 
             fatalError("Failed to prepare for \(WebViewId)") }
             
-            let webViewPresenter = WebViewPresenter()
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
             webViewViewController.presenter = webViewPresenter
             webViewPresenter.view = webViewViewController
             webViewViewController.delegate = self
