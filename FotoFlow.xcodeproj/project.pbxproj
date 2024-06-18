@@ -23,7 +23,6 @@
 		042B16B32B377BCE00BE1560 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B16B22B377BCE00BE1560 /* ProfileViewController.swift */; };
 		042CD03A2C21FA10003A7B30 /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CD0392C21FA10003A7B30 /* AuthConfiguration.swift */; };
 		042CD03C2C21FC2E003A7B30 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CD03B2C21FC2E003A7B30 /* AuthHelper.swift */; };
-		042CD0442C22018B003A7B30 /* FotoFlowTests_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CD0432C22018B003A7B30 /* FotoFlowTests_.swift */; };
 		042CD04B2C22194F003A7B30 /* WebViewViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CD04A2C22194F003A7B30 /* WebViewViewControllerSpy.swift */; };
 		042CD04D2C221DBC003A7B30 /* WebViewPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CD04C2C221DBC003A7B30 /* WebViewPresenterSpy.swift */; };
 		042DB0802BC5D98600F7569C /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042DB07F2BC5D98600F7569C /* AlertPresenter.swift */; };
@@ -47,27 +46,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0415CAED2B1E686A00BDEFDA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0415CACE2B1E686900BDEFDA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0415CAD52B1E686900BDEFDA;
-			remoteInfo = FotoFlow;
-		};
-		0415CAF72B1E686A00BDEFDA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0415CACE2B1E686900BDEFDA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0415CAD52B1E686900BDEFDA;
-			remoteInfo = FotoFlow;
-		};
-		042CD0452C22018B003A7B30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0415CACE2B1E686900BDEFDA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0415CAD52B1E686900BDEFDA;
-			remoteInfo = FotoFlow;
-		};
 		04E263802BD1CACD00C37DFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0415CACE2B1E686900BDEFDA /* Project object */;
@@ -93,17 +71,15 @@
 		0415CAE22B1E686900BDEFDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0415CAE52B1E686900BDEFDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0415CAE72B1E686900BDEFDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0415CAEC2B1E686A00BDEFDA /* FotoFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FotoFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0415CAF62B1E686A00BDEFDA /* FotoFlowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FotoFlowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		042B16B22B377BCE00BE1560 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		042B16B52B377BE900BE1560 /* SFProDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Regular.ttf"; sourceTree = "<group>"; };
 		042B16B62B377BE900BE1560 /* SFProDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Bold.ttf"; sourceTree = "<group>"; };
 		042CD0392C21FA10003A7B30 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		042CD03B2C21FC2E003A7B30 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
-		042CD0412C22018B003A7B30 /* FotoFlowTests_.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FotoFlowTests_.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		042CD0432C22018B003A7B30 /* FotoFlowTests_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoFlowTests_.swift; sourceTree = "<group>"; };
 		042CD04A2C22194F003A7B30 /* WebViewViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerSpy.swift; sourceTree = "<group>"; };
 		042CD04C2C221DBC003A7B30 /* WebViewPresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenterSpy.swift; sourceTree = "<group>"; };
+		042CD05C2C222257003A7B30 /* FotoFlowTests_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoFlowTests_1.swift; sourceTree = "<group>"; };
 		042DB07F2BC5D98600F7569C /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		0433D8FF2BD32AC800A5F5AE /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		043F8B512BA4D6F90085D1C5 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
@@ -130,27 +106,6 @@
 				04365A4F2BC8629F001DDF31 /* Kingfisher in Frameworks */,
 				04BAB2842BBCAFB20052D169 /* ProgressHUD in Frameworks */,
 				04365A522BC8874C001DDF31 /* SwiftKeychainWrapper in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0415CAE92B1E686A00BDEFDA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0415CAF32B1E686A00BDEFDA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		042CD03E2C22018B003A7B30 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +142,7 @@
 				04E2637D2BD1CACD00C37DFE /* FotoFlowImageTests */,
 				042CD0422C22018B003A7B30 /* FotoFlowTests_ */,
 				042B16B42B377BE900BE1560 /* Font */,
+				042CD05B2C222257003A7B30 /* FotoFlowTests_1 */,
 				0415CAD72B1E686900BDEFDA /* Products */,
 				04BAB2822BBCAFB20052D169 /* Frameworks */,
 			);
@@ -196,10 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				0415CAD62B1E686900BDEFDA /* FotoFlow.app */,
-				0415CAEC2B1E686A00BDEFDA /* FotoFlowTests.xctest */,
-				0415CAF62B1E686A00BDEFDA /* FotoFlowUITests.xctest */,
 				04E2637C2BD1CACD00C37DFE /* FotoFlowImageTests.xctest */,
-				042CD0412C22018B003A7B30 /* FotoFlowTests_.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,6 +201,14 @@
 				042CD0432C22018B003A7B30 /* FotoFlowTests_.swift */,
 			);
 			path = FotoFlowTests_;
+			sourceTree = "<group>";
+		};
+		042CD05B2C222257003A7B30 /* FotoFlowTests_1 */ = {
+			isa = PBXGroup;
+			children = (
+				042CD05C2C222257003A7B30 /* FotoFlowTests_1.swift */,
+			);
+			path = FotoFlowTests_1;
 			sourceTree = "<group>";
 		};
 		0433D8FE2BD32AA100A5F5AE /* Help */ = {
@@ -333,60 +294,6 @@
 			productReference = 0415CAD62B1E686900BDEFDA /* FotoFlow.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0415CAEB2B1E686A00BDEFDA /* FotoFlowTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0415CB032B1E686A00BDEFDA /* Build configuration list for PBXNativeTarget "FotoFlowTests" */;
-			buildPhases = (
-				0415CAE82B1E686A00BDEFDA /* Sources */,
-				0415CAE92B1E686A00BDEFDA /* Frameworks */,
-				0415CAEA2B1E686A00BDEFDA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0415CAEE2B1E686A00BDEFDA /* PBXTargetDependency */,
-			);
-			name = FotoFlowTests;
-			productName = FotoFlowTests;
-			productReference = 0415CAEC2B1E686A00BDEFDA /* FotoFlowTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		0415CAF52B1E686A00BDEFDA /* FotoFlowUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0415CB062B1E686A00BDEFDA /* Build configuration list for PBXNativeTarget "FotoFlowUITests" */;
-			buildPhases = (
-				0415CAF22B1E686A00BDEFDA /* Sources */,
-				0415CAF32B1E686A00BDEFDA /* Frameworks */,
-				0415CAF42B1E686A00BDEFDA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0415CAF82B1E686A00BDEFDA /* PBXTargetDependency */,
-			);
-			name = FotoFlowUITests;
-			productName = FotoFlowUITests;
-			productReference = 0415CAF62B1E686A00BDEFDA /* FotoFlowUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		042CD0402C22018B003A7B30 /* FotoFlowTests_ */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 042CD0472C22018B003A7B30 /* Build configuration list for PBXNativeTarget "FotoFlowTests_" */;
-			buildPhases = (
-				042CD03D2C22018B003A7B30 /* Sources */,
-				042CD03E2C22018B003A7B30 /* Frameworks */,
-				042CD03F2C22018B003A7B30 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				042CD0462C22018B003A7B30 /* PBXTargetDependency */,
-			);
-			name = FotoFlowTests_;
-			productName = FotoFlowTests_;
-			productReference = 042CD0412C22018B003A7B30 /* FotoFlowTests_.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		04E2637B2BD1CACD00C37DFE /* FotoFlowImageTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04E263842BD1CACD00C37DFE /* Build configuration list for PBXNativeTarget "FotoFlowImageTests" */;
@@ -418,18 +325,6 @@
 					0415CAD52B1E686900BDEFDA = {
 						CreatedOnToolsVersion = 15.0;
 					};
-					0415CAEB2B1E686A00BDEFDA = {
-						CreatedOnToolsVersion = 15.0;
-						TestTargetID = 0415CAD52B1E686900BDEFDA;
-					};
-					0415CAF52B1E686A00BDEFDA = {
-						CreatedOnToolsVersion = 15.0;
-						TestTargetID = 0415CAD52B1E686900BDEFDA;
-					};
-					042CD0402C22018B003A7B30 = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = 0415CAD52B1E686900BDEFDA;
-					};
 					04E2637B2BD1CACD00C37DFE = {
 						CreatedOnToolsVersion = 15.3;
 						TestTargetID = 0415CAD52B1E686900BDEFDA;
@@ -455,10 +350,7 @@
 			projectRoot = "";
 			targets = (
 				0415CAD52B1E686900BDEFDA /* FotoFlow */,
-				0415CAEB2B1E686A00BDEFDA /* FotoFlowTests */,
-				0415CAF52B1E686A00BDEFDA /* FotoFlowUITests */,
 				04E2637B2BD1CACD00C37DFE /* FotoFlowImageTests */,
-				042CD0402C22018B003A7B30 /* FotoFlowTests_ */,
 			);
 		};
 /* End PBXProject section */
@@ -471,27 +363,6 @@
 				0415CAE62B1E686900BDEFDA /* LaunchScreen.storyboard in Resources */,
 				0415CAE32B1E686900BDEFDA /* Assets.xcassets in Resources */,
 				0415CAE12B1E686900BDEFDA /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0415CAEA2B1E686A00BDEFDA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0415CAF42B1E686A00BDEFDA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		042CD03F2C22018B003A7B30 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,28 +410,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0415CAE82B1E686A00BDEFDA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0415CAF22B1E686A00BDEFDA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		042CD03D2C22018B003A7B30 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				042CD0442C22018B003A7B30 /* FotoFlowTests_.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		04E263782BD1CACD00C37DFE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -574,21 +423,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0415CAEE2B1E686A00BDEFDA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0415CAD52B1E686900BDEFDA /* FotoFlow */;
-			targetProxy = 0415CAED2B1E686A00BDEFDA /* PBXContainerItemProxy */;
-		};
-		0415CAF82B1E686A00BDEFDA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0415CAD52B1E686900BDEFDA /* FotoFlow */;
-			targetProxy = 0415CAF72B1E686A00BDEFDA /* PBXContainerItemProxy */;
-		};
-		042CD0462C22018B003A7B30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0415CAD52B1E686900BDEFDA /* FotoFlow */;
-			targetProxy = 042CD0452C22018B003A7B30 /* PBXContainerItemProxy */;
-		};
 		04E263812BD1CACD00C37DFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0415CAD52B1E686900BDEFDA /* FotoFlow */;
@@ -801,116 +635,6 @@
 			};
 			name = Release;
 		};
-		0415CB042B1E686A00BDEFDA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3U6WQZ9PG7;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ValeriaPet.practicum.FotoFlowTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FotoFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FotoFlow";
-			};
-			name = Debug;
-		};
-		0415CB052B1E686A00BDEFDA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3U6WQZ9PG7;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ValeriaPet.practicum.FotoFlowTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FotoFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FotoFlow";
-			};
-			name = Release;
-		};
-		0415CB072B1E686A00BDEFDA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3U6WQZ9PG7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ValeriaPet.practicum.FotoFlowUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = FotoFlow;
-			};
-			name = Debug;
-		};
-		0415CB082B1E686A00BDEFDA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3U6WQZ9PG7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ValeriaPet.practicum.FotoFlowUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = FotoFlow;
-			};
-			name = Release;
-		};
-		042CD0482C22018B003A7B30 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ValeriaPet.practicum.FotoFlow.FotoFlowTests-";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FotoFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FotoFlow";
-			};
-			name = Debug;
-		};
-		042CD0492C22018B003A7B30 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ValeriaPet.practicum.FotoFlow.FotoFlowTests-";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FotoFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FotoFlow";
-			};
-			name = Release;
-		};
 		04E263822BD1CACD00C37DFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -966,33 +690,6 @@
 			buildConfigurations = (
 				0415CB012B1E686A00BDEFDA /* Debug */,
 				0415CB022B1E686A00BDEFDA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0415CB032B1E686A00BDEFDA /* Build configuration list for PBXNativeTarget "FotoFlowTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0415CB042B1E686A00BDEFDA /* Debug */,
-				0415CB052B1E686A00BDEFDA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0415CB062B1E686A00BDEFDA /* Build configuration list for PBXNativeTarget "FotoFlowUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0415CB072B1E686A00BDEFDA /* Debug */,
-				0415CB082B1E686A00BDEFDA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		042CD0472C22018B003A7B30 /* Build configuration list for PBXNativeTarget "FotoFlowTests_" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				042CD0482C22018B003A7B30 /* Debug */,
-				042CD0492C22018B003A7B30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
