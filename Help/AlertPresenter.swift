@@ -18,7 +18,7 @@ final class AlertPresenter {
     
     weak var delegate: UIViewController?
     
-    static func showAlert(alert model: AlertModel, on screen: UIViewController) {
+    static func showAlert(alert model: AlertModel, on screen: UIViewController) -> UIAlertController?  {
         let alert = UIAlertController(
             title: model.title,
             message: model.text,
@@ -27,6 +27,7 @@ final class AlertPresenter {
         
         alert.addAction(alertAction)
         screen.present(alert, animated: true, completion: nil)
+        return alert
     }
 }
 

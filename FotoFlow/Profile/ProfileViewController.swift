@@ -8,23 +8,35 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? {get set}
+    var profileImageView: UIImageView? {get set}
+    var exitButton: UIButton? {get set}
+    var logoutAlert: UIAlertController? {get set}
+    
+    func updateAvatar(url: URL)
+    
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
+    var presenter: ProfilePresenterProtocol?
+    var profileImageView: UIImageView?
+    var exitButton: UIButton?
+    var logoutAlert: UIAlertController?
     
     
     let name = UILabel()
     let nick = UILabel()
     let greet = UILabel()
     
-    private let photoImageView = {
-        
-        let photoImageView = UIImageView()
-        photoImageView.layer.cornerRadius = 35
-        photoImageView.tintColor = .white
-        photoImageView.clipsToBounds = true
-        photoImageView.backgroundColor = UIColor(named: "YP Black")
-        
-        return photoImageView
-    } ()
+    private let photoImageView: UIImageView = {
+           let photoImageView = UIImageView()
+           photoImageView.layer.cornerRadius = 35
+           photoImageView.tintColor = .white
+           photoImageView.clipsToBounds = true
+           photoImageView.backgroundColor = UIColor(named: "YP Black")
+           return photoImageView
+       }()
     
     
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -32,6 +44,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
+        presenter?.viewDidLoad()
         
         
         if let url = ProfileImageService.profileImageService.avatarURL {
@@ -51,18 +64,18 @@ final class ProfileViewController: UIViewController {
     }
     
     func loadProfileData() {
-            if let profile = ProfileService.profileService.profile {
-                // Use the existing profile data
-                name.text = profile.name
-                nick.text = profile.loginName
-                greet.text = profile.bio
-                
-                ProfileImageService.profileImageService.fetchProfileImageURL(profile.username) { result in }
-            } else {
-                print("No profile data available.")
-            }
-        } 
-
+        if let profile = ProfileService.profileService.profile {
+            // Use the existing profile data
+            name.text = profile.name
+            nick.text = profile.loginName
+            greet.text = profile.bio
+            
+            ProfileImageService.profileImageService.fetchProfileImageURL(profile.username) { _ in }
+        } else {
+            print("No profile data available.")
+        }
+    }
+    
     
     private func updateAvatar(notification: Notification) {
         guard
@@ -72,7 +85,7 @@ final class ProfileViewController: UIViewController {
         else {return}
         updateAvatar(url: url)
     }
-    private func updateAvatar(url: URL) {
+    func updateAvatar(url: URL) {
         photoImageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 61)
         photoImageView.kf.setImage(with: url,
@@ -95,7 +108,6 @@ final class ProfileViewController: UIViewController {
         
         name.textColor = .ypWhiteIOS
         name.font = .boldSystemFont(ofSize: 23)
-        
         name.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(name)
         
@@ -108,7 +120,6 @@ final class ProfileViewController: UIViewController {
         
         nick.textColor = .ypGrayIOS
         nick.font = .systemFont(ofSize: 13)
-        
         nick.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nick)
         
@@ -121,7 +132,6 @@ final class ProfileViewController: UIViewController {
         
         greet.textColor = .ypWhiteIOS
         greet.font = .systemFont(ofSize: 13)
-        
         greet.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(greet)
         
@@ -138,8 +148,8 @@ final class ProfileViewController: UIViewController {
         
         exitButton.tintColor = .ypRedIOS
         exitButton.setImage(buttonImage, for: .normal)
-        
         exitButton.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(exitButton)
         
         NSLayoutConstraint.activate([
@@ -150,16 +160,18 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc func logoutButtonAction() {
-        
+
         let alert = AlertModel(title: "Пока :(",
                                text: "Ты точно хочешь меня покинуть?",
                                buttonText: "Да!",
-                               completion: {_ in
-            ProfileLogoutService.profileLogoutService.logout()
+                               completion: {[weak self] _ in
+            self?.presenter?.profileLogout()
         })
-        AlertPresenter.showAlert(alert: alert, on: self)
+
+        self.logoutAlert = AlertPresenter.showAlert(alert: alert, on: self)
     }
+
 }
 
-    
+
 

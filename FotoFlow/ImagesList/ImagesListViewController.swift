@@ -135,7 +135,7 @@ extension ImagesListViewController: UITableViewDelegate {
 extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        let photo = photoNames[indexPath.row]
+        _ = photoNames[indexPath.row]
         
         UIBlockingProgressHUD.show()
         
