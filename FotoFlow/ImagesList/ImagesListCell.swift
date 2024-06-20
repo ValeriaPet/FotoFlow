@@ -15,19 +15,26 @@ protocol ImagesListCellDelegate: AnyObject {
 final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
+    weak var delegate: ImagesListCellDelegate?
     
     @IBOutlet var cellImage: UIImageView!
-    
     @IBOutlet weak var likeButton: UIButton!
-    
     @IBOutlet var dataText: UILabel!
-    
     @IBOutlet var gradientView: UIView!
-    
-    weak var delegate: ImagesListCellDelegate?
     
     @IBAction private func likeButtonClicked() {
         delegate?.imageListCellDidTapLike(self)
+    }
+    
+    func configure(with imageUrl: URL, date: String, isLiked: Bool, completion: @escaping () -> Void) {
+        setFavoriteButtonImage(isLiked: isLiked)
+    }
+        
+    func setFavoriteButtonImage(isLiked: Bool) {
+        guard let image = UIImage(named: isLiked ? "favorites_active" : "favorites_no_active") else {
+            return
+        }
+        likeButton.setImage(image, for: .normal)
     }
     
     override func prepareForReuse() {

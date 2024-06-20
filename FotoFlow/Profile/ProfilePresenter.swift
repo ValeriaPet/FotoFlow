@@ -36,9 +36,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         _ = userProfile.profile?.loginName
         _ = userProfile.profile?.bio
         
-        
     }
-    
     private func userImageUrlUpdate() {
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,

@@ -145,5 +145,20 @@ final class ImagesListService {
         return request
     }
     
+    func addMockPhotosForTests() {
+        guard let url = Constants.DefaultBaseURL else {
+            return
+        }
+        photos = []
+        for index in 0 ..< 5 {
+            photos.append(Photo(id: "\(index)",
+                                size: CGSize(width: 100, height: 200),
+                                thumbImageURL: url,
+                                largeImageURL: url,
+                                isLiked: index % 2 == 0)
+            )
+        }
+    }
+    
 }
 
