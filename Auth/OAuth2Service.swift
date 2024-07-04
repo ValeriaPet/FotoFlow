@@ -71,9 +71,9 @@ final class OAuth2Service {
         
     private func authTokenRequest(code: String) -> URLRequest? {
         // Определяем параметры для запроса
-        let params = "?client_id=\(AccessKey)" +
-        "&client_secret=\(SecretKey)" +
-        "&redirect_uri=\(RedirectURI)" +
+        let params = "?client_id=\(Constants.AccessKey)" +
+        "&client_secret=\(Constants.SecretKey)" +
+        "&redirect_uri=\(Constants.RedirectURI)" +
         "&code=\(code)" +
         "&grant_type=authorization_code"
         

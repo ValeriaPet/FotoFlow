@@ -55,7 +55,7 @@ final class ProfileService {
         URLRequest.makeHTTPRequest(
             path: "/me",
             httpMethod: "GET",
-            baseURL: DefaultBaseURL)
+            baseURL: Constants.DefaultBaseURL!)
     }
 }
 

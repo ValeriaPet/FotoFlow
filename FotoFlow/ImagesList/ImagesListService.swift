@@ -35,7 +35,7 @@ final class ImagesListService {
         }
         
         let nextPage = (lastLoadedPage ?? 0) + 1
-        guard let request = makeFetchListPhotoRequest(url: "\(PhotoListUrl)?page=\(nextPage)&per_page=\(photosPerPage)",
+        guard let request = makeFetchListPhotoRequest(url: "\(Constants.PhotoListUrl)?page=\(nextPage)&per_page=\(photosPerPage)",
                                                     httpMethod: "GET"
         ) else {
             print("CONSOLE func fetchPhotosNextPage: Ошибка сборки запроса страницы с картинками")
@@ -98,7 +98,7 @@ final class ImagesListService {
             return
         }
         
-        guard let request = makeFetchListPhotoRequest(url: "\(PhotoListUrl)/\(photos[photoId].id)/like", httpMethod:photos[photoId].isLiked ? "DELETE" : "POST")
+        guard let request = makeFetchListPhotoRequest(url: "\(Constants.PhotoListUrl)/\(photos[photoId].id)/like", httpMethod:photos[photoId].isLiked ? "DELETE" : "POST")
                 
         else {
             return

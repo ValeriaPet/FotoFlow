@@ -56,7 +56,7 @@ final class ProfileImageService {
             URLRequest.makeHTTPRequest(
                 path: "/users/\(username)",
                 httpMethod: "GET",
-                baseURL: UserPhotoListUrl
+                baseURL: Constants.UserPhotoListUrl
             )
         }
     }

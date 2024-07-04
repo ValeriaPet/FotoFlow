@@ -56,9 +56,9 @@ extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseURL: URL = DefaultBaseURL
+        baseURL: URL = Constants.DefaultBaseURL!
     ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL) ?? DefaultBaseURL)
+        var request = URLRequest(url: (URL(string: path, relativeTo: baseURL) ?? Constants.DefaultBaseURL!))
         request.httpMethod = httpMethod
         
         if let token = OAuth2TokenStorage.shared.token {

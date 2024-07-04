@@ -26,8 +26,8 @@ final class AuthHelper: AuthHelperProtocol{
             return nil
         }
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: AccessKey),
-            URLQueryItem(name: "redirect_uri", value: RedirectURI),
+            URLQueryItem(name: "client_id", value: configuration.AccessKey),
+            URLQueryItem(name: "redirect_uri", value: configuration.RedirectURI),
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "scope", value: configuration.AccessScope)
         ]
