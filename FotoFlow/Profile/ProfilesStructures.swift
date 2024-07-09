@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProfileResult: Decodable {
+struct ProfileResult: Codable {
     var userLogin: String
     var firstName: String
     var lastName: String?
@@ -30,7 +30,7 @@ struct ProfileResult: Decodable {
         var bio: String?
         
     }
-        struct ProfileImage: Decodable {
+        struct ProfileImage: Codable {
             let small: String?
             let medium: String?
             let large: String?

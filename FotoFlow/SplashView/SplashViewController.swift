@@ -11,16 +11,16 @@ final class SplashViewController: UIViewController {
 
     private let showLoginFlowSegueID = "ShowLoginFlow"
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         UIElementsLogo()
+        print("SplashViewController: viewDidLoad")
     }
     
-    override func viewDidAppear(_ animated: Bool){
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkAuthStatus()
+        print("SplashViewController: viewDidAppear")
     }
     
     private func checkAuthStatus() {
@@ -31,15 +31,15 @@ final class SplashViewController: UIViewController {
             } else {
                 switchToTabBarController()
             }
-                    } else {
-                        showAuthController()
-                        }
-            UIBlockingProgressHUD.dismiss()
+        } else {
+            showAuthController()
         }
+        UIBlockingProgressHUD.dismiss()
+    }
     
     private func showAuthController() {
         let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "AuthViewControllerID")
-        guard let authViewController = viewController as? AuthViewController else {return}
+        guard let authViewController = viewController as? AuthViewController else { return }
         authViewController.delegate = self
         authViewController.modalPresentationStyle = .fullScreen
         present(authViewController, animated: true)
@@ -62,54 +62,6 @@ final class SplashViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    
-    private func presentAuth() {
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        let viewController = storyboard.instantiateViewController(identifier: "AuthViewControllerID")
-        guard let authViewController = viewController as? AuthViewController
-        else {return}
-        authViewController.delegate = self
-        authViewController.modalPresentationStyle = .fullScreen
-        present(authViewController, animated: true)
-    }
-}
-
-extension SplashViewController: AuthViewControllerDelegate {
-    
-    func authViewController(_ vc: AuthViewController, _ token: String) {
-        vc.dismiss(animated: true)
-        dismiss(animated: true)
-        fetchProfile(token)
-    }
-    
-    private func fetchProfile(_ token: String) {
-        
-        profileService.fetchProfile(token: token) { [weak self] result in
-            
-                guard let self = self else { return }
-                UIBlockingProgressHUD.dismiss()
-                switch result {
-                case .success(let profile):
-                    // Store the fetched profile in ProfileService
-                    self.profileService.profile = profile
-                    self.switchToTabBarController()
-                case .failure:
-                    self.showLoginAlert(message: "Не удалось получить данные профиля")
-                
-            }
-        }
-    }
-    
-    func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String) {
-        
-        if let token = OAuth2TokenStorage.shared.token {
-                        fetchProfile(token)
-                    } else {
-                        showLoginAlert(message: "Не удалось получить токен")
-                    }
-        }
-    
-    
     private func UIElementsLogo() {
         view.backgroundColor = .ypBackgroundIOS
         let logoImage = UIImage(named: "Logo_of_Unsplash")
@@ -123,6 +75,39 @@ extension SplashViewController: AuthViewControllerDelegate {
         ])
     }
 }
+
+extension SplashViewController: AuthViewControllerDelegate {
+    
+    func authViewController(_ vc: AuthViewController, _ token: String) {
+        vc.dismiss(animated: true)
+        dismiss(animated: true)
+        fetchProfile(token)
+    }
+    
+    private func fetchProfile(_ token: String) {
+        profileService.fetchProfile(token: token) { [weak self] result in
+            guard let self = self else { return }
+            UIBlockingProgressHUD.dismiss()
+            switch result {
+            case .success(let profile):
+                // Store the fetched profile in ProfileService
+                self.profileService.profile = profile
+                self.switchToTabBarController()
+            case .failure:
+                self.showLoginAlert(message: "Не удалось получить данные профиля")
+            }
+        }
+    }
+    
+    func authViewController(_ vc: AuthViewController, didAutenticateWithCode code: String) {
+        if let token = OAuth2TokenStorage.shared.token {
+            fetchProfile(token)
+        } else {
+            showLoginAlert(message: "Не удалось получить токен")
+        }
+    }
+}
+
 
 
 

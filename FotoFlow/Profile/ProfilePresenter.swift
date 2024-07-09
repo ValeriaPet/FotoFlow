@@ -13,45 +13,43 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     weak var view: ProfileViewControllerProtocol?
     
     private let userProfile = ProfileService.profileService
-    private let userProfileImageServise = ProfileImageService.profileImageService
+    private let userProfileImageService = ProfileImageService.profileImageService
     private var profileImageServiceObserver: NSObjectProtocol?
     
     func viewDidLoad() {
         profileUpdate()
-        if let url = userProfileImageServise.avatarURL {
+        if let url = userProfileImageService.avatarURL {
             view?.updateAvatar(url: url)
-        }
-        else {
+        } else {
             userImageUrlUpdate()
         }
     }
     
     func profileLogout() {
+        print("ProfilePresenter: profileLogout called")
         ProfileLogoutService.profileLogoutService.logout()
     }
     
     private func profileUpdate() {
         guard let profile = userProfile.profile else { return }
-        view?.UIElements(name: profile.name ?? "", nick: profile.loginName, greet: profile.bio ?? "")
+        view?.UIElements()
+//        view?.updateAvatar(url: URL(string: profile.profileImageURL)!)
+        view?.nameLabel.text = profile.name
+        view?.nickLabel.text = profile.loginName
+        view?.greetLabel.text = profile.bio
     }
-//        _ = userProfile.profile?.name
-//        _ = userProfile.profile?.loginName
-//        _ = userProfile.profile?.bio
-
-    
     
     private func userImageUrlUpdate() {
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
             object: nil,
             queue: .main) { [weak self] notification in
-                let urlString = String(describing: notification.userInfo?["URL"] ?? "")
-                guard let url = URL(string: urlString) else {
-                    return
-                }
+                let urlString = notification.userInfo?["URL"] as? String
+                guard let url = URL(string: urlString ?? "") else { return }
                 self?.view?.updateAvatar(url: url)
             }
     }
 }
+
 
 

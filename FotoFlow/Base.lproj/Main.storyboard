@@ -242,7 +242,6 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="ZWH-WY-nfV" kind="show" identifier="ShowWebView" id="Bi6-Sw-abq"/>
@@ -271,7 +270,7 @@
         <!--WebViewViewController-->
         <scene sceneID="Hd7-Y4-zd7">
             <objects>
-                <viewController storyboardIdentifier="WebViewViewController" title="WebViewViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZWH-WY-nfV" customClass="WebViewViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" title="WebViewViewController" id="ZWH-WY-nfV" customClass="WebViewViewController" customModule="FotoFlow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kmc-kg-GD6">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -27,7 +27,7 @@ final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     var presenter: ProfilePresenterProtocol?
     var profileImageView: UIImageView?
     
-    func UIElements(name: String, nick: String, greet: String){
+    func UIElements(){
         configureUIElementsCalled.toggle()
     }
     
@@ -77,7 +77,7 @@ final class ProfileViewTests: XCTestCase {
         viewController.presenter = presenter
         presenter.view = viewController
         
-        viewController.UIElements(name: "User", nick: "User", greet: "")
+        viewController.UIElements()
         viewController.exitButton?.sendActions(for: .allTouchEvents)
         
         let alert = viewController.logoutAlert
