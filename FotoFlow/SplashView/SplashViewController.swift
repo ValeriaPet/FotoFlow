@@ -11,7 +11,13 @@ final class SplashViewController: UIViewController {
 
     private let showLoginFlowSegueID = "ShowLoginFlow"
     
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        UIElementsLogo()
+    }
+    
     override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(animated)
         checkAuthStatus()

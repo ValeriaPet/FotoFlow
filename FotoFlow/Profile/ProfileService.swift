@@ -15,6 +15,36 @@ final class ProfileService {
     
     private var task: URLSessionTask?
     
+    private init() {}
+    
+    func updateProfileDetails(userToken: String, completion: @escaping (Bool) -> Void) {
+        
+        self.fetchProfile(token: userToken) {result in
+            DispatchQueue.main.async {
+            }
+            switch result {
+            case .success(let profile):
+                self.profile?.username = profile.username
+                self.profile?.name = profile.name
+                self.profile?.loginName = "@\(profile.username)"
+                self.profile?.bio = profile.bio
+                self.task = nil
+                completion(true)
+            case .failure(let error):
+                print("CONSOLE func fetchUserProfileData:", error.localizedDescription)
+                completion(false)
+            }
+        }
+    }
+    
+    func cleanUserProfile() {
+        profile = Profile (username: "",
+                          name: "",
+                          loginName: "",
+                          bio: nil
+        )
+    }
+        
     func fetchProfile(token: String, completion: @escaping (Result<Profile, Error>) -> Void){
 
         if task != nil {
@@ -43,14 +73,7 @@ final class ProfileService {
         self.task = task
     }
     
-    func cleanUserProfile() {
-        profile = Profile (username: "",
-                          name: "",
-                          loginName: "",
-                          bio: nil
-        )
-    }
-    
+
     func makeFetchProfileRequest(token: String) -> URLRequest? {
         URLRequest.makeHTTPRequest(
             path: "/me",

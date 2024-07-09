@@ -31,7 +31,7 @@ final class ImagesListCell: UITableViewCell {
     }
         
     func setFavoriteButtonImage(isLiked: Bool) {
-        guard let image = UIImage(named: isLiked ? "favorites_active" : "favorites_no_active") else {
+        guard let image = UIImage(named: isLiked ? "LikeIsActive" : "LikeNoActive") else {
             return
         }
         likeButton.setImage(image, for: .normal)

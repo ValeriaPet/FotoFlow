@@ -1,9 +1,3 @@
-//
-//  PhotoStructure.swift
-//  FotoFlow
-//
-//  Created by LERÄ on 18.04.24.
-//
 
 import Foundation
 

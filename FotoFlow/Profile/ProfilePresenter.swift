@@ -17,7 +17,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     private var profileImageServiceObserver: NSObjectProtocol?
     
     func viewDidLoad() {
-        profileLogout()
+        profileUpdate()
         if let url = userProfileImageServise.avatarURL {
             view?.updateAvatar(url: url)
         }
@@ -25,18 +25,21 @@ final class ProfilePresenter: ProfilePresenterProtocol {
             userImageUrlUpdate()
         }
     }
+    
     func profileLogout() {
         ProfileLogoutService.profileLogoutService.logout()
     }
     
-    
     private func profileUpdate() {
-        
-        _ = userProfile.profile?.name
-        _ = userProfile.profile?.loginName
-        _ = userProfile.profile?.bio
-        
+        guard let profile = userProfile.profile else { return }
+        view?.UIElements(name: profile.name ?? "", nick: profile.loginName, greet: profile.bio ?? "")
     }
+//        _ = userProfile.profile?.name
+//        _ = userProfile.profile?.loginName
+//        _ = userProfile.profile?.bio
+
+    
+    
     private func userImageUrlUpdate() {
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,

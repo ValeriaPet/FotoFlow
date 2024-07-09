@@ -16,12 +16,9 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
 }
 
 final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
-    
-    var exitButton: UIButton?
-    
     var logoutAlert: UIAlertController?
     
-    var userLogoutButton: UIButton?
+    var exitButton: UIButton?
     var profileImageDidSet: Bool = false
     func updateAvatar(url: URL) {
         profileImageDidSet.toggle()
@@ -49,6 +46,17 @@ final class ProfileViewTests: XCTestCase {
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
+    func testPresenterCallsConfigureUIElements() {
+        let viewController = ProfileViewControllerSpy()
+        let presenter = ProfilePresenter()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        presenter.viewDidLoad()
+        
+        XCTAssertTrue(viewController.configureUIElementsCalled)
+    }
+    
     func testPresenterCallsUpdateAvatar() {
         let viewController = ProfileViewControllerSpy()
         let presenter = ProfilePresenter()
@@ -69,7 +77,7 @@ final class ProfileViewTests: XCTestCase {
         viewController.presenter = presenter
         presenter.view = viewController
         
-        viewController.UIElements(name: "", nick: "", greet: "")
+        viewController.UIElements(name: "User", nick: "User", greet: "")
         viewController.exitButton?.sendActions(for: .allTouchEvents)
         
         let alert = viewController.logoutAlert

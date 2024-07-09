@@ -26,7 +26,7 @@ final class ImagesListPresenterSpy: ImageListPresenterProtocol {
     func getPhotosCount() -> Int {
         0
     }
-    func getSingleImageUrl(for row: Int) -> URL {
+    func singleImageURL(for row: Int) -> URL {
         return Constants.DefaultBaseURL!
     }
     func changeLike(for indexPath: IndexPath, completion: @escaping (Bool) -> Void) { }
@@ -93,7 +93,7 @@ final class ImagesListTests: XCTestCase {
         presenter.viewDidLoad()
         
         var singleImageUrl: URL?
-        singleImageUrl = presenter.getSingleImageUrl(for: 0)
+        singleImageUrl = presenter.singleImageURL(for: 0)
         
         XCTAssert(singleImageUrl != nil)
     }

@@ -58,8 +58,11 @@
                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1eF-cY-B2a" secondAttribute="trailing" constant="100" id="f4T-3b-H4L"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYb-ZK-tvA">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYb-ZK-tvA" userLabel="favoritesButton">
                                                     <rect key="frame" x="333" y="4" width="44" height="44"/>
+                                                    <accessibility key="accessibilityConfiguration" label="favoritesButton">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="ZDn-7B-cFK"/>
                                                         <constraint firstAttribute="width" constant="44" id="aq5-eR-c2c"/>
@@ -224,6 +227,9 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXJ-WQ-7pM">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White (iOS)"/>
+                                <accessibility key="accessibilityConfiguration" label="Войти">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="laF-MB-8lH"/>
                                 </constraints>
@@ -236,9 +242,10 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="ZWH-WY-nfV" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="Bi6-Sw-abq"/>
+                                    <segue destination="ZWH-WY-nfV" kind="show" identifier="ShowWebView" id="Bi6-Sw-abq"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_of_Unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="a0s-WP-HOo">
@@ -278,7 +285,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PbX-R2-vSw">
-                                <rect key="frame" x="0.0" y="0.0" width="64" height="44"/>
+                                <rect key="frame" x="0.0" y="103" width="64" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="R2b-vk-FCj"/>
                                     <constraint firstAttribute="height" constant="44" id="fBX-XC-z5O"/>
@@ -290,7 +297,7 @@
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9H0-nE-VKM">
-                                <rect key="frame" x="0.0" y="40" width="393" height="4"/>
+                                <rect key="frame" x="0.0" y="143" width="393" height="4"/>
                                 <color key="progressTintColor" name="YP Black (iOS)"/>
                             </progressView>
                         </subviews>
@@ -378,7 +385,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

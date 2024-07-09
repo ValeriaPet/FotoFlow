@@ -27,20 +27,21 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     weak var delegate: WebViewViewControllerDelegate?
     private var estimatedProgressObservation: NSKeyValueObservation?
     
-    func load(request: URLRequest) {
-        webView.load(request)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        webView.navigationDelegate = self
-        webView.accessibilityIdentifier = "WebViewViewController"
+        webView.navigationDelegate = self
+        webView.accessibilityIdentifier = "UnsplashWebView"
+        presenter?.viewDidLoad()
         
         estimatedProgressObservation = webView.observe(
             \.estimatedProgress,
              options: [],
              changeHandler: {[weak self] _, _ in
-                 guard self != nil else {return}
+                 guard let presenter = self?.presenter,
+                       let estimatedProgress = self?.webView.estimatedProgress else {
+                     return
+                 }
+                 presenter.didUpdateProgressValue(estimatedProgress)
              })
     }
     
@@ -60,6 +61,10 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
         super.viewWillDisappear(animated)
     }
     
+    func load(request: URLRequest) {
+        webView.load(request)
+    }
+    
     func setProgressValue(_ newValue: Float) {
         progressView.progress = newValue
     }
@@ -67,9 +72,9 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
     }
+}
     
-    
-//    extension WebViewViewController: WKNavigationDelegate {
+    extension WebViewViewController: WKNavigationDelegate {
         
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
         ) {
@@ -82,13 +87,12 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
                 print("yes")
             }
         }
-    
-    
-   private func code(from navigationAction: WKNavigationAction) -> String? {
-        if
-            let url = navigationAction.request.url {
-            return presenter?.code(from: url)
-        }
+        
+        private func code(from navigationAction: WKNavigationAction) -> String? {
+            if
+                let url = navigationAction.request.url {
+                return presenter?.code(from: url)
+            }
             return nil
         }
     }

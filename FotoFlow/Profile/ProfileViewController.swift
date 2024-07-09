@@ -10,6 +10,7 @@ public protocol ProfileViewControllerProtocol: AnyObject {
     func UIElements(name: String, nick: String, greet: String)
     
     func updateAvatar(url: URL)
+   
 }
 
 final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
@@ -24,9 +25,11 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         super.viewDidLoad()
         presenter?.viewDidLoad()
         
+        UIElements(name: "name", nick: "nick", greet: "greet")
         
         if let url = ProfileImageService.profileImageService.avatarURL {
             updateAvatar(url: url)
+
         }
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
@@ -47,8 +50,9 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
             let url = URL(string: avatarURL)
         else {return}
         updateAvatar(url: url)
-        
+
     }
+    
     func updateAvatar(url: URL) {
         guard let photoImageView = self.profileImageView else {
             return
@@ -59,17 +63,6 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
                                    options: [.processor(processor)])
     }
     
-    @objc func logoutButtonAction() {
-        let alert = AlertModel(title: "Пока :(",
-                               text: "Ты точно хочешь меня покинуть?",
-                               buttonText: "Да!",
-                               completion: {[weak self] _ in
-            self?.presenter?.profileLogout()
-        })
-        self.logoutAlert = AlertPresenter.showAlert(alert: alert, on: self)
-    }
-    
-    
     func UIElements(name: String, nick: String, greet: String) {
         let photoImageView = UIImageView()
         let imageSize = CGSize(width: 70, height: 70)
@@ -79,20 +72,24 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         photoImageView.backgroundColor = UIColor(named: "YP Black")
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(photoImageView)
+        self.profileImageView = photoImageView
         
-        let nameLabel = UILabel() // Исправлено имя переменной
+        let nameLabel = UILabel()
+        nameLabel.text = name
         nameLabel.textColor = .ypWhiteIOS
         nameLabel.font = .boldSystemFont(ofSize: 23)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
-        let nickLabel = UILabel() // Исправлено имя переменной
+        let nickLabel = UILabel()
+        nickLabel.text = nick
         nickLabel.textColor = .ypGrayIOS
         nickLabel.font = .systemFont(ofSize: 13)
         nickLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nickLabel)
         
-        let greetLabel = UILabel() // Исправлено имя переменной
+        let greetLabel = UILabel()
+        greetLabel.text = greet
         greetLabel.textColor = .ypWhiteIOS
         greetLabel.font = .systemFont(ofSize: 13)
         greetLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -101,11 +98,10 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         let buttonImage = UIImage(named: "Exit")
         let exitButton = UIButton.systemButton(with: buttonImage!, target: self, action: #selector(self.logoutButtonAction))
         exitButton.tintColor = .ypRedIOS
-        exitButton.setImage(buttonImage, for: .normal)
+//        exitButton.setImage(buttonImage, for: .normal)
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButton)
-        
-        // Присваиваем exitButton свойству контроллера
+        exitButton.accessibilityIdentifier = "Exit"
         self.exitButton = exitButton
         
         NSLayoutConstraint.activate([
@@ -138,7 +134,16 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
             exitButton.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor)
         ])
     }
-
+    
+    @objc func logoutButtonAction() {
+        let alert = AlertModel(title: "Пока :(",
+                               text: "Ты точно хочешь меня покинуть?",
+                               buttonText: "Да!",
+                               completion: {[weak self] _ in
+            self?.presenter?.profileLogout()
+        })
+        self.logoutAlert = AlertPresenter.showAlert(alert: alert, on: self)
+    }
 }
 
 

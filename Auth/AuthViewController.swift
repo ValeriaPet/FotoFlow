@@ -1,9 +1,9 @@
 
 import UIKit
 
-enum CodingError: Error {
-    case customError
-}
+//enum CodingError: Error {
+//    case customError
+//}
 
 protocol AuthViewControllerDelegate: AnyObject {
     func authViewController(_ vc: AuthViewController, _ token: String)

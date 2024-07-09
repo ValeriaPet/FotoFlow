@@ -1,9 +1,3 @@
-//
-//  ProfileLogoutService.swift
-//  FotoFlow
-//
-//  Created by LERÄ on 30.04.24.
-//
 
 import Foundation
 import WebKit
@@ -21,13 +15,15 @@ final class ProfileLogoutService {
     }
     
     private func cleanCookies() {
-  
-       HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-       WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-          records.forEach { record in
-             WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-          }
-       }
+        print("Cleaning cookies...")
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {
+                    print("Removed data for record: \(record)")
+                })
+            }
+        }
     }
     
     private func cleanUserData() {

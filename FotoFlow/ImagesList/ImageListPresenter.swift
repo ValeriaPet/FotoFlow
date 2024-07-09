@@ -8,6 +8,7 @@ protocol ImageListPresenterProtocol {
     func viewDidLoad()
     func cleanPhotos()
     func getPhotosCount() -> Int
+    func singleImageURL(for row: Int) -> URL
     func changeLike (for indexPath: IndexPath, completion: @escaping (Bool) -> Void)
     func getCellHeight (indexPath: IndexPath, tableBoundWidth: CGFloat) -> CGFloat
     func prepareNewCell (for tableView: UITableView, with indexpath: IndexPath, on viewController: ImagesListCellDelegate) -> UITableViewCell
@@ -53,7 +54,7 @@ final class ImageListPresenter: ImageListPresenterProtocol {
         return photoNames.count
     }
     
-    func getSingleImageUrl(for row: Int) -> URL {
+    func singleImageURL(for row: Int) -> URL {
         return photoNames[row].largeImageURL
     }
     
@@ -63,9 +64,6 @@ final class ImageListPresenter: ImageListPresenterProtocol {
             self?.view?.activityIndicator(show: false)
             switch result {
             case .success(let like):
-                guard let favoriteImage = UIImage(named: like ? "LikeIsActive" : "LikeNoActive") else {
-                    return
-                }
                 completion(like)
                 print("CONSOLE func changeLike: изменен лайк для фото",
                       self?.photoNames[indexPath.row].id ?? "",
