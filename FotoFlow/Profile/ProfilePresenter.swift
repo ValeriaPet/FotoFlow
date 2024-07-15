@@ -31,12 +31,13 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
     
     private func profileUpdate() {
-        guard let profile = userProfile.profile else { return }
-        view?.UIElements()
-//        view?.updateAvatar(url: URL(string: profile.profileImageURL)!)
-        view?.nameLabel.text = profile.name
-        view?.nickLabel.text = profile.loginName
-        view?.greetLabel.text = profile.bio
+    
+        let nameLabel = userProfile.profile.username
+        let nickLabel = userProfile.profile.loginName
+        let greetLabel = userProfile.profile.bio ?? ""
+       
+        view?.UIElements(name: nameLabel, nick: nickLabel, greet: greetLabel)
+    
     }
     
     private func userImageUrlUpdate() {

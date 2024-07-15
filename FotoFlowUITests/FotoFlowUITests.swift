@@ -52,7 +52,7 @@ final class FotoFlowUITests: XCTestCase {
         let tablesQuery = app.tables
 
         // Ожидание загрузки первой ячейки
-        let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
+        let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         
         _ = cell.waitForExistence(timeout: 5)
 
@@ -61,7 +61,7 @@ final class FotoFlowUITests: XCTestCase {
         print("Первая ячейка успешно прокручена вверх")
 
 
-        let likeButton = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
+        let likeButton = tablesQuery.children(matching: .cell).element(boundBy: 1)
         
         likeButton.buttons["favoritesButton"].tap()
         sleep(3)

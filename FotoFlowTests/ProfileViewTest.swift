@@ -16,6 +16,11 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
 }
 
 final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
+    
+//    var nameLabel: UILabel = UILabel()
+//    var nickLabel: UILabel = UILabel()
+//    var greetLabel: UILabel = UILabel()
+    
     var logoutAlert: UIAlertController?
     
     var exitButton: UIButton?
@@ -23,12 +28,12 @@ final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     func updateAvatar(url: URL) {
         profileImageDidSet.toggle()
     }
-    var configureUIElementsCalled: Bool = false
+    var UIElements: Bool = false
     var presenter: ProfilePresenterProtocol?
     var profileImageView: UIImageView?
     
-    func UIElements(){
-        configureUIElementsCalled.toggle()
+    func UIElements(name: String, nick: String, greet: String) {
+        UIElements.toggle()
     }
     
 }
@@ -54,7 +59,7 @@ final class ProfileViewTests: XCTestCase {
         
         presenter.viewDidLoad()
         
-        XCTAssertTrue(viewController.configureUIElementsCalled)
+        XCTAssertTrue(viewController.UIElements)
     }
     
     func testPresenterCallsUpdateAvatar() {
@@ -77,7 +82,7 @@ final class ProfileViewTests: XCTestCase {
         viewController.presenter = presenter
         presenter.view = viewController
         
-        viewController.UIElements()
+        viewController.UIElements(name: "name", nick: "nick", greet: "greet")
         viewController.exitButton?.sendActions(for: .allTouchEvents)
         
         let alert = viewController.logoutAlert

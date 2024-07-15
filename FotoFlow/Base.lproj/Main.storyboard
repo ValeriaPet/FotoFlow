@@ -58,7 +58,7 @@
                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1eF-cY-B2a" secondAttribute="trailing" constant="100" id="f4T-3b-H4L"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYb-ZK-tvA" userLabel="favoritesButton">
+                                                <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="favoritesButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYb-ZK-tvA" userLabel="favoritesButton">
                                                     <rect key="frame" x="333" y="4" width="44" height="44"/>
                                                     <accessibility key="accessibilityConfiguration" label="favoritesButton">
                                                         <bool key="isElement" value="YES"/>
@@ -224,7 +224,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXJ-WQ-7pM">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="Войти" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXJ-WQ-7pM" userLabel="Войти">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White (iOS)"/>
                                 <accessibility key="accessibilityConfiguration" label="Войти">

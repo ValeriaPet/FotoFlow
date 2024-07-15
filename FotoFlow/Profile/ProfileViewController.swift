@@ -1,4 +1,5 @@
 
+import Foundation
 import UIKit
 import Kingfisher
 
@@ -7,10 +8,10 @@ public protocol ProfileViewControllerProtocol: AnyObject {
     var profileImageView: UIImageView? { get set }
     var exitButton: UIButton? { get set }
     var logoutAlert: UIAlertController? { get set }
-    var nameLabel: UILabel { get }
-    var nickLabel: UILabel { get }
-    var greetLabel: UILabel { get }
-    func UIElements()
+//    var nameLabel: UILabel { get }
+//    var nickLabel: UILabel { get }
+//    var greetLabel: UILabel { get }
+    func UIElements(name: String, nick: String, greet: String)
     func updateAvatar(url: URL)
 }
 
@@ -21,53 +22,53 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     var exitButton: UIButton?
     var logoutAlert: UIAlertController?
 
-    let nameLabel = UILabel()
-    let nickLabel = UILabel()
-    let greetLabel = UILabel()
+//    let nameLabel = UILabel()
+//    let nickLabel = UILabel()
+//    let greetLabel = UILabel()
 
     private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad()
-        UIElements()
+//        UIElements()
         
-        if let url = ProfileImageService.profileImageService.avatarURL {
-            updateAvatar(url: url)
-        }
-        
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.didChangeNotification,
-            object: nil,
-            queue: .main,
-            using: { [weak self] notification in
-                guard let self = self else { return }
-                self.updateAvatar(notification: notification)
-            })
-        
-        loadProfileData()
+//        if let url = ProfileImageService.profileImageService.avatarURL {
+//            updateAvatar(url: url)
+//        }
+//        
+//        profileImageServiceObserver = NotificationCenter.default.addObserver(
+//            forName: ProfileImageService.didChangeNotification,
+//            object: nil,
+//            queue: .main,
+//            using: { [weak self] notification in
+//                guard let self = self else { return }
+//                self.updateAvatar(url: notification)
+//            })
+//        
+//        loadProfileData()
     }
     
-    func loadProfileData() {
-        if let profile = ProfileService.profileService.profile {
-            nameLabel.text = profile.name
-            nickLabel.text = profile.loginName
-            greetLabel.text = profile.bio
-            ProfileImageService.profileImageService.fetchProfileImageURL(profile.username) { result in }
-        } else {
-            print("ProfileViewController: No profile data available.")
-        }
-    }
+//    func loadProfileData() {
+//        if let profile = ProfileService.profileService.profile {
+//            nameLabel.text = profile.name
+//            nickLabel.text = profile.loginName
+//            greetLabel.text = profile.bio
+//            ProfileImageService.profileImageService.fetchProfileImageURL(profile.username) { result in }
+//        } else {
+//            print("ProfileViewController: No profile data available.")
+//        }
+//    }
     
-    private func updateAvatar(notification: Notification) {
-        guard
-            let userInfo = notification.userInfo,
-            let avatarURL = userInfo["URL"] as? String,
-            let url = URL(string: avatarURL)
-        else { return }
-        updateAvatar(url: url)
-    }
-    
+//    private func updateAvatar(notification: Notification) {
+//        guard
+//            let userInfo = notification.userInfo,
+//            let avatarURL = userInfo["URL"] as? String,
+//            let url = URL(string: avatarURL)
+//        else { return }
+//        updateAvatar(url: url)
+//    }
+//    
     func updateAvatar(url: URL) {
         guard let profileImageView = self.profileImageView else { return }
         profileImageView.kf.indicatorType = .activity
@@ -75,7 +76,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         profileImageView.kf.setImage(with: url, options: [.processor(processor)])
     }
     
-    func UIElements() {
+    func UIElements(name: String, nick: String, greet: String) {
         let photoImageView = UIImageView()
         let imageSize = CGSize(width: 70, height: 70)
         photoImageView.layer.cornerRadius = 35
@@ -87,21 +88,21 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         self.profileImageView = photoImageView
         
         let nameLabel = UILabel()
-        nameLabel.text = "name"
+        nameLabel.text = name
         nameLabel.textColor = .ypWhiteIOS
         nameLabel.font = .boldSystemFont(ofSize: 23)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
         let nickLabel = UILabel()
-        nickLabel.text = "nick"
+        nickLabel.text = nick
         nickLabel.textColor = .ypGrayIOS
         nickLabel.font = .systemFont(ofSize: 13)
         nickLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nickLabel)
         
         let greetLabel = UILabel()
-        greetLabel.text = "greet"
+        greetLabel.text = greet
         greetLabel.textColor = .ypWhiteIOS
         greetLabel.font = .systemFont(ofSize: 13)
         greetLabel.translatesAutoresizingMaskIntoConstraints = false
