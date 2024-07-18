@@ -1,15 +1,12 @@
-
-
 import Foundation
 
 public protocol ProfilePresenterProtocol: AnyObject {
-    var view: ProfileViewControllerProtocol? {get set}
+    var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
     func profileLogout()
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
-    
     weak var view: ProfileViewControllerProtocol?
     
     private let userProfile = ProfileService.profileService
@@ -18,6 +15,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     
     func viewDidLoad() {
         profileUpdate()
+        view?.UIElements()
         if let url = userProfileImageService.avatarURL {
             view?.updateAvatar(url: url)
         } else {
@@ -31,13 +29,10 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
     
     private func profileUpdate() {
-    
-        let nameLabel = userProfile.profile.username
-        let nickLabel = userProfile.profile.loginName
-        let greetLabel = userProfile.profile.bio ?? ""
-       
-        view?.UIElements(name: nameLabel, nick: nickLabel, greet: greetLabel)
-    
+        guard let profile = userProfile.profile else { return }
+        view?.nameLabel.text = profile.name
+        view?.nickLabel.text = profile.loginName
+        view?.greetLabel.text = profile.bio
     }
     
     private func userImageUrlUpdate() {
@@ -45,12 +40,9 @@ final class ProfilePresenter: ProfilePresenterProtocol {
             forName: ProfileImageService.didChangeNotification,
             object: nil,
             queue: .main) { [weak self] notification in
-                let urlString = notification.userInfo?["URL"] as? String
-                guard let url = URL(string: urlString ?? "") else { return }
+                guard let urlString = notification.userInfo?["URL"] as? String,
+                      let url = URL(string: urlString) else { return }
                 self?.view?.updateAvatar(url: url)
             }
     }
 }
-
-
-

@@ -99,10 +99,38 @@ final class ImageListPresenter: ImageListPresenterProtocol {
             isLiked: photo.isLiked) {[weak tableView] in
                 tableView?.reloadRows(at: [indexpath], with: .automatic)
             }
+        
+        // Настройка изображения с помощью Kingfisher
+        imageListCell.cellImage.kf.indicatorType = .activity
+        imageListCell.cellImage.kf.setImage(
+            with: photo.thumbImageURL,
+            placeholder: UIImage(named: "picture_load_placeholder")
+        ) {[weak tableView] _ in
+            tableView?.reloadRows(at: [indexpath], with: .automatic)
+        }
+        
+        // Настройка даты
+        imageListCell.dataText.text = dateToStringFormatter.string(from: photo.createdAt ?? Date())
+        
+        // Настройка кнопки лайка
+        let likedImage = UIImage(named: photo.isLiked ? "LikeIsActive" : "LikeNoActive")
+        imageListCell.likeButton.setImage(likedImage, for: .normal)
+        
+        // Настройка градиента
+        imageListCell.gradientView.layer.masksToBounds = true
+        imageListCell.gradientView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        imageListCell.gradientView.layer.cornerRadius = 16
+        let gradient = CAGradientLayer()
+        gradient.frame = imageListCell.gradientView.bounds
+        gradient.colors = [UIColor.igGradientAlpha0.cgColor, UIColor.igGradientAlpha20.cgColor]
+        imageListCell.gradientView.layer.insertSublayer(gradient, at: 0)
+        
         if indexpath.row == self.photoNames.count - 2, imagesListService.task == nil {
             print("CONSOLE func tableView: Достигнут конец ленты")
             self.imagesListService.fetchPhotosNextPage("") { }
         }
         return imageListCell
     }
+
+    
 }

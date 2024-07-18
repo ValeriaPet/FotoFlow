@@ -64,22 +64,6 @@ final class ImagesListViewController: UIViewController & ImageListViewController
         }
     }
     
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        setImageWithKF(for: cell, with: indexPath)
-        cell.dataText.text = self.dateToStringFormatter.string(from: self.photoNames[indexPath.row].createdAt ?? Date())
-        
-        let likedImage = UIImage(named: self.photoNames[indexPath.row].isLiked ? "LikeIsActive" : "LikeNoActive")
-        cell.likeButton.setImage(likedImage, for: .normal)
-        
-        cell.gradientView.layer.masksToBounds = true
-        cell.gradientView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        cell.gradientView.layer.cornerRadius = 16
-        let gradient = CAGradientLayer()
-        gradient.frame = cell.gradientView.bounds
-        gradient.colors = [UIColor.igGradientAlpha0.cgColor, UIColor.igGradientAlpha20.cgColor]
-        cell.gradientView.layer.insertSublayer(gradient, at: 0)
-    }
-    
     func activityIndicator(show: Bool){
         show ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.dismiss()
     }

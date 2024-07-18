@@ -16,10 +16,12 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
 }
 
 final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
+    var profileImageView: UIImageView?
     
-//    var nameLabel: UILabel = UILabel()
-//    var nickLabel: UILabel = UILabel()
-//    var greetLabel: UILabel = UILabel()
+    
+    var nameLabel: UILabel = UILabel()
+    var nickLabel: UILabel = UILabel()
+    var greetLabel: UILabel = UILabel()
     
     var logoutAlert: UIAlertController?
     
@@ -28,15 +30,14 @@ final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     func updateAvatar(url: URL) {
         profileImageDidSet.toggle()
     }
-    var UIElements: Bool = false
+    var configureUIElementsCalled: Bool = false
     var presenter: ProfilePresenterProtocol?
-    var profileImageView: UIImageView?
     
-    func UIElements(name: String, nick: String, greet: String) {
-        UIElements.toggle()
+    func UIElements() {
+        configureUIElementsCalled.toggle()
     }
-    
 }
+
 
 final class ProfileViewTests: XCTestCase {
     
@@ -59,7 +60,7 @@ final class ProfileViewTests: XCTestCase {
         
         presenter.viewDidLoad()
         
-        XCTAssertTrue(viewController.UIElements)
+        XCTAssertTrue(viewController.configureUIElementsCalled)
     }
     
     func testPresenterCallsUpdateAvatar() {
@@ -69,9 +70,11 @@ final class ProfileViewTests: XCTestCase {
         presenter.view = viewController
         
         presenter.viewDidLoad()
+        
+        let validURLString = "https://example.com/avatar.jpg"
         NotificationCenter.default.post(name: ProfileImageService.didChangeNotification,
-                                        object: self,
-                                        userInfo: ["URL": Constants.DefaultBaseURL ?? ""])
+                                        object: nil,
+                                        userInfo: ["URL": validURLString])
         
         XCTAssertTrue(viewController.profileImageDidSet)
     }
@@ -82,11 +85,15 @@ final class ProfileViewTests: XCTestCase {
         viewController.presenter = presenter
         presenter.view = viewController
         
-        viewController.UIElements(name: "name", nick: "nick", greet: "greet")
-        viewController.exitButton?.sendActions(for: .allTouchEvents)
+        viewController.loadViewIfNeeded()
+        viewController.UIElements()
+        viewController.exitButton?.sendActions(for: .touchUpInside)
         
         let alert = viewController.logoutAlert
         XCTAssertTrue(alert != nil)
     }
 }
+
+
+
 

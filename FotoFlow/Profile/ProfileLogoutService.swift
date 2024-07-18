@@ -1,4 +1,3 @@
-
 import Foundation
 import WebKit
 import Kingfisher
@@ -10,49 +9,52 @@ final class ProfileLogoutService {
     
     func logout() {
         print("ProfileLogoutService: Starting logout process...")
-        cleanCookies()
-        cleanUserData()
-        switchToSplashController()
-    }
-    
-    private func cleanCookies() {
-        print("ProfileLogoutService: Cleaning cookies...")
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {
-                    print("ProfileLogoutService: Removed data for record: \(record)")
-                })
+        cleanCookies {
+            self.cleanUserData {
+                DispatchQueue.main.async {
+                    self.switchToSplashController()
+                }
             }
         }
     }
     
-    private func cleanUserData() {
+    private func cleanCookies(completion: @escaping () -> Void) {
+        print("ProfileLogoutService: Cleaning cookies...")
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            let dispatchGroup = DispatchGroup()
+            for record in records {
+                dispatchGroup.enter()
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {
+                    print("ProfileLogoutService: Removed data for record: \(record)")
+                    dispatchGroup.leave()
+                })
+            }
+            dispatchGroup.notify(queue: .main) {
+                completion()
+            }
+        }
+    }
+    
+    private func cleanUserData(completion: @escaping () -> Void) {
         print("ProfileLogoutService: Cleaning user data...")
         OAuth2TokenStorage.shared.token = nil
-        
         ProfileService.profileService.cleanUserProfile()
         ProfileImageService.profileImageService.cleanUserAvatarURL()
-        
         ImagesListService.imagesListService.cleanPhotos()
-
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
         print("ProfileLogoutService: User data cleaned")
+        completion()
     }
     
     private func switchToSplashController() {
-        print("ProfileLogoutService: Switching to Splash Controller...")
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first else {
-            print("ProfileLogoutService: Invalid window configuration")
+        guard let window = UIApplication.shared.windows.first else {
+            assertionFailure("Invalid window configuration")
             return
         }
         let splashViewController = SplashViewController()
         window.rootViewController = splashViewController
-        window.makeKeyAndVisible()
-        print("ProfileLogoutService: Switched to Splash Controller")
     }
 }
-

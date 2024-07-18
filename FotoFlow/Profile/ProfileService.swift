@@ -10,34 +10,11 @@ import Foundation
 final class ProfileService {
     
     static let profileService = ProfileService()
-    var profile: Profile
+    var profile: Profile?
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
     
-    private init() {
-        self.profile = Profile(username: "", loginName: "")
-    }
-    
-    func updateProfileDetails(userToken: String, completion: @escaping (Bool) -> Void) {
-        
-        self.fetchProfile(token: userToken) {result in
-            DispatchQueue.main.async {
-            }
-            switch result {
-            case .success(let profile):
-                self.profile.username = profile.username
-                self.profile.name = profile.name
-                self.profile.loginName = "@\(profile.username)"
-                self.profile.bio = profile.bio
-                self.task = nil
-                completion(true)
-            case .failure(let error):
-                print("CONSOLE func fetchUserProfileData:", error.localizedDescription)
-                completion(false)
-            }
-        }
-    }
     
     func cleanUserProfile() {
         profile = Profile (username: "",

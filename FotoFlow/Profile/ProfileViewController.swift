@@ -1,5 +1,3 @@
-
-import Foundation
 import UIKit
 import Kingfisher
 
@@ -8,13 +6,12 @@ public protocol ProfileViewControllerProtocol: AnyObject {
     var profileImageView: UIImageView? { get set }
     var exitButton: UIButton? { get set }
     var logoutAlert: UIAlertController? { get set }
-//    var nameLabel: UILabel { get }
-//    var nickLabel: UILabel { get }
-//    var greetLabel: UILabel { get }
-    func UIElements(name: String, nick: String, greet: String)
+    var nameLabel: UILabel { get }
+    var nickLabel: UILabel { get }
+    var greetLabel: UILabel { get }
+    func UIElements()
     func updateAvatar(url: URL)
 }
-
 
 final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     var presenter: ProfilePresenterProtocol?
@@ -22,53 +19,60 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     var exitButton: UIButton?
     var logoutAlert: UIAlertController?
 
-//    let nameLabel = UILabel()
-//    let nickLabel = UILabel()
-//    let greetLabel = UILabel()
+    let nameLabel = UILabel()
+    let nickLabel = UILabel()
+    let greetLabel = UILabel()
 
     private var profileImageServiceObserver: NSObjectProtocol?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIElements()
         presenter?.viewDidLoad()
-//        UIElements()
         
-//        if let url = ProfileImageService.profileImageService.avatarURL {
-//            updateAvatar(url: url)
-//        }
-//        
-//        profileImageServiceObserver = NotificationCenter.default.addObserver(
-//            forName: ProfileImageService.didChangeNotification,
-//            object: nil,
-//            queue: .main,
-//            using: { [weak self] notification in
-//                guard let self = self else { return }
-//                self.updateAvatar(url: notification)
-//            })
-//        
-//        loadProfileData()
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] notification in
+                guard let self = self else { return }
+                self.updateAvatar(notification: notification)
+            })
+        
+        loadProfileData()
     }
     
-//    func loadProfileData() {
-//        if let profile = ProfileService.profileService.profile {
-//            nameLabel.text = profile.name
-//            nickLabel.text = profile.loginName
-//            greetLabel.text = profile.bio
-//            ProfileImageService.profileImageService.fetchProfileImageURL(profile.username) { result in }
-//        } else {
-//            print("ProfileViewController: No profile data available.")
-//        }
-//    }
+    func loadProfileData() {
+        guard let profile = ProfileService.profileService.profile else {
+            print("ProfileViewController: No profile data available.")
+            return
+        }
+        nameLabel.text = profile.name
+        nickLabel.text = profile.loginName
+        greetLabel.text = profile.bio
+        ProfileImageService.profileImageService.fetchProfileImageURL(profile.username) { result in
+            switch result {
+            case .success(let urlString):
+                if let url = URL(string: urlString) {
+                    self.updateAvatar(url: url)
+                } else {
+                    print("Invalid URL string: \(urlString)")
+                }
+            case .failure(let error):
+                print("Failed to fetch profile image URL:", error)
+            }
+        }
+    }
     
-//    private func updateAvatar(notification: Notification) {
-//        guard
-//            let userInfo = notification.userInfo,
-//            let avatarURL = userInfo["URL"] as? String,
-//            let url = URL(string: avatarURL)
-//        else { return }
-//        updateAvatar(url: url)
-//    }
-//    
+    private func updateAvatar(notification: Notification) {
+        guard
+            let userInfo = notification.userInfo,
+            let avatarURL = userInfo["URL"] as? String,
+            let url = URL(string: avatarURL)
+        else { return }
+        updateAvatar(url: url)
+    }
+    
     func updateAvatar(url: URL) {
         guard let profileImageView = self.profileImageView else { return }
         profileImageView.kf.indicatorType = .activity
@@ -76,7 +80,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         profileImageView.kf.setImage(with: url, options: [.processor(processor)])
     }
     
-    func UIElements(name: String, nick: String, greet: String) {
+    func UIElements() {
         let photoImageView = UIImageView()
         let imageSize = CGSize(width: 70, height: 70)
         photoImageView.layer.cornerRadius = 35
@@ -87,22 +91,19 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         view.addSubview(photoImageView)
         self.profileImageView = photoImageView
         
-        let nameLabel = UILabel()
-        nameLabel.text = name
+        nameLabel.text = "name"
         nameLabel.textColor = .ypWhiteIOS
         nameLabel.font = .boldSystemFont(ofSize: 23)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
-        let nickLabel = UILabel()
-        nickLabel.text = nick
+        nickLabel.text = "nick"
         nickLabel.textColor = .ypGrayIOS
         nickLabel.font = .systemFont(ofSize: 13)
         nickLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nickLabel)
         
-        let greetLabel = UILabel()
-        greetLabel.text = greet
+        greetLabel.text = "greet"
         greetLabel.textColor = .ypWhiteIOS
         greetLabel.font = .systemFont(ofSize: 13)
         greetLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -143,20 +144,27 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         ])
     }
     
+//    @objc func logoutButtonAction() {
+//
+//        let alert = AlertModel(title: "Пока :(",
+//                               text: "Ты точно хочешь меня покинуть?",
+//                               buttonText: "Да!",
+//                               completion: {_ in
+//            ProfileLogoutService.profileLogoutService.logout()
+//        })
+//        AlertPresenter.showAlert(alert: alert, on: self)
+//    }
+    
     @objc func logoutButtonAction() {
         print("ProfileViewController: logoutButtonAction called")
-        let alert = AlertModel(title: "Пока :(",
-                               text: "Ты точно хочешь меня покинуть?",
-                               buttonText: "Да!",
-                               completion: { [weak self] _ in
+        let alert = UIAlertController(title: "Пока :(",
+                                      message: "Ты точно хочешь меня покинуть?",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Да!", style: .destructive, handler: { [weak self] _ in
             self?.presenter?.profileLogout()
-        })
-        self.logoutAlert = AlertPresenter.showAlert(alert: alert, on: self)
+        }))
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+        self.logoutAlert = alert
     }
 }
-
-
-
-
-
-
