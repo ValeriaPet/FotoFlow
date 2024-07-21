@@ -50,6 +50,7 @@ final class ProfileLogoutService {
     }
     
     private func switchToSplashController() {
+        print("ProfileLogoutService: Switching to splash controller")
         guard let window = UIApplication.shared.windows.first else {
             assertionFailure("Invalid window configuration")
             return

@@ -49,8 +49,10 @@ final class ProfileViewTests: XCTestCase {
         
         _ = viewController.view
         
-        XCTAssertTrue(presenter.viewDidLoadCalled)
+        print("Test: viewDidLoadCalled is \(presenter.viewDidLoadCalled)")
+        XCTAssertTrue(presenter.viewDidLoadCalled, "viewDidLoad should be called on the presenter")
     }
+
     
     func testPresenterCallsConfigureUIElements() {
         let viewController = ProfileViewControllerSpy()

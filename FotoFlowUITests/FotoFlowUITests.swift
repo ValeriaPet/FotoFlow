@@ -33,8 +33,8 @@ final class FotoFlowUITests: XCTestCase {
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
         
         passwordTextField.tap()
-        
         passwordTextField.typeText("qwertyqwerty")
+        app.toolbars.buttons["Done"].tap()
         webView.swipeUp()
         
         let loginButton = webView.buttons["Login"]
@@ -51,16 +51,12 @@ final class FotoFlowUITests: XCTestCase {
     
     func testFeed() throws {
         let tablesQuery = app.tables
-
-        // Ожидание загрузки первой ячейки
         let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
+        XCTAssertTrue(cell.waitForExistence(timeout: 7))
         
-        _ = cell.waitForExistence(timeout: 5)
-
         // Прокрутка вверх
         cell.swipeUp()
         print("Первая ячейка успешно прокручена вверх")
-
 
         let likeButton = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
         

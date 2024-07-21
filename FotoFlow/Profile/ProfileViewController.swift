@@ -27,8 +27,13 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.presenter?.viewDidLoad()
+        self.presenter = ProfilePresenter()
+        self.presenter?.view = self
+        
+        print("ProfileViewController: viewDidLoad called, presenter: \(self.presenter != nil)")
         UIElements()
-        presenter?.viewDidLoad()
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
@@ -41,6 +46,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         
         loadProfileData()
     }
+
     
     func loadProfileData() {
         guard let profile = ProfileService.profileService.profile else {
@@ -161,10 +167,12 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
                                       message: "Ты точно хочешь меня покинуть?",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Да!", style: .destructive, handler: { [weak self] _ in
+            print("ProfileViewController: calling presenter?.profileLogout()")
             self?.presenter?.profileLogout()
         }))
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
         self.logoutAlert = alert
     }
+
 }
