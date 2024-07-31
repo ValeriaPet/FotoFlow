@@ -1,0 +1,101 @@
+
+@testable import FotoFlow
+import XCTest
+
+final class ProfilePresenterSpy: ProfilePresenterProtocol {
+    var logoutIsInitiated: Bool = false
+    func profileLogout() {
+        logoutIsInitiated.toggle()
+    }
+    func userImageUrlUpdateMonitor() {}
+    var viewDidLoadCalled: Bool = false
+    var view: ProfileViewControllerProtocol?
+    func viewDidLoad() {
+        viewDidLoadCalled.toggle()
+    }
+}
+
+final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
+    var profileImageView: UIImageView?
+    
+    
+    var nameLabel: UILabel = UILabel()
+    var nickLabel: UILabel = UILabel()
+    var greetLabel: UILabel = UILabel()
+    
+    var logoutAlert: UIAlertController?
+    
+    var exitButton: UIButton?
+    var profileImageDidSet: Bool = false
+    func updateAvatar(url: URL) {
+        profileImageDidSet.toggle()
+    }
+    var configureUIElementsCalled: Bool = false
+    var presenter: ProfilePresenterProtocol?
+    
+    func UIElements() {
+        configureUIElementsCalled.toggle()
+    }
+}
+
+
+final class ProfileViewTests: XCTestCase {
+    
+    func testViewControllerCallsViewDidLoad() {
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenterSpy()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        _ = viewController.view
+        
+        print("Test: viewDidLoadCalled is \(presenter.viewDidLoadCalled)")
+        XCTAssertTrue(presenter.viewDidLoadCalled, "viewDidLoad should be called on the presenter")
+    }
+
+    
+    func testPresenterCallsConfigureUIElements() {
+        let viewController = ProfileViewControllerSpy()
+        let presenter = ProfilePresenter()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        presenter.viewDidLoad()
+        
+        XCTAssertTrue(viewController.configureUIElementsCalled)
+    }
+    
+    func testPresenterCallsUpdateAvatar() {
+        let viewController = ProfileViewControllerSpy()
+        let presenter = ProfilePresenter()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        presenter.viewDidLoad()
+        
+        let validURLString = "https://example.com/avatar.jpg"
+        NotificationCenter.default.post(name: ProfileImageService.didChangeNotification,
+                                        object: nil,
+                                        userInfo: ["URL": validURLString])
+        
+        XCTAssertTrue(viewController.profileImageDidSet)
+    }
+    
+    func testLogoutButtonAction() {
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenterSpy()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        
+        viewController.loadViewIfNeeded()
+        viewController.UIElements()
+        viewController.exitButton?.sendActions(for: .touchUpInside)
+        
+        let alert = viewController.logoutAlert
+        XCTAssertTrue(alert != nil)
+    }
+}
+
+
+
+

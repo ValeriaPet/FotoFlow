@@ -1,41 +1,102 @@
-//
-//  FotoFlowUITests.swift
-//  FotoFlowUITests
-//
-//  Created by LERÄ on 05.12.23.
-//
+
 
 import XCTest
 
 final class FotoFlowUITests: XCTestCase {
-
+    
+    private let app = XCUIApplication()
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+        
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        print(app.debugDescription)
+    }
+    
+    func testAuth() throws {
+        
+        app.buttons["Войти"].tap()
+        
+        let webView = app.webViews["UnsplashWebView"]
+        XCTAssertTrue(webView.waitForExistence(timeout: 5))
+        
+        let loginTextField = webView.descendants(matching: .textField).element
+        XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
+        
+        loginTextField.tap()
+        loginTextField.typeText("mugi-chan@mail.ru")
+        app.toolbars.buttons["Done"].tap()
+        webView.swipeUp()
+     
+        
+        let passwordTextField = webView.descendants(matching: .secureTextField).element
+        XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
+        
+        passwordTextField.tap()
+        passwordTextField.typeText("qwertyqwerty")
+        app.toolbars.buttons["Done"].tap()
+        webView.swipeUp()
+        
+        let loginButton = webView.buttons["Login"]
+        
+        XCTAssertTrue(loginButton.waitForExistence(timeout: 10), "Кнопка логина не найдена")
+            loginButton.tap()
+        
+        let tablesQuery = app.tables
+        let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
+        XCTAssertTrue(cell.waitForExistence(timeout: 7))
+        
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+    
+    func testFeed() throws {
+        let tablesQuery = app.tables
+        let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
+        XCTAssertTrue(cell.waitForExistence(timeout: 7))
+        
+        // Прокрутка вверх
+        cell.swipeUp()
+        print("Первая ячейка успешно прокручена вверх")
+
+        let likeButton = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
+        
+        likeButton.buttons["favoritesButton"].tap()
+        sleep(3)
+        
+        likeButton.buttons["favoritesButton"].tap()
+        
+        sleep(3)
+        
+        likeButton.tap()
+
+        // Работа с изображением
+        let image = app.scrollViews.images.element(boundBy: 0)
+        _ = image.waitForExistence(timeout: 5)
+        
+        image.pinch(withScale: 3, velocity: 1)
+        
+        image.pinch(withScale: 0.5, velocity: -1)
+        print("Изображение успешно увеличено и уменьшено")
+
+        // Возврат назад
+        let backButton = app.buttons["Backward"]
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5), "Кнопка возврата не найдена")
+        backButton.tap()
+        print("Успешно возвращено на экран ленты")
+    }
+
+    func testProfile() throws {
+        
+        func testProfile() throws {
+            sleep(3)
+            app.tabBars.buttons.element(boundBy: 1).tap()
+            
+            XCTAssertTrue(app.staticTexts["Name Lastname"].exists)
+            XCTAssertTrue(app.staticTexts["@username"].exists)
+            
+            app.buttons["Exit"].tap()
+            
+            app.alerts["Bye bye!"].scrollViews.otherElements.buttons["Yes"].tap()
         }
     }
 }
